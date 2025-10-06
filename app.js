@@ -4,6 +4,7 @@ const path = require("node:path");
 
 // require Routers here
 const indexRouter = require("./routes/indexRouter.js");
+const authRouter = require("./routes/authRouter.js");
 
 const app = express();
 
@@ -19,6 +20,7 @@ app.use(express.urlencoded({ extended: true }));
 
 // Use Routers here
 app.use("/", indexRouter);
+app.use("/", authRouter);
 
 // Ignore favicon icon / ... request
 app.get(
