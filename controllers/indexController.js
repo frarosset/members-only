@@ -1,3 +1,3 @@
 exports.get = (req, res) => {
-  res.send("INDEX");
+  res.render("index", { pageTitle: process.env.TITLE });
 };
