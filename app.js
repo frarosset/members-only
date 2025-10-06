@@ -3,6 +3,7 @@ const express = require("express");
 const path = require("node:path");
 
 // require Routers here
+const indexRouter = require("./routes/indexRouter.js");
 
 const app = express();
 
@@ -17,6 +18,7 @@ app.use(express.static("public", { extensions: ["html"] }));
 app.use(express.urlencoded({ extended: true }));
 
 // Use Routers here
+app.use("/", indexRouter);
 
 // Ignore favicon icon / ... request
 app.get(
