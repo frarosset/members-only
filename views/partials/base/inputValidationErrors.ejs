@@ -1,0 +1,15 @@
+<%# Required: - %>
+<%# Optional: locals.validationErrors = {validationErrors.groupedMsg[name] which is an array of messages]}%>
+
+<%_ if(locals.validationErrors){ 
+const errorMsgs = validationErrors.groupedMsg[name]; 
+if (errorMsgs != null) { _%>
+<div role="alert" aria-live="assertive">
+  <ul>
+    <%_ errorMsgs.forEach((msg) => { _%>
+    <li><%= msg %></li>
+    <%_ }) _%>
+  </ul>
+</div>
+<%_ }
+} _%>

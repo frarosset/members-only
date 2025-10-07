@@ -21,8 +21,8 @@ CREATE TABLE users (
       process.env.USERNAME_MAX_LENGTH
     )}) UNIQUE NOT NULL,
     passwordHash VARCHAR(255) NOT NULL,
-    name VARCHAR(${Number(process.env.NAME_MAX_LENGTH)}) NOT NULL,
-    surname VARCHAR(${Number(process.env.SURNAME_MAX_LENGTH)}) NOT NULL,
+    name VARCHAR(${Number(process.env.NAME_SURNAME_MAX_LENGTH)}) NOT NULL,
+    surname VARCHAR(${Number(process.env.NAME_SURNAME_MAX_LENGTH)}) NOT NULL,
     signup_date TIMESTAMPTZ NOT NULL DEFAULT CURRENT_TIMESTAMP,
     membership_start_date TIMESTAMPTZ DEFAULT NULL,
     is_member BOOLEAN NOT NULL DEFAULT FALSE,

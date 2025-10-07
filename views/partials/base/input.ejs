@@ -1,0 +1,7 @@
+<%# Required: locals.label %>
+<%# Optional: locals.data.[name], locals.value, class, input attributes, locals.validationErrors    %>
+<label>
+  <span><%= label %></span>
+  <input <%- include("inputParams.ejs",{value: locals.data?.[name] ?? locals.value}) _%>>
+  <%- include("inputValidationErrors.ejs") _%>
+</label>

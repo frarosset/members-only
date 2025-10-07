@@ -1,0 +1,7 @@
+<%# Required: locals.label %>
+<%# Optional: locals.data.[name], class, input attributes, locals.validationErrors %>
+<label>
+  <span><%= label %></span>
+  <textarea rows="6" <%- include("inputParams.ejs") _%>><%= locals.data?.[name] || "" %></textarea>
+  <%- include("inputValidationErrors.ejs") _%>
+</label>
