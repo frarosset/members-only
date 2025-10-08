@@ -1,3 +1,5 @@
+const authValidators = require("./validators/authValidators.js");
+
 exports.signup = {};
 
 exports.signup.get = (req, res) => {
@@ -5,6 +7,7 @@ exports.signup.get = (req, res) => {
 };
 
 exports.signup.post = [
+  authValidators.signup,
   (req, res) => {
     res.send(JSON.stringify(req.body));
   },
