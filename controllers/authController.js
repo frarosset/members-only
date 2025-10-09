@@ -1,4 +1,6 @@
 const authValidators = require("./validators/authValidators.js");
+const asyncHandler = require("express-async-handler");
+const db = require("../db/queries.js");
 
 exports.signup = {};
 
@@ -8,7 +10,9 @@ exports.signup.get = (req, res) => {
 
 exports.signup.post = [
   authValidators.signup,
-  (req, res) => {
-    res.send(JSON.stringify(req.body));
-  },
+  asyncHandler(async (req, res) => {
+    const id = await db.create.user(req.body);
+
+    res.send(id + JSON.stringify(req.body));
+  }),
 ];
