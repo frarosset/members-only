@@ -18,4 +18,13 @@ db.create.user = async (data) => {
   return results.rows[0].id;
 };
 
+db.read.usernameAvailability = async (username) => {
+  const sql = "SELECT username FROM users WHERE username = $1;";
+  const sqlData = [username];
+
+  const results = await pool.query(sql, sqlData);
+
+  return results.rows.length === 0;
+};
+
 module.exports = db;

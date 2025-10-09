@@ -1,4 +1,5 @@
 const { body } = require("express-validator");
+const db = require("../../db/queries.js");
 const handleValidationErrorsFcn = require("./handleValidationErrorsFcn.js");
 
 const msg = {
@@ -36,8 +37,14 @@ exports.signup = [
     .matches(
       new RegExp(process.env.USERNAME_REGEX, process.env.USERNAME_REGEX_FLAG)
     )
-    .withMessage(process.env.USERNAME_REGEX_MSG),
-  // CHECK ALREADY EXISTS
+    .withMessage(process.env.USERNAME_REGEX_MSG)
+    .custom(async (username, { req }) => {
+      const isUSernameAvailable = await db.read.usernameAvailability(username);
+      if (!isUSernameAvailable) {
+        throw new Error(`This username is already used.`);
+      }
+      return true;
+    }),
   body("name")
     .trim()
     .notEmpty()
