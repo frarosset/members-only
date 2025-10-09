@@ -8,4 +8,9 @@ const securePasswordForStorage = async (password) => {
   return hashedPassword;
 };
 
-module.exports = { securePasswordForStorage };
+const checkPassword = async (password, storedSecuredPassword) => {
+  const match = await bcrypt.compare(password, storedSecuredPassword);
+  return match;
+};
+
+module.exports = { securePasswordForStorage, checkPassword };
