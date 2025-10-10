@@ -3,9 +3,14 @@ const asyncHandler = require("express-async-handler");
 const db = require("../db/queries.js");
 
 exports.signup = {};
+exports.login = {};
 
 exports.signup.get = (req, res) => {
   res.render("signup", { pageTitle: process.env.TITLE });
+};
+
+exports.login.get = (req, res) => {
+  res.render("login", { pageTitle: process.env.TITLE });
 };
 
 exports.signup.post = [

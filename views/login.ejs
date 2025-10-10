@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= pageTitle %> | Sign Up</title>
+</head>
+
+<body>
+  <main>
+    <h1> <%= pageTitle %></h1>
+    <p>User Login</p>
+
+    <form action="/login" method="POST">
+      <div>
+        <%- include("./partials/base/input.ejs",{type: "text", name: "username", label: "Username", maxlength: process.env.USERNAME_MAX_LENGTH, required: true}) _%>
+        <%- include("./partials/base/input.ejs",{type: "password", name: "password", label: "Password", maxlength: process.env.PASSWORD_MAX_LENGTH, required: true}) _%>
+      </div>
+
+      <%- include("./partials/base/submitButton.ejs", {label: "LOGIN"}) _%>
+    </form>
+    <p>Don't have an account? <a href="/signup">Register here</a></p>
+  </main>
+</body>
+</body>
+
+</html>
