@@ -3,6 +3,8 @@ const express = require("express");
 const path = require("node:path");
 const session = require("express-session");
 const passport = require("passport");
+const pgSession = require("connect-pg-simple")(session);
+const pool = require("./db/pool.js");
 
 // require Routers here
 const indexRouter = require("./routes/indexRouter.js");
@@ -27,12 +29,15 @@ app.get(
 );
 
 // Setup session for authentication
+const sessionStore = new pgSession({ pool: pool, createTableIfMissing: true });
+
 app.use(
   session({
     secret: process.env.SESSION_SECRET,
     resave: false,
     saveUninitialized: false,
-    cookie: { secure: false, maxAge: 1000 * 60 * 60 * 24 },
+    store: sessionStore,
+    cookie: { secure: true, maxAge: 1000 * 60 * 60 * 24 },
   })
 );
 app.use(passport.session());
