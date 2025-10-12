@@ -13,7 +13,8 @@ passport.use(
         return done(null, false, { message: "This username does not exists!" });
       }
 
-      const match = checkPassword(password, user.hashedPassword);
+      const match = await checkPassword(password, user.password_hash);
+
       if (!match) {
         return done(null, false, { message: "Incorrect password!" });
       }

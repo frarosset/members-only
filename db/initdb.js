@@ -20,7 +20,7 @@ CREATE TABLE users (
     username VARCHAR(${Number(
       process.env.USERNAME_MAX_LENGTH
     )}) UNIQUE NOT NULL,
-    passwordHash VARCHAR(255) NOT NULL,
+    password_hash VARCHAR(255) NOT NULL,
     name VARCHAR(${Number(process.env.NAME_SURNAME_MAX_LENGTH)}) NOT NULL,
     surname VARCHAR(${Number(process.env.NAME_SURNAME_MAX_LENGTH)}) NOT NULL,
     signup_date TIMESTAMPTZ NOT NULL DEFAULT CURRENT_TIMESTAMP,

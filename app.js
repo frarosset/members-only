@@ -1,6 +1,8 @@
 require("dotenv").config();
 const express = require("express");
 const path = require("node:path");
+const session = require("express-session");
+const passport = require("passport");
 
 // require Routers here
 const indexRouter = require("./routes/indexRouter.js");
@@ -15,13 +17,6 @@ app.set("view engine", "ejs");
 // Serve static files
 app.use(express.static("public", { extensions: ["html"] }));
 
-// Parse data for req.body
-app.use(express.urlencoded({ extended: true }));
-
-// Use Routers here
-app.use("/", indexRouter);
-app.use("/", authRouter);
-
 // Ignore favicon icon / ... request
 app.get(
   ["/favicon.ico", "/.well-known/appspecific/com.chrome.devtools.json"],
@@ -30,6 +25,24 @@ app.get(
     res.sendStatus(204); // No Content
   }
 );
+
+// Setup session for authentication
+app.use(
+  session({
+    secret: process.env.SESSION_SECRET,
+    resave: false,
+    saveUninitialized: false,
+    cookie: { secure: false, maxAge: 1000 * 60 * 60 * 24 },
+  })
+);
+app.use(passport.session());
+
+// Parse data for req.body
+app.use(express.urlencoded({ extended: true }));
+
+// Use Routers here
+app.use("/", indexRouter);
+app.use("/", authRouter);
 
 const PORT = process.env.PORT || 8080;
 app.listen(PORT, () => {

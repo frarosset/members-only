@@ -1,6 +1,7 @@
 const authValidators = require("./validators/authValidators.js");
 const asyncHandler = require("express-async-handler");
 const db = require("../db/queries.js");
+const passport = require("passport");
 
 exports.signup = {};
 exports.login = {};
@@ -19,5 +20,13 @@ exports.signup.post = [
     const id = await db.create.user(req.body);
 
     res.send(id + JSON.stringify(req.body));
+  }),
+];
+
+exports.login.post = [
+  passport.authenticate("local", {
+    successRedirect: "/",
+    failureRedirect: "/login",
+    failureMessage: true,
   }),
 ];
