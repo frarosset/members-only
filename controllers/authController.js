@@ -11,7 +11,10 @@ exports.signup.get = (req, res) => {
 };
 
 exports.login.get = (req, res) => {
-  res.render("login", { pageTitle: process.env.TITLE });
+  res.render("login", {
+    pageTitle: process.env.TITLE,
+    message: res.locals.messages?.[0],
+  });
 };
 
 exports.signup.post = [

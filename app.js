@@ -37,6 +37,18 @@ app.use(
 );
 app.use(passport.session());
 
+// Save useful data in res.locals
+app.use((req, res, next) => {
+  const msg = req.session.messages || [];
+  res.locals.messages = msg;
+  res.locals.hasMessages = !!msg.length;
+  req.session.messages = [];
+
+  res.locals.currentUser = req.user;
+
+  next();
+});
+
 // Parse data for req.body
 app.use(express.urlencoded({ extended: true }));
 

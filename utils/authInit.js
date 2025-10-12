@@ -16,7 +16,9 @@ passport.use(
       const match = await checkPassword(password, user.password_hash);
 
       if (!match) {
-        return done(null, false, { message: "Incorrect password!" });
+        return done(null, false, {
+          message: "Incorrect username or password!",
+        });
       }
 
       return done(null, user);
