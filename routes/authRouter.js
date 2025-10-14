@@ -10,5 +10,6 @@ router.get("/continue-as-guest", authController.continueAsGuest.get);
 
 router.post("/signup", authController.signup.post);
 router.post("/login", authController.login.post);
+router.post("/logout", authController.logout.post);
 
 module.exports = router;

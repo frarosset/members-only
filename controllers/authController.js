@@ -5,6 +5,7 @@ const passport = require("passport");
 
 exports.signup = {};
 exports.login = {};
+exports.logout = {};
 exports.continueAsGuest = {};
 
 exports.signup.get = (req, res) => {
@@ -39,3 +40,12 @@ exports.login.post = [
     failureMessage: true,
   }),
 ];
+
+exports.logout.post = (req, res, next) => {
+  req.logout((err) => {
+    if (err) {
+      return next(err);
+    }
+    res.redirect("/");
+  });
+};
