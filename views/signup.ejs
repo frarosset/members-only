@@ -12,6 +12,12 @@
     <h1> <%= pageTitle %></h1>
     <p>Create your account</p>
 
+    <%_ if(locals.currentUser) { _%>
+
+    <p>You already have an account as <%= currentUser.username _%>. <a href="/logout">Log out</a> to create a new account.</p>
+
+    <%_ } else { _%>
+
     <form action="/signup" method="POST">
       <div>
         <%- include("./partials/base/input.ejs",{type: "text", name: "username", label: "Username", maxlength: process.env.USERNAME_MAX_LENGTH, minlength: process.env.USERNAME_MIN_LENGTH, required: true,  pattern: process.env.USERNAME_REGEX, title: process.env.USERNAME_REGEX_MSG}) _%>
@@ -26,7 +32,9 @@
     </form>
     <p>Already have an account? <a href="/login">Login</a></p>
   </main>
-</body>
+
+  <%_ } _%>
+
 </body>
 
 </html>

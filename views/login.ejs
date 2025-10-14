@@ -12,6 +12,12 @@
     <h1> <%= pageTitle %></h1>
     <p>User Login</p>
 
+    <%_ if(locals.currentUser) { _%>
+
+    <p>You are already logged in as <%= currentUser.username _%>. <a href="/logout">Log out</a> to use a different account.</p>
+
+    <%_ } else { _%>
+
     <form action="/login" method="POST">
       <%_ if(locals.message){ _%>
       <div><%= locals.message _%></div>
@@ -25,7 +31,9 @@
     </form>
     <p>Don't have an account? <a href="/signup">Register here</a></p>
   </main>
-</body>
+
+  <%_ } _%>
+
 </body>
 
 </html>
