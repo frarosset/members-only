@@ -6,6 +6,7 @@ const router = Router();
 
 router.get("/signup", authController.signup.get);
 router.get("/login", authController.login.get);
+router.get("/continue-as-guest", authController.continueAsGuest.get);
 
 router.post("/signup", authController.signup.post);
 router.post("/login", authController.login.post);

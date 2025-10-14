@@ -5,6 +5,7 @@ const passport = require("passport");
 
 exports.signup = {};
 exports.login = {};
+exports.continueAsGuest = {};
 
 exports.signup.get = (req, res) => {
   res.render("signup", { pageTitle: process.env.TITLE });
@@ -15,6 +16,11 @@ exports.login.get = (req, res) => {
     pageTitle: process.env.TITLE,
     message: res.locals.messages?.[0],
   });
+};
+
+exports.continueAsGuest.get = (req, res) => {
+  req.session.isGuest = true;
+  res.redirect("/");
 };
 
 exports.signup.post = [

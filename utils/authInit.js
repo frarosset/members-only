@@ -5,27 +5,34 @@ const { checkPassword } = require("./passwordUtils.js");
 
 // Define veryfy function called by passport.authenticate()
 passport.use(
-  new LocalStrategy(async (username, password, done) => {
-    try {
-      const user = await db.read.userFromUsername(username);
+  new LocalStrategy(
+    { passReqToCallback: true },
+    async (req, username, password, done) => {
+      try {
+        const user = await db.read.userFromUsername(username);
 
-      if (!user) {
-        return done(null, false, { message: "This username does not exists!" });
+        if (!user) {
+          return done(null, false, {
+            message: "This username does not exists!",
+          });
+        }
+
+        const match = await checkPassword(password, user.password_hash);
+
+        if (!match) {
+          return done(null, false, {
+            message: "Incorrect username or password!",
+          });
+        }
+
+        req.session.isGuest = false;
+
+        return done(null, user);
+      } catch (err) {
+        return done(err);
       }
-
-      const match = await checkPassword(password, user.password_hash);
-
-      if (!match) {
-        return done(null, false, {
-          message: "Incorrect username or password!",
-        });
-      }
-
-      return done(null, user);
-    } catch (err) {
-      return done(err);
     }
-  })
+  )
 );
 
 // Define serializeUser function called after authenticate, to store user info on the session data
