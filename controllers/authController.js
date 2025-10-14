@@ -26,10 +26,15 @@ exports.continueAsGuest.get = (req, res) => {
 
 exports.signup.post = [
   authValidators.signup,
-  asyncHandler(async (req, res) => {
+  asyncHandler(async (req, res, next) => {
     const id = await db.create.user(req.body);
 
-    res.send(id + JSON.stringify(req.body));
+    req.login({ id }, (err) => {
+      if (err) {
+        return next(err);
+      }
+      res.redirect("/");
+    });
   }),
 ];
 
