@@ -8,11 +8,26 @@
 </head>
 
 <body>
+  <%_ if(locals.isGuest || locals.currentUser) { _%>
+
+  <%- include("./partials/header.ejs"); _%>
+
+  <%_ const role =  locals.currentUser ? locals.currentUser.is_member ? "a member": locals.currentUser.is_admin ? "an admin" : "a user" : "a guest"; _%>
+  <p>You are <%= role%></p>
+
+  <p>Custom message list</p>
+
+  <%_ } else { _%>
+
   <h1> <%= pageTitle %></h1>
   <div>
     <a href="/login">LOGIN</a>
     <a href="/signup">SIGN UP</a>
   </div>
+
+  <a href="/continue-as-guest">Continue as a guest</a>
+
+  <%_ } _%>
 </body>
 
 </html>

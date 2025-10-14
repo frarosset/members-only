@@ -37,7 +37,7 @@ app.use(
     resave: false,
     saveUninitialized: false,
     store: sessionStore,
-    cookie: { secure: true, maxAge: 1000 * 60 * 60 * 24 },
+    cookie: { secure: false, maxAge: 1000 * 60 * 60 * 24 },
   })
 );
 app.use(passport.session());
@@ -50,6 +50,8 @@ app.use((req, res, next) => {
   req.session.messages = [];
 
   res.locals.currentUser = req.user;
+
+  res.locals.isGuest = req.session.isGuest;
 
   next();
 });

@@ -1,0 +1,18 @@
+<header>
+  <h1> <%= pageTitle %></h1>
+  <nav>
+    <%_ if(locals.currentUser) { _%>
+
+    <a href="/new-message">POST A MESSAGE</a>
+    <a href="/join-the-club">JOIN THE CLUB</a>
+    <a href="/logout">LOGOUT</a>
+
+
+    <%_ } else { // guest _%>
+
+    <a href="/login">LOGIN</a>
+    <a href="/signup">SIGN UP</a>
+
+    <%_ } _%>
+  </nav>
+</header>
