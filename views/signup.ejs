@@ -14,7 +14,7 @@
 
     <%_ if(locals.currentUser) { _%>
 
-    <p>You already have an account as <%= currentUser.username _%>. <a href="/logout">Log out</a> to create a new account.</p>
+    <p>You already have an account as <%= currentUser.username _%>. <%- include("./partials/logoutButtonAndDialog.ejs",{useLink:true}) _%> to create a new account.</p>
 
     <%_ } else { _%>
 

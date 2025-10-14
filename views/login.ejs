@@ -14,7 +14,7 @@
 
     <%_ if(locals.currentUser) { _%>
 
-    <p>You are already logged in as <%= currentUser.username _%>. <a href="/logout">Log out</a> to use a different account.</p>
+    <p>You are already logged in as <%= currentUser.username _%>. <%- include("./partials/logoutButtonAndDialog.ejs",{useLink:true}) _%> to use a different account.</p>
 
     <%_ } else { _%>
 

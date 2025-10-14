@@ -1,0 +1,30 @@
+<dialog class='logout'>
+  <form action="/logout" method="POST">
+    Are you sure you want to log out?
+    <button class='close' type="button">Close</button>
+    <button type="submit" autofocus>LOGOUT</button>
+  </form>
+</dialog>
+<%_ 
+  const showLogoutModalLabel = locals.label ?? "Logout";
+  if(locals.useLink) { 
+_%>
+<a class='show-logout-modal' href="#"><%= showLogoutModalLabel _%></a>
+<%_ } else { _%>
+<button class='show-logout-modal' type="button"><%= showLogoutModalLabel _%></button>
+<%_ } _%>
+
+<script>
+  const logoutDialog = document.querySelector("dialog.logout");
+  const logoutShowButton = document.querySelector("dialog.logout + .show-logout-modal");
+  const logoutCloseButton = document.querySelector("dialog.logout button.close");
+
+  logoutShowButton.addEventListener("click", (e) => {
+    e.preventDefault();
+    logoutDialog.showModal();
+  });
+
+  logoutCloseButton.addEventListener("click", (e) => {
+    logoutDialog.close();
+  });
+</script>
