@@ -20,11 +20,20 @@ exports.login.get = (req, res) => {
 };
 
 exports.continueAsGuest.get = (req, res) => {
-  req.session.isGuest = true;
+  if (!req.user) {
+    req.session.isGuest = true;
+  }
   res.redirect("/");
 };
 
 exports.signup.post = [
+  (req, res, next) => {
+    if (req.user) {
+      res.redirect("/signup"); // This shows an invite to logout to the user to proceed
+    } else {
+      next();
+    }
+  },
   authValidators.signup,
   asyncHandler(async (req, res, next) => {
     const id = await db.create.user(req.body);
@@ -39,6 +48,13 @@ exports.signup.post = [
 ];
 
 exports.login.post = [
+  (req, res, next) => {
+    if (req.user) {
+      res.redirect("/login"); // This shows an invite to logout to the user to proceed
+    } else {
+      next();
+    }
+  },
   passport.authenticate("local", {
     successRedirect: "/",
     failureRedirect: "/login",
