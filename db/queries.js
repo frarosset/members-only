@@ -45,4 +45,14 @@ db.read.usernameAvailability = async (username) => {
   return results.rows.length === 0;
 };
 
+db.read.membershipRiddleCheckValidity = async (id, trait, noun) => {
+  // the membership riddle validator is implemented as a sql query stored as env variable to keep it secret!
+  const sql = process.env.MEMBERSHIP_RIDDLE_CHECK_VALIDITY_SQL;
+  const sqlData = [id, trait, noun];
+
+  const results = await pool.query(sql, sqlData);
+
+  return results.rows.length > 0;
+};
+
 module.exports = db;
