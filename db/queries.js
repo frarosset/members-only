@@ -71,4 +71,13 @@ db.read.membershipRiddleCheckValidity = async (id, trait, noun) => {
   return results.rows.length > 0;
 };
 
+db.read.membershipTraitNounAvailability = async (trait, noun) => {
+  const sql = "SELECT 1 FROM users WHERE membership_trait_noun = $1;";
+  const sqlData = [`${trait} ${noun}`];
+
+  const results = await pool.query(sql, sqlData);
+
+  return results.rows.length === 0;
+};
+
 module.exports = db;

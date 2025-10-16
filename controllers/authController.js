@@ -99,10 +99,25 @@ exports.joinTheClub.post = [
       noun
     );
 
+    let outcomeStr = "";
+
     if (isValid) {
-      db.update.upgradeUserToMember(id, trait, noun);
+      // Check if another user has already brought this item
+      const isNotAlreadyBrought = await db.read.membershipTraitNounAvailability(
+        trait,
+        noun
+      );
+
+      if (isNotAlreadyBrought) {
+        db.update.upgradeUserToMember(id, trait, noun);
+        outcomeStr = "VALID > UPGRADED";
+      } else {
+        outcomeStr = "VALID > ALREADY BROUGHT";
+      }
+    } else {
+      outcomeStr = "INVALID";
     }
 
-    res.send(isValid ? "VALID" : "INVALID");
+    res.send(outcomeStr);
   }),
 ];
