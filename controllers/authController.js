@@ -78,6 +78,8 @@ exports.logout.post = (req, res, next) => {
   });
 };
 
+const startsWithVowel = (word) => /^[aeiou]/i.test(word);
+
 exports.joinTheClub.post = [
   (req, res, next) => {
     if (!req.user || req.user.is_member) {
@@ -100,6 +102,7 @@ exports.joinTheClub.post = [
     );
 
     let outcomeStr = "";
+    let onCloseRedirectTo = null;
 
     if (isValid) {
       // Check if another user has already brought this item
@@ -110,14 +113,23 @@ exports.joinTheClub.post = [
 
       if (isNotAlreadyBrought) {
         db.update.upgradeUserToMember(id, trait, noun);
-        outcomeStr = "VALID > UPGRADED";
+        outcomeStr = `You’ve got it! You and your ${trait} ${noun} are in. Welcome to the club!`;
+        onCloseRedirectTo = "/";
       } else {
-        outcomeStr = "VALID > ALREADY BROUGHT";
+        const article = startsWithVowel(trait) ? "an" : "a";
+        outcomeStr = `You’re on the right path: you could have entered with ${article} ${trait} ${noun}. However, another member has already brought that. Try once more.`;
       }
     } else {
-      outcomeStr = "INVALID";
+      const article = startsWithVowel(trait) ? "An" : "A";
+      outcomeStr = `${article} ${trait} ${noun}? No, you can't enter with that! Please try again.`;
     }
 
-    res.send(outcomeStr);
+    // Note: currentUser is automatically passed through res.locals
+    // However, its membership is not updated, yet, so you can show a custom message
+    res.render("joinTheClub", {
+      pageTitle: process.env.TITLE,
+      message: outcomeStr,
+      onCloseRedirectTo: onCloseRedirectTo,
+    });
   }),
 ];

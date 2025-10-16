@@ -14,7 +14,7 @@
 
     <%_ if(locals.currentUser?.is_member) { _%>
 
-    <p>Congratulations, <%= locals.currentUser.name _%>! You already are a member of our club!</p>
+    <p>Congratulations, <%= locals.currentUser.name _%>! You are already a member of our club!</p>
 
     <p>As a member you can:
       <%- include("partials/memberFeatures.ejs") _%>
@@ -61,6 +61,8 @@
     </form>
 
     <%- include("./partials/joinTheClubHints.ejs",{useLink:true}) _%>
+
+    <%- include("./partials/messageDialog.ejs") _%>
 
     <%_ } else { _%>
     <p>You must be logged in to join our club. <a href="/login">Login</a> </p>

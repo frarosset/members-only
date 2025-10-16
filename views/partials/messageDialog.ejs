@@ -1,0 +1,19 @@
+<%_ if(locals.message){ _%>
+<dialog open class='message'>
+  <%= locals.message _%>
+  <%_ if(locals.onCloseRedirectTo){ _%>
+  <a href="<%= locals.onCloseRedirectTo _%>">Close</a>
+  <%_ } else { _%>
+  <button class='close' type="button">Close</button>
+  <%_ } _%>
+</dialog>
+
+<script>
+  const messageDialog = document.querySelector("dialog.message");
+  const messageCloseButton = document.querySelector("dialog.message button.close");
+
+  messageCloseButton.addEventListener("click", (e) => {
+    messageDialog.close();
+  });
+</script>
+<%_ } _%>
