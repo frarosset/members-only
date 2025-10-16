@@ -16,6 +16,11 @@ const msg = {
       )} and ${Math.max(min, max)} characters.`;
     }
   },
+  maxLength: (field, max) => {
+    return `The ${field} must have at most ${max} ${
+      max === 1 ? "character" : "characters"
+    }.`;
+  },
 };
 
 exports.signup = [
@@ -119,4 +124,42 @@ exports.signup = [
       return true;
     }),
   handleValidationErrorsFcn("signup"),
+];
+
+exports.joinTheClub = [
+  body("trait")
+    .trim()
+    .notEmpty()
+    .withMessage(msg.notEmpty("trait"))
+    .isLength({
+      max: Number(process.env.MEMBERSHIP_RIDDLE_MAX_LENGTH),
+    })
+    .withMessage(
+      msg.maxLength("trait", process.env.MEMBERSHIP_RIDDLE_MAX_LENGTH)
+    )
+    .matches(
+      new RegExp(
+        process.env.MEMBERSHIP_RIDDLE_REGEX,
+        process.env.MEMBERSHIP_RIDDLE_REGEX_FLAG
+      )
+    )
+    .withMessage(process.env.MEMBERSHIP_RIDDLE_REGEX_MSG),
+  body("noun")
+    .trim()
+    .notEmpty()
+    .withMessage(msg.notEmpty("trait"))
+    .isLength({
+      max: Number(process.env.MEMBERSHIP_RIDDLE_MAX_LENGTH),
+    })
+    .withMessage(
+      msg.maxLength("trait", process.env.MEMBERSHIP_RIDDLE_MAX_LENGTH)
+    )
+    .matches(
+      new RegExp(
+        process.env.MEMBERSHIP_RIDDLE_REGEX,
+        process.env.MEMBERSHIP_RIDDLE_REGEX_FLAG
+      )
+    )
+    .withMessage(process.env.MEMBERSHIP_RIDDLE_REGEX_MSG),
+  handleValidationErrorsFcn("joinTheClub"),
 ];

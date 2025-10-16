@@ -12,5 +12,6 @@ router.get("/join-the-club", authController.joinTheClub.get);
 router.post("/signup", authController.signup.post);
 router.post("/login", authController.login.post);
 router.post("/logout", authController.logout.post);
+router.post("/join-the-club", authController.joinTheClub.post);
 
 module.exports = router;

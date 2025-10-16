@@ -77,3 +77,17 @@ exports.logout.post = (req, res, next) => {
     res.redirect("/");
   });
 };
+
+exports.joinTheClub.post = [
+  (req, res, next) => {
+    if (!req.user || req.user.is_member) {
+      res.redirect("/join-the-club");
+    } else {
+      next();
+    }
+  },
+  authValidators.joinTheClub,
+  asyncHandler(async (req, res, next) => {
+    res.send("Joining the club");
+  }),
+];
