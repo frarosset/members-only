@@ -1,0 +1,35 @@
+<dialog class='join-the-club-hints'>
+  <ul>
+    <li><strong>Odin Doe</strong> joins the club bringing a <em>digital owl 🦉</em></li>
+    <li><strong>John Doe</strong> might join the club if he brings an <em>obedient octopus 🐙</em>, but not if it is a <em>diligent</em> one.</li>
+    <li><strong>John Doe</strong> cannot enter with an <em>obedient jellyfish</em> or an <em>affectionate otter</em>.</li>
+    <li><strong>Jane Doe</strong> might join the club if she brings an <em>affectionate otter 🦦</em>, but not if it is a <em>loyal</em> one.</li>
+    <li><strong>Jane Doe</strong> cannot enter with an <em>affectionate beaver</em> or an <em>obedient octopus</em>.</li>
+    <li><strong>Jane Doe</strong> can also bring an <em>agitated orange 🍊</em> and <strong>John Doe</strong> an <em>overjoyed orange 🍊</em> but not the other way around.</li>
+    <li><strong>John Smith</strong> is accepted by bringing an <em>ordinary tulip 🌷</em></li>
+  </ul>
+  <button class='close' type="button">Close</button>
+</dialog>
+<%_ 
+  const showJoinTheClubHintsModalLabel = locals.label ?? "Hints";
+  if(locals.useLink) { 
+_%>
+<a class='show-join-the-club-hints-modal' href="#"><%= showJoinTheClubHintsModalLabel _%></a>
+<%_ } else { _%>
+<button class='show-join-the-club-hints-modal' type="button"><%= showJoinTheClubHintsModalLabel _%></button>
+<%_ } _%>
+
+<script>
+  const joinTheClubHintsDialog = document.querySelector("dialog.join-the-club-hints");
+  const joinTheClubHintsShowButton = document.querySelector("dialog.join-the-club-hints + .show-join-the-club-hints-modal");
+  const joinTheClubHintsCloseButton = document.querySelector("dialog.join-the-club-hints button.close");
+
+  joinTheClubHintsShowButton.addEventListener("click", (e) => {
+    e.preventDefault();
+    joinTheClubHintsDialog.showModal();
+  });
+
+  joinTheClubHintsCloseButton.addEventListener("click", (e) => {
+    joinTheClubHintsDialog.close();
+  });
+</script>

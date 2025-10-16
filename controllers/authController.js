@@ -7,6 +7,7 @@ exports.signup = {};
 exports.login = {};
 exports.logout = {};
 exports.continueAsGuest = {};
+exports.joinTheClub = {};
 
 exports.signup.get = (req, res) => {
   res.render("signup", { pageTitle: process.env.TITLE });
@@ -24,6 +25,12 @@ exports.continueAsGuest.get = (req, res) => {
     req.session.isGuest = true;
   }
   res.redirect("/");
+};
+
+exports.joinTheClub.get = (req, res) => {
+  res.render("joinTheClub", {
+    pageTitle: process.env.TITLE,
+  });
 };
 
 exports.signup.post = [

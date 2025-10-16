@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= pageTitle %> | Join the club</title>
+</head>
+
+<body>
+  <main>
+    <h1> <%= pageTitle %></h1>
+    <h2>Join the club</h2>
+
+    <%_ if(locals.currentUser?.is_member) { _%>
+
+    <p>Congratulations, <%= locals.currentUser.name _%>! You already are a member of our club!</p>
+
+    <p>As a member you can:
+      <%- include("partials/memberFeatures.ejs") _%>
+    </p>
+
+    <%_ } else { _%>
+
+    <div>
+      <p>Join our club to unlock new features:
+        <%- include("partials/memberFeatures.ejs") _%>
+      </p>
+    </div>
+
+    <%_ if(locals.currentUser) { _%>
+    <p>So, <strong><%= locals.currentUser.name%> <%= locals.currentUser.surname%></strong>, will you join our club? You are allowed in only if you bring a special animal, plant, vegetable, or mythological/fantasy creature.</p>
+
+    <form action="/join-the-club" method="POST">
+      <p>What will you bring? <i>Type a single-word trait (adjective) and a single-word noun to describe it.</i></p>
+
+      <%- include("./partials/base/input.ejs",{type: "text", name: "trait", label: "Trait", maxlength: process.env.MEMBERSHIP_RIDDLE_MAX_LENGTH, required: true,  pattern: process.env.MEMBERSHIP_RIDDLE_REGEX, title: process.env.MEMBERSHIP_RIDDLE_REGEX_MSG}) _%>
+      <%- include("./partials/base/input.ejs",{type: "text", name: "noun", label: "Noun", maxlength: process.env.MEMBERSHIP_RIDDLE_MAX_LENGTH,  required: true,  pattern: process.env.MEMBERSHIP_RIDDLE_REGEX, title: process.env.MEMBERSHIP_RIDDLE_REGEX_MSG}) _%>
+
+      <%- include("./partials/base/submitButton.ejs", {fallbackUrl: "/", label: "I'm bringing a ..."}) _%>
+
+      <script>
+        const traitInput = document.querySelector('input[name="trait"]');
+        const nounInput = document.querySelector('input[name="noun"]');
+        const joinBtn = document.querySelector('button[type="submit"]');
+
+        function updateButton() {
+          const trait = traitInput.value.trim();
+          const noun = nounInput.value.trim();
+
+          const startsWithVowel = (word) => /^[aeiou]/i.test(word);
+          const article = startsWithVowel(trait) ? "an" : "a";
+
+          joinBtn.textContent = trait || noun ? `I'm bringing ${article} ${trait || "..."} ${noun || "..."}` : "I'm bringing a ...";
+        }
+
+        traitInput.addEventListener('input', updateButton);
+        nounInput.addEventListener('input', updateButton);
+      </script>
+
+    </form>
+
+    <%- include("./partials/joinTheClubHints.ejs",{useLink:true}) _%>
+
+    <%_ } else { _%>
+    <p>You must be logged in to join our club. <a href="/login">Login</a> </p>
+    <%_ } _%>
+  </main>
+
+  <%_ } _%>
+
+</body>
+
+</html>
