@@ -26,7 +26,10 @@ CREATE TABLE users (
     signup_date TIMESTAMPTZ NOT NULL DEFAULT CURRENT_TIMESTAMP,
     membership_start_date TIMESTAMPTZ DEFAULT NULL,
     is_member BOOLEAN NOT NULL DEFAULT FALSE,
-    is_admin BOOLEAN NOT NULL DEFAULT FALSE
+    is_admin BOOLEAN NOT NULL DEFAULT FALSE,
+    membership_trait_noun VARCHAR(${
+      1 + 2 * Number(process.env.MEMBERSHIP_RIDDLE_MAX_LENGTH)
+    }) UNIQUE
 );
 
 CREATE TABLE messages (

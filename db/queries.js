@@ -18,6 +18,22 @@ db.create.user = async (data) => {
   return results.rows[0].id;
 };
 
+db.update.upgradeUserToMember = async (id, trait, noun) => {
+  const sql = `
+    UPDATE users 
+    SET is_member = TRUE,
+    membership_start_date = CURRENT_TIMESTAMP,
+    membership_trait_noun = $2
+    WHERE id = $1 
+    RETURNING id;
+  `;
+  const sqlData = [id, `${trait} ${noun}`];
+
+  const results = await pool.query(sql, sqlData);
+
+  return results.rows[0].id;
+};
+
 db.read.userFromId = async (id) => {
   const sql = "SELECT * FROM users WHERE id = $1;";
   const sqlData = [id];

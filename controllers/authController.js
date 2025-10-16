@@ -88,12 +88,20 @@ exports.joinTheClub.post = [
   },
   authValidators.joinTheClub,
   asyncHandler(async (req, res, next) => {
+    const id = req.user.id;
+    const trait = req.body.trait;
+    const noun = req.body.noun;
+
     // Check validity of membership riddle entered data
     const isValid = await db.read.membershipRiddleCheckValidity(
-      req.user.id,
-      req.body.trait,
-      req.body.noun
+      id,
+      trait,
+      noun
     );
+
+    if (isValid) {
+      db.update.upgradeUserToMember(id, trait, noun);
+    }
 
     res.send(isValid ? "VALID" : "INVALID");
   }),
