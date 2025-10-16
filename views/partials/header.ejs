@@ -4,7 +4,11 @@
     <%_ if(locals.currentUser) { _%>
 
     <a href="/new-message">POST A MESSAGE</a>
+
+    <%_ if(!locals.currentUser.is_member) { _%>
     <a href="/join-the-club">JOIN THE CLUB</a>
+    <%_ } _%>
+
     <%- include("./logoutButtonAndDialog.ejs") _%>
 
     <%_ } else { // guest _%>
