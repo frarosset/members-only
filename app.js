@@ -9,6 +9,7 @@ const pool = require("./db/pool.js");
 // require Routers here
 const indexRouter = require("./routes/indexRouter.js");
 const authRouter = require("./routes/authRouter.js");
+const messageRouter = require("./routes/messageRouter.js");
 
 const app = express();
 
@@ -62,6 +63,7 @@ app.use(express.urlencoded({ extended: true }));
 // Use Routers here
 app.use("/", indexRouter);
 app.use("/", authRouter);
+app.use("/", messageRouter);
 
 const PORT = process.env.PORT || 8080;
 app.listen(PORT, () => {

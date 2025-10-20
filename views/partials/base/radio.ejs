@@ -1,0 +1,5 @@
+<%# Required: value %>
+<%# Optional: locals.label, class, input attributes, locals.validationErrors    %>
+<label>
+  <input <%- include("inputParams.ejs",{type: "radio"}) _%>><span><%= locals.label || value -%></span>
+</label>
