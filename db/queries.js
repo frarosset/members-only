@@ -80,4 +80,22 @@ db.read.membershipTraitNounAvailability = async (trait, noun) => {
   return results.rows.length === 0;
 };
 
+db.read.membershipRiddleTraitAllowed = async (trait) => {
+  const sql = "SELECT 1 FROM membership_riddle_traits WHERE trait = $1;";
+  const sqlData = [trait];
+
+  const results = await pool.query(sql, sqlData);
+
+  return results.rows.length === 1;
+};
+
+db.read.membershipRiddleNounAllowed = async (noun) => {
+  const sql = "SELECT 1 FROM membership_riddle_nouns WHERE noun = $1;";
+  const sqlData = [noun];
+
+  const results = await pool.query(sql, sqlData);
+
+  return results.rows.length === 1;
+};
+
 module.exports = db;

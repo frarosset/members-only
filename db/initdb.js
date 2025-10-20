@@ -6,7 +6,7 @@ const fs = require("fs");
 const { Client } = require("pg");
 
 const SQL_drop_all = `
-DROP TABLE session;
+DROP TABLE IF EXISTS session;
 DROP TABLE IF EXISTS messages;
 DROP TABLE IF EXISTS users;
 
