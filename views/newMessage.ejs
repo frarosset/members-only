@@ -30,7 +30,7 @@
         <%- include("./partials/base/radio.ejs", {name: "access", id: "all", value: "all", checked: allCaseChecked, label: "All" }) _%>
         <%- include("./partials/base/radio.ejs", {name: "access", id: "users_only", value: "users_only", checked: locals.data?.access === "users_only", label: "Registered users only" }) _%>
         <%- include("./partials/base/radio.ejs", {name: "access", id: "members_only", value: "members_only", checked: locals.data?.access === "members_only", label: ("Members only") + (isNotMember ? "*" : ""), disabled: isNotMember }) _%>
-        <%- include("./partials/base/inputValidationErrors.ejs") _%>
+        <%- include("./partials/base/inputValidationErrors.ejs",{name: "access"}) _%>
         <%_ if(isNotMember) { _%> <p>* Posting members-only messages requires membership: <a href="/join-the-club">join the club</a>.</p> <%_ } _%>
       </fieldset>
 
