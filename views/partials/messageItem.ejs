@@ -1,4 +1,22 @@
 <div>
-  <h3><%= title _%></h3>
-  <p><%= text _%></p>
+  <%_ if(members_only && !locals.currentUser?.is_member){ _%>
+
+  <%_ if(locals.currentUser){ _%>
+  <p>This is a members-only message. <a href="/join-the-club">Join the club</a> to read it.</p>
+  <%_ } else { _%>
+  <p>This is a members-only message. <a href="/login">Login</a> and join the club to read it.</p>
+  <%_ } _%>
+
+  <%_ } else if(users_only && !locals.currentUser){ _%>
+
+  <p>This is a users-only message. <a href="/login">Login</a> to read it.</p>
+
+  <%_ } else { _%>
+
+  <main>
+    <h3><%= title _%></h3>
+    <p><%= text _%></p>
+  </main>
+
+  <%_ } _%>
 </div>
