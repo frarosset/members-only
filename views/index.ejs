@@ -5,9 +5,10 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title><%= pageTitle %> | Welcome</title>
+  <%- include("partials/dateScript") _%>
 </head>
 
-<body>
+<body data-now="<%= (new Date()).toISOString() %>">
   <%_ if(locals.isGuest || locals.currentUser) { _%>
 
   <%- include("./partials/header.ejs"); _%>
