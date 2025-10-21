@@ -1,0 +1,12 @@
+<div>
+  <ul>
+    <li>Registered on <%- include("./elements/date.ejs",{date: user.signup_date}) _%><span></li>
+    <%_ if(user.is_member) { 
+            const startsWithVowel = (word) => /^[aeiou]/i.test(word);
+            const article = startsWithVowel(user.membership_trait_noun) ? "an" : "a";
+        _%>
+    <li>Member since <%- include("./elements/date.ejs",{date: user.membership_start_date}) _%><span></li>
+    <li>Joined the club with <%= article %> <%= user.membership_trait_noun _%><span></li>
+    <%_ } _%>
+  </ul>
+</div>

@@ -15,8 +15,8 @@
 
   <%_ if(locals.currentUser?.is_member){ _%>
   <header>
-    <span><a href="/user/<%= author_id _%>"><%= author_username _%></a></span>
-    <span class="date" data-date="<%= creation_date.toISOString() %>"></span>
+    <%_ if(!(locals.hideUsername ?? false)) {_%> <span><a href="/user/<%= author_id _%>"><%= author_username _%></a></span><%_ } _%>
+    <%- include("./elements/date.ejs",{date: creation_date}) _%>
   </header>
   <hr>
 

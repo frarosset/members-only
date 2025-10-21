@@ -13,7 +13,6 @@ exports.get = [
   asyncHandler(async (req, res) => {
     const isMember = req?.user?.is_member != null;
     const allMessages = await db.read.allMessages(isMember);
-    console.log(allMessages);
 
     res.render("index", {
       pageTitle: process.env.TITLE,

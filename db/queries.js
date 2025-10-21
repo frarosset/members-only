@@ -15,7 +15,7 @@ db.create.user = async (data) => {
 
   const results = await pool.query(sql, sqlData);
 
-  return results.rows[0].id;
+  return results.rows?.[0].id;
 };
 
 // Create a message
@@ -31,7 +31,7 @@ db.create.message = async (data) => {
 
   const results = await pool.query(sql, sqlData);
 
-  return results.rows[0].id;
+  return results.rows?.[0].id;
 };
 
 db.update.upgradeUserToMember = async (id, trait, noun) => {
@@ -47,7 +47,7 @@ db.update.upgradeUserToMember = async (id, trait, noun) => {
 
   const results = await pool.query(sql, sqlData);
 
-  return results.rows[0].id;
+  return results.rows?.[0].id;
 };
 
 db.read.userFromId = async (id) => {
@@ -56,7 +56,29 @@ db.read.userFromId = async (id) => {
 
   const results = await pool.query(sql, sqlData);
 
-  return results.rows[0];
+  return results.rows?.[0];
+};
+
+db.read.userPublicFromId = async (id) => {
+  const sql = `
+    SELECT 
+      id, 
+      username, 
+      name,
+      surname,
+      signup_date,
+      membership_start_date,
+      is_member,
+      is_admin,
+      membership_trait_noun
+    FROM users
+    WHERE id = $1;
+  `;
+  const sqlData = [id];
+
+  const results = await pool.query(sql, sqlData);
+
+  return results.rows?.[0];
 };
 
 db.read.userFromUsername = async (username) => {
@@ -65,7 +87,7 @@ db.read.userFromUsername = async (username) => {
 
   const results = await pool.query(sql, sqlData);
 
-  return results.rows[0];
+  return results.rows?.[0];
 };
 
 db.read.usernameAvailability = async (username) => {
@@ -74,7 +96,7 @@ db.read.usernameAvailability = async (username) => {
 
   const results = await pool.query(sql, sqlData);
 
-  return results.rows.length === 0;
+  return results.rows?.length === 0;
 };
 
 db.read.membershipRiddleCheckValidity = async (id, trait, noun) => {
@@ -84,7 +106,7 @@ db.read.membershipRiddleCheckValidity = async (id, trait, noun) => {
 
   const results = await pool.query(sql, sqlData);
 
-  return results.rows.length > 0;
+  return results.rows?.length > 0;
 };
 
 db.read.membershipTraitNounAvailability = async (trait, noun) => {
@@ -93,7 +115,7 @@ db.read.membershipTraitNounAvailability = async (trait, noun) => {
 
   const results = await pool.query(sql, sqlData);
 
-  return results.rows.length === 0;
+  return results.rows?.length === 0;
 };
 
 db.read.membershipRiddleTraitAllowed = async (trait) => {
@@ -102,7 +124,7 @@ db.read.membershipRiddleTraitAllowed = async (trait) => {
 
   const results = await pool.query(sql, sqlData);
 
-  return results.rows.length === 1;
+  return results.rows?.length === 1;
 };
 
 db.read.membershipRiddleNounAllowed = async (noun) => {
@@ -111,19 +133,33 @@ db.read.membershipRiddleNounAllowed = async (noun) => {
 
   const results = await pool.query(sql, sqlData);
 
-  return results.rows.length === 1;
+  return results.rows?.length === 1;
 };
 
-db.read.allMessages = async (isMember = true) => {
-  const baseDataCols = "messages.id, title, text, users_only, members_only";
+const messagesSql = (isMember, userId = null) => {
   const dataCols =
-    baseDataCols +
+    "messages.id, title, text, users_only, members_only" +
     (isMember ? ", creation_date, author_id, username AS author_username" : "");
 
   const joinSql = isMember ? "LEFT JOIN users on users.id = author_id" : "";
 
-  const sql = `SELECT ${dataCols} FROM messages ${joinSql} ORDER BY creation_date DESC;`;
+  const whereSql = userId != null ? "WHERE author_id = $1" : "";
+
+  return `SELECT ${dataCols} FROM messages ${joinSql} ${whereSql} ORDER BY creation_date DESC;`;
+};
+
+db.read.allMessages = async (isMember = true) => {
+  const sql = messagesSql(isMember);
   const sqlData = [];
+
+  const results = await pool.query(sql, sqlData);
+
+  return results.rows;
+};
+
+db.read.allMessagesPerUserId = async (userId, isMember = true) => {
+  const sql = messagesSql(isMember, userId);
+  const sqlData = [userId];
 
   const results = await pool.query(sql, sqlData);
 
