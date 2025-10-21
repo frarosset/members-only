@@ -5,6 +5,7 @@ const fs = require("fs");
 const db = require("./queries.js");
 
 const users = require("./data/users.private.json");
+const messages = require("./data/messages.private.json");
 
 const { Client } = require("pg");
 
@@ -58,12 +59,17 @@ const connectionString =
 
 async function main() {
   const client = new Client({ connectionString });
+  const usersUsernamesIdMap = new Map([]);
 
   await client.connect();
   await client.query(SQL_init);
+  await client.end();
 
+  // Populate the db
   for (const user of users) {
     const id = await db.create.user(user);
+
+    usersUsernamesIdMap.set(user.username, id);
 
     if (user.is_member) {
       await db.update.upgradeUserToMember(
@@ -74,7 +80,11 @@ async function main() {
     }
   }
 
-  await client.end();
+  for (const msg of messages) {
+    const userId = usersUsernamesIdMap.get(msg.authorUsername);
+
+    await db.create.message({ ...msg, userId });
+  }
 }
 
 main();
