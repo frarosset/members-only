@@ -6,6 +6,8 @@ require("dotenv").config();
 
 const { Client } = require("pg");
 
+const sql_init_command = "CREATE EXTENSION IF NOT EXISTS unaccent;";
+
 const SQL_drop_all = `
 DROP TABLE IF EXISTS membership_riddle_traits;
 DROP TABLE IF EXISTS membership_riddle_nouns;
@@ -35,7 +37,8 @@ const SQL_populate_tables = `
     )};
 `;
 
-const SQL_init = SQL_drop_all + SQL_create_tables + SQL_populate_tables;
+const SQL_init =
+  sql_init_command + SQL_drop_all + SQL_create_tables + SQL_populate_tables;
 
 const connectionString =
   process.argv.length > 2 ? process.argv[2] : process.env.DB_CONNECTION_STRING;

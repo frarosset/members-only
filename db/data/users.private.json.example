@@ -1,0 +1,20 @@
+[
+  {
+    "username": "odin",
+    "password": "somepassword",
+    "name": "Odin",
+    "surname": "Doe",
+    "is_member": true,
+    "is_admin": false,
+    "membership_trait": "digital",
+    "membership_noun": "owl"
+  },
+  {
+    "username": "jane",
+    "password": "somepassword",
+    "name": "Jane",
+    "surname": "Public",
+    "is_member": false,
+    "is_admin": false
+  }
+]

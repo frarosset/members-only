@@ -2,6 +2,9 @@
 
 require("dotenv").config();
 const fs = require("fs");
+const db = require("./queries.js");
+
+const users = require("./data/users.private.json");
 
 const { Client } = require("pg");
 
@@ -58,6 +61,19 @@ async function main() {
 
   await client.connect();
   await client.query(SQL_init);
+
+  for (const user of users) {
+    const id = await db.create.user(user);
+
+    if (user.is_member) {
+      await db.update.upgradeUserToMember(
+        id,
+        user.membership_trait,
+        user.membership_noun
+      );
+    }
+  }
+
   await client.end();
 }
 
