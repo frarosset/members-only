@@ -1,0 +1,9 @@
+<%_ if (locals?.messagesArray.length > 0) { _%>
+<ul>
+  <%_ for (const msg of locals.messagesArray) { _%>
+  <li><%- include("./messageItem.ejs",{...msg}) _%> </li>
+  <%_ } _%>
+</ul>
+<%_ } else { _%>
+<p>No messages yet!</p>
+<%_ } _%>

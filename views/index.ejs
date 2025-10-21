@@ -15,7 +15,7 @@
   <%_ const role =  locals.currentUser ? locals.currentUser.is_member ? "a member": locals.currentUser.is_admin ? "an admin" : "a user" : "a guest"; _%>
   <p>You are <%= role%></p>
 
-  <p>Custom message list</p>
+  <%- include("./partials/messageList.ejs") _%>
 
   <%_ } else { _%>
 

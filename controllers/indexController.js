@@ -1,3 +1,23 @@
-exports.get = (req, res) => {
-  res.render("index", { pageTitle: process.env.TITLE });
-};
+const asyncHandler = require("express-async-handler");
+const db = require("../db/queries.js");
+
+exports.get = [
+  (req, res, next) => {
+    if (!req.session.isGuest && !req.user) {
+      res.render("index", { pageTitle: process.env.TITLE });
+      return;
+    }
+
+    next();
+  },
+  asyncHandler(async (req, res) => {
+    const isUser = req.user != null;
+    const allMessages = await db.read.allMessages(isUser);
+    console.log(allMessages);
+
+    res.render("index", {
+      pageTitle: process.env.TITLE,
+      messagesArray: allMessages,
+    });
+  }),
+];

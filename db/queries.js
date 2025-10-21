@@ -114,4 +114,14 @@ db.read.membershipRiddleNounAllowed = async (noun) => {
   return results.rows.length === 1;
 };
 
+db.read.allMessages = async (isUser = true) => {
+  const dataCols = isUser ? "*" : "id, title, text, users_only, members_only";
+  const sql = `SELECT ${dataCols} FROM messages;`;
+  const sqlData = [];
+
+  const results = await pool.query(sql, sqlData);
+
+  return results.rows;
+};
+
 module.exports = db;
