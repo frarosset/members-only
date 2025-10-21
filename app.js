@@ -12,6 +12,7 @@ const CustomNotFoundError = require("./errors/CustomNotFoundError.js");
 const indexRouter = require("./routes/indexRouter.js");
 const authRouter = require("./routes/authRouter.js");
 const messageRouter = require("./routes/messageRouter.js");
+const userRouter = require("./routes/userRouter.js");
 
 const app = express();
 
@@ -66,6 +67,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use("/", indexRouter);
 app.use("/", authRouter);
 app.use("/", messageRouter);
+app.use("/", userRouter);
 
 // catch-all route throwing a 404 error
 app.use((req, res, next) => {
