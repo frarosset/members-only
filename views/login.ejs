@@ -18,17 +18,7 @@
 
     <%_ } else { _%>
 
-    <form action="/login" method="POST">
-      <%_ if(locals.message){ _%>
-      <div><%= locals.message _%></div>
-      <%_ } _%>
-      <div>
-        <%- include("./partials/base/input.ejs",{type: "text", name: "username", label: "Username", maxlength: process.env.USERNAME_MAX_LENGTH, required: true}) _%>
-        <%- include("./partials/base/input.ejs",{type: "password", name: "password", label: "Password", maxlength: process.env.PASSWORD_MAX_LENGTH, required: true}) _%>
-      </div>
-
-      <%- include("./partials/base/submitButton.ejs", {label: "LOGIN"}) _%>
-    </form>
+    <%- include("./partials/form/loginForm.ejs") _%>
     <p>Don't have an account? <a href="/signup">Register here</a></p>
 
     <%_ } _%>

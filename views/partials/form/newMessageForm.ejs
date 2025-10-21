@@ -1,0 +1,19 @@
+    <form action="/new-message" method="POST">
+      <div>
+        <%- include("../base/input.ejs",{type: "title", name: "title", label: "Title", maxlength: process.env.TITLE_MAX_LENGTH, minlength: process.env.TITLE_MIN_LENGTH, required: true,  pattern: process.env.TITLE_REGEX, title: process.env.TITLE_REGEX_MSG}) _%>
+        <%- include("../base/textarea.ejs",{name: "text", label: "Text", maxlength: process.env.TEXT_MAX_LENGTH, minlength: process.env.TEXT_MIN_LENGTH, required: true,  pattern: process.env.TEXT_REGEX, title: process.env.TEXT_REGEX_MSG}) _%>
+      </div>
+
+      <fieldset>
+        <legend>Who can read this?</legend>
+        <%_ const  isNotMember = !locals.currentUser.is_member; _%>
+        <%_ const  allCaseChecked = locals.data?.access === "all" || !(locals.data?.access === "users_only" || locals.data?.access === "members_only"); _%>
+        <%- include("../base/radio.ejs", {name: "access", id: "all", value: "all", checked: allCaseChecked, label: "All" }) _%>
+        <%- include("../base/radio.ejs", {name: "access", id: "users_only", value: "users_only", checked: locals.data?.access === "users_only", label: "Registered users only" }) _%>
+        <%- include("../base/radio.ejs", {name: "access", id: "members_only", value: "members_only", checked: locals.data?.access === "members_only", label: ("Members only") + (isNotMember ? "*" : ""), disabled: isNotMember }) _%>
+        <%- include("../base/inputValidationErrors.ejs",{name: "access"}) _%>
+        <%_ if(isNotMember) { _%> <p>* Posting members-only messages requires membership: <a href="/join-the-club">join the club</a>.</p> <%_ } _%>
+      </fieldset>
+
+      <%- include("../base/submitButton.ejs", {label: "POST"}) _%>
+    </form>

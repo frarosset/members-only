@@ -1,0 +1,11 @@
+    <form action="/login" method="POST">
+      <%_ if(locals.message){ _%>
+      <div><%= locals.message _%></div>
+      <%_ } _%>
+      <div>
+        <%- include("../base/input.ejs",{type: "text", name: "username", label: "Username", maxlength: process.env.USERNAME_MAX_LENGTH, required: true}) _%>
+        <%- include("../base/input.ejs",{type: "password", name: "password", label: "Password", maxlength: process.env.PASSWORD_MAX_LENGTH, required: true}) _%>
+      </div>
+
+      <%- include("../base/submitButton.ejs", {label: "LOGIN"}) _%>
+    </form>
