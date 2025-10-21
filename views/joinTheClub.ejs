@@ -28,7 +28,6 @@
       </p>
     </div>
 
-    <%_ if(locals.currentUser) { _%>
     <p>So, <strong><%= locals.currentUser.name%> <%= locals.currentUser.surname%></strong>, will you join our club? You are allowed in only if you bring a special animal, plant, vegetable, gem, natural entity, or fantasy creature.</p>
 
     <%- include("./partials/form/joinTheClubForm.ejs") _%>
@@ -37,9 +36,6 @@
 
     <%- include("./partials/messageDialog.ejs") _%>
 
-    <%_ } else { _%>
-    <p>You must be logged in to join our club. <a href="/login">Login</a> </p>
-    <%_ } _%>
     <%_ } _%>
   </main>
 

@@ -1,11 +1,11 @@
-class CustomNotFoundError extends Error {
+class CustomUnauthenticatedError extends Error {
   constructor(message, partial = "") {
     super(message);
-    this.statusCode = 404;
+    this.statusCode = 401;
     // So the error is neat when stringified. NotFoundError: message instead of Error: message
-    this.name = "NotFoundError";
+    this.name = "Unauthorized";
     this.partial = partial;
   }
 }
 
-module.exports = CustomNotFoundError;
+module.exports = CustomUnauthenticatedError;

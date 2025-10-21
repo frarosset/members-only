@@ -8,7 +8,8 @@
 <body>
   <main class="error">
     <h2><%= code %></h2>
-    <p><%= message %></p>
+    <%_ if (locals.message ) { _%><p><%= locals.message %></p><%_ } _%>
+    <%_ if (locals.partial ) { _%><%- include(process.cwd() + locals.partial) %><%_ } _%>
   </main>
 </body>
 

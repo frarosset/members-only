@@ -78,11 +78,13 @@ app.use((error, req, res, next) => {
 
   const code = error.statusCode || 500;
   const message = code !== 500 ? error.message : "Internal server error";
+  const partial = error.partial;
 
   res.status(code).render("error", {
     pageTitle: process.env.TITLE,
     code,
     message,
+    partial,
   });
 });
 

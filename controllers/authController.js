@@ -2,6 +2,7 @@ const authValidators = require("./validators/authValidators.js");
 const asyncHandler = require("express-async-handler");
 const db = require("../db/queries.js");
 const passport = require("passport");
+const CustomUnauthenticatedError = require("../errors/CustomUnauthenticatedError.js");
 
 exports.signup = {};
 exports.login = {};
@@ -28,6 +29,13 @@ exports.continueAsGuest.get = (req, res) => {
 };
 
 exports.joinTheClub.get = (req, res) => {
+  if (!req.user) {
+    throw new CustomUnauthenticatedError(
+      "",
+      "/views/partials/messages/joinTheClubButNotLoggedIn.ejs"
+    );
+  }
+
   res.render("joinTheClub", {
     pageTitle: process.env.TITLE,
   });
@@ -82,7 +90,12 @@ const startsWithVowel = (word) => /^[aeiou]/i.test(word);
 
 exports.joinTheClub.post = [
   (req, res, next) => {
-    if (!req.user || req.user.is_member) {
+    if (!req.user) {
+      throw new CustomUnauthenticatedError(
+        "",
+        "/views/partials/messages/joinTheClubButNotLoggedIn.ejs"
+      );
+    } else if (req.user.is_member) {
       res.redirect("/join-the-club");
     } else {
       next();
