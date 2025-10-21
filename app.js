@@ -6,6 +6,8 @@ const passport = require("passport");
 const pgSession = require("connect-pg-simple")(session);
 const pool = require("./db/pool.js");
 
+const CustomNotFoundError = require("./errors/CustomNotFoundError.js");
+
 // require Routers here
 const indexRouter = require("./routes/indexRouter.js");
 const authRouter = require("./routes/authRouter.js");
@@ -64,6 +66,25 @@ app.use(express.urlencoded({ extended: true }));
 app.use("/", indexRouter);
 app.use("/", authRouter);
 app.use("/", messageRouter);
+
+// catch-all route throwing a 404 error
+app.use((req, res, next) => {
+  throw new CustomNotFoundError("Page not found");
+});
+
+// Error handling
+app.use((error, req, res, next) => {
+  console.log(error);
+
+  const code = error.statusCode || 500;
+  const message = code !== 500 ? error.message : "Internal server error";
+
+  res.status(code).render("error", {
+    pageTitle: process.env.TITLE,
+    code,
+    message,
+  });
+});
 
 const PORT = process.env.PORT || 8080;
 app.listen(PORT, () => {
