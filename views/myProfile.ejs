@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= pageTitle %> | My Profile</title>
+  <%- include("partials/elements/dateScript") _%>
+</head>
+
+<body>
+  <main>
+    <h1> <%= pageTitle %></h1>
+
+    <header>
+      <%- include("./partials/userInfo.ejs") _%>
+    </header>
+
+    <%- include("./partials/userDetails.ejs") _%>
+
+
+    <div>
+      <a href="/my-messages">My messages</a>
+
+      <%_ if(!locals.currentUser.is_member) { _%>
+      <a href="/join-the-club">Join the club</a>
+      <%_ } _%>
+
+      <%- include("./partials/logoutButtonAndDialog.ejs") _%>
+    </div>
+
+  </main>
+
+</body>
+
+</html>

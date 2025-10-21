@@ -5,6 +5,7 @@ const CustomUnauthorizedError = require("../errors/CustomUnauthorizedError.js");
 const CustomNotFoundError = require("../errors/CustomNotFoundError.js");
 
 exports.user = {};
+exports.myProfile = {};
 
 exports.user.get = [
   (req, res, next) => {
@@ -35,4 +36,20 @@ exports.user.get = [
 
     res.render("user", { pageTitle: process.env.TITLE, user });
   }),
+];
+
+exports.myProfile.get = [
+  (req, res, next) => {
+    if (!req.user) {
+      throw new CustomUnauthenticatedError(
+        "",
+        "/views/partials/messages/myProfileButNotLoggedIn.ejs"
+      );
+    } else {
+      next();
+    }
+  },
+  (req, res) => {
+    res.render("myProfile", { pageTitle: process.env.TITLE, user: req.user });
+  },
 ];
