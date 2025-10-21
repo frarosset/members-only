@@ -13,6 +13,14 @@
 
   <%_ } else { _%>
 
+  <%_ if(locals.currentUser?.is_member){ _%>
+  <header>
+    <span><a href="/user/<%= author_id _%>"><%= author_username _%></a></span>
+    <span><%= creation_date _%></span>
+  </header>
+  <hr>
+
+  <%_ } _%>
   <main>
     <h3><%= title _%></h3>
     <p><%= text _%></p>

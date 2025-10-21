@@ -114,9 +114,15 @@ db.read.membershipRiddleNounAllowed = async (noun) => {
   return results.rows.length === 1;
 };
 
-db.read.allMessages = async (isUser = true) => {
-  const dataCols = isUser ? "*" : "id, title, text, users_only, members_only";
-  const sql = `SELECT ${dataCols} FROM messages;`;
+db.read.allMessages = async (isMember = true) => {
+  const baseDataCols = "messages.id, title, text, users_only, members_only";
+  const dataCols =
+    baseDataCols +
+    (isMember ? ", creation_date, author_id, username AS author_username" : "");
+
+  const joinSql = isMember ? "LEFT JOIN users on users.id = author_id" : "";
+
+  const sql = `SELECT ${dataCols} FROM messages ${joinSql} ORDER BY creation_date DESC;`;
   const sqlData = [];
 
   const results = await pool.query(sql, sqlData);
