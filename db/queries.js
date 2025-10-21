@@ -18,6 +18,22 @@ db.create.user = async (data) => {
   return results.rows[0].id;
 };
 
+// Create a message
+// Input: data (object with userId, title, text, access)
+db.create.message = async (data) => {
+  const usersOnly =
+    data.access === "users_only" || data.access === "members_only";
+  const membersOnly = data.access === "members_only";
+
+  const sql =
+    "INSERT INTO messages (title, text, users_only, members_only, author_id, creation_date) VALUES ($1, $2, $3, $4, $5, CURRENT_TIMESTAMP) RETURNING id;";
+  const sqlData = [data.title, data.text, usersOnly, membersOnly, data.userId];
+
+  const results = await pool.query(sql, sqlData);
+
+  return results.rows[0].id;
+};
+
 db.update.upgradeUserToMember = async (id, trait, noun) => {
   const sql = `
     UPDATE users 

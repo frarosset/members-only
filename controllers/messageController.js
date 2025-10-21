@@ -1,4 +1,6 @@
 const messageValidators = require("./validators/messageValidators.js");
+const asyncHandler = require("express-async-handler");
+const db = require("../db/queries.js");
 
 exports.newMessage = {};
 
@@ -15,7 +17,9 @@ exports.newMessage.post = [
     }
   },
   messageValidators.newMessage,
-  (req, res) => {
-    res.send("Message posted");
-  },
+  asyncHandler(async (req, res) => {
+    await db.create.message({ ...req.body, userId: req.user.id });
+
+    res.redirect("/");
+  }),
 ];
