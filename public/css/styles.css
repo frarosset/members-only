@@ -1,0 +1,100 @@
+@import url("https://fonts.googleapis.com/css2?family=Alan+Sans:wght@300..900&display=swap");
+
+:root {
+  --txt-col: #303030;
+  --bg-color: #fdc5f5;
+  --bg-gradient: linear-gradient(
+    150deg,
+    rgba(253, 197, 245, 1) 0%,
+    rgba(247, 174, 248, 1) 13%,
+    rgba(179, 136, 235, 1) 34%,
+    rgba(128, 147, 241, 1) 67%,
+    rgba(114, 221, 247, 1) 100%
+  );
+
+  --default-font: "Alan Sans", monospace;
+  --default-lineheight: 1.5;
+  --default-fontsize: max(18px, 2vmin);
+
+  --page-width: 50em;
+  --page-gap: 0.5vmin;
+
+  font-family: var(--default-font);
+  line-height: var(--default-lineheight);
+  font-weight: 400;
+  font-size: var(--default-fontsize);
+
+  color-scheme: light dark;
+  color: var(--txt-col);
+  background-color: var(--bg-col);
+
+  /* font-synthesis: none; */
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/*||Reset */
+*,
+*::before,
+*::after {
+  font-family: inherit;
+  font-size: inherit; /* 100% */
+  line-height: inherit;
+  color: inherit;
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+  vertical-align: baseline;
+  -webkit-tap-highlight-color: transparent;
+  /* see: https://www.joshwcomeau.com/css/custom-css-reset/ */
+  line-height: calc(1em + 0.5rem);
+}
+
+html {
+  background: var(--bg-color);
+  background: var(--bg-gradient);
+  background-attachment: fixed;
+  /* scrollbar-gutter: stable both-edges; */
+}
+
+body {
+  margin: 0 auto;
+  min-height: 100vh; /*it is assumed the same for <html>*/
+  min-height: 100dvh; /* if supported */
+  /* height: 100vh; /*it is assumed the same for <html>*/
+  /* height: 100dvh; /* if supported */
+
+  min-width: 320px;
+  width: 100%;
+  /* or max-width -- this avoids horizontal scroll bars */
+
+  touch-action: manipulation; /* disable double tap to zoom on some browsers*/
+  user-select: text;
+
+  overflow: hidden auto;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--page-gap);
+}
+
+/* Customize scrollbars */
+::-webkit-scrollbar {
+  width: 4px; /* width of the entire scrollbar */
+  height: 4px; /* height of the entire scrollbar */
+}
+
+::-webkit-scrollbar-track {
+  background: transparent; /* color of the tracking area */
+}
+
+::-webkit-scrollbar-thumb {
+  background: #888; /* color of the scroll thumb */
+  border-radius: 2px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #555; /* color of the scroll thumb on hover */
+}
