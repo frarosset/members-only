@@ -134,3 +134,16 @@ body > header nav {
   display: flex;
   gap: var(--header-nav-gap);
 }
+
+/* || Text and block highlight styles */
+.text-gradient,
+.text-gradient-fixed {
+  background: var(--bg-gradient);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.text-gradient-fixed {
+  background-attachment: fixed;
+}
