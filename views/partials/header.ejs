@@ -1,20 +1,19 @@
 <header>
-  <h1 class="text-gradient-fixed"> <%= pageTitle %></h1>
+  <h1 class="text-gradient fixed-gradient"> <%= pageTitle %></h1>
   <nav>
     <%_ if(locals.currentUser) { _%>
 
-    <a href="/new-message">POST A MESSAGE</a>
-
+    <a href="/new-message" class="button block-border-gradient">POST</a>
     <%_ if(!locals.currentUser.is_member) { _%>
-    <a href="/join-the-club">JOIN THE CLUB</a>
+    <a href="/join-the-club" class="button block-border-gradient fill-gradient fixed-gradient">JOIN</a>
     <%_ } _%>
 
     <%- include("./logoutButtonAndDialog.ejs") _%>
 
     <%_ } else { // guest _%>
 
-    <a href="/login">LOGIN</a>
-    <a href="/signup">SIGN UP</a>
+    <a href="/login" class="button block-border-gradient">LOGIN</a>
+    <a href="/signup" class="button block-border-gradient fill-gradient fixed-gradient">SIGN UP</a>
 
     <%_ } _%>
   </nav>

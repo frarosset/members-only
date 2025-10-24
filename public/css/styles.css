@@ -29,10 +29,17 @@
   --base-padding-tb: 0.5rem;
   --base-padding-lr: 0.8rem;
 
+  --small-radius: 0.5em;
+
   --header-padding: var(--base-padding-tb) var(--base-padding-lr);
   --header-gap: 0.8rem;
   --header-nav-gap: 0.5rem;
   --header-shadow: 0 0 5px var(--top-color);
+
+  --block-border-size: 0.1em;
+  --block-border-shadow: 0 0 5px var(--txt-col);
+
+  --button-padding: 0.1em 0.5em;
 
   font-family: var(--default-font);
   line-height: var(--default-lineheight);
@@ -136,14 +143,62 @@ body > header nav {
 }
 
 /* || Text and block highlight styles */
-.text-gradient,
-.text-gradient-fixed {
+.text-gradient {
   background: var(--bg-gradient);
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
 }
 
-.text-gradient-fixed {
+.block-border-gradient {
+  position: relative;
+
+  color: var(--txt-col-alt);
+  background: var(--top-color);
+  background-origin: border-box;
+  background-clip: padding-box !important;
+  border: var(--block-border-size) solid transparent;
+  text-shadow: var(--block-border-shadow);
+}
+
+.block-border-gradient::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  margin: calc(-1 * var(--block-border-size));
+  border-radius: inherit;
+  background: var(--bg-gradient);
+}
+
+*:has(> .block-border-gradient) {
+  isolation: isolate;
+}
+
+.fill-gradient {
+  background: transparent;
+}
+
+.fixed-gradient,
+.fixed-gradient::before {
   background-attachment: fixed;
+}
+
+/* \\ Buttons */
+
+.button {
+  border-radius: var(--small-radius);
+  text-align: center;
+  vertical-align: center;
+  text-decoration: none;
+  padding: var(--button-padding);
+}
+
+.button:hover {
+  background: transparent;
+}
+
+.button:hover,
+.button:hover::before {
+  background-attachment: unset;
 }
