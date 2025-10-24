@@ -20,8 +20,10 @@
   <%- include("./partials/header.ejs"); _%>
 
   <main>
-    <%- include("./partials/greetings.ejs") _%>
-    <%- include("./partials/messageList.ejs") _%>
+    <div class="main-container">
+      <%- include("./partials/greetings.ejs") _%>
+      <%- include("./partials/messageList.ejs") _%>
+    </div>
   </main>
 
   <%_ } else { _%>
@@ -30,12 +32,14 @@
     <h1> <%= pageTitle %></h1>
   </header>
   <main>
-    <div>
-      <a href="/login" class="base-button">LOGIN</a>
-      <a href="/signup" class="highlight-button">SIGN UP</a>
-    </div>
+    <div class="main-container">
+      <div>
+        <a href="/login" class="base-button">LOGIN</a>
+        <a href="/signup" class="highlight-button">SIGN UP</a>
+      </div>
 
-    <a href="/continue-as-guest">Continue as a guest</a>
+      <a href="/continue-as-guest">Continue as a guest</a>
+    </div>
   </main>
   <%_ } _%>
 </body>
