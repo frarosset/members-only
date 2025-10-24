@@ -1,36 +1,42 @@
 <!DOCTYPE html>
 <html lang="en">
 
+<%_ const showIndex = locals.isGuest || locals.currentUser; _%>
+<%_ const bodyClass = showIndex ? "index" : "entry-index"; _%>
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title><%= pageTitle %> | Welcome</title>
-  <%_ if(locals.isGuest || locals.currentUser) { _%>
+  <%_ if (showIndex) { _%>
   <%- include("partials/elements/dateScript") _%>
   <%_ } _%>
   <link rel="stylesheet" href="/css/styles.css">
 </head>
 
-<body data-now="<%= (new Date()).toISOString() %>">
-  <%_ if(locals.isGuest || locals.currentUser) { _%>
+<body data-now="<%= (new Date()).toISOString() %>" class="<%= bodyClass _%>">
+  <%_ if(showIndex) { _%>
 
   <%- include("./partials/header.ejs"); _%>
 
-  <%_ const role =  locals.currentUser ? locals.currentUser.is_member ? "a member": locals.currentUser.is_admin ? "an admin" : "a user" : "a guest"; _%>
-  <p>You are <%= role%></p>
-
-  <%- include("./partials/messageList.ejs") _%>
+  <main>
+    <%- include("./partials/greetings.ejs") _%>
+    <%- include("./partials/messageList.ejs") _%>
+  </main>
 
   <%_ } else { _%>
 
-  <h1> <%= pageTitle %></h1>
-  <div>
-    <a href="/login">LOGIN</a>
-    <a href="/signup">SIGN UP</a>
-  </div>
+  <header>
+    <h1> <%= pageTitle %></h1>
+  </header>
+  <main>
+    <div>
+      <a href="/login" class="base-button">LOGIN</a>
+      <a href="/signup" class="highlight-button">SIGN UP</a>
+    </div>
 
-  <a href="/continue-as-guest">Continue as a guest</a>
-
+    <a href="/continue-as-guest">Continue as a guest</a>
+  </main>
   <%_ } _%>
 </body>
 

@@ -1,0 +1,19 @@
+ <div class="greetings">
+   <%_ if(locals.isGuest) { _%>
+
+   <p>Hello, <i>guest </i>!</p>
+   <p>You're welcome to explore public, anonymous messages shared by our users.</p>
+   <p>To post your own messages, simply <a href="/login">log in</a>. You'll also gain access to messages visible only to registered users.</p>
+   <p>Want to see who wrote each message and unlock members-only content? Join our club to get the full experience.</p>
+
+   <%_ } else if (locals.currentUser?.is_member) { _%>
+
+   <p>Welcome back, <span><%= currentUser.name%> </span>!</p>
+
+   <%_ } else { _%>
+
+   <p>Welcome back, <span><%= currentUser.name%> </span>!</p>
+   <p>Curious about who wrote each message? <a href="/join-the-club">Join our club</a> to reveal authors and access members-only content.</p>
+
+   <%_ } _%>
+ </div>
