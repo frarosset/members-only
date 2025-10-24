@@ -139,7 +139,14 @@ db.read.membershipRiddleNounAllowed = async (noun) => {
 const messagesSql = (isMember, userId = null) => {
   const dataCols =
     "messages.id, title, text, users_only, members_only" +
-    (isMember ? ", creation_date, author_id, username AS author_username" : "");
+    (isMember
+      ? `, creation_date, json_build_object(
+          'id', users.id,
+          'username', users.username,
+          'is_member', users.is_member,
+          'is_admin', users.is_admin
+        ) AS author`
+      : "");
 
   const joinSql = isMember ? "LEFT JOIN users on users.id = author_id" : "";
 

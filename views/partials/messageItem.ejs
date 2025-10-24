@@ -15,7 +15,7 @@
 
   <%_ if(locals.currentUser?.is_member){ _%>
   <header>
-    <%_ if(!(locals.hideUsername ?? false)) {_%> <span><a href="/user/<%= author_id _%>"><%= author_username _%></a></span><%_ } _%>
+    <%_ if(!(locals.hideUsername ?? false)) {_%> <span><%- include("./elements/userIcon.ejs",{user: author})%><a href="/user/<%= author.id _%>"><%= author.username _%></a></span><%_ } _%>
     <%- include("./elements/date.ejs",{date: creation_date}) _%>
   </header>
   <hr>

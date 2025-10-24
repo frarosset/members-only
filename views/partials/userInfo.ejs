@@ -1,5 +1,6 @@
-<h2> <%= user.name %> <%= user.surname  _%></h2>
 <div>
+  <%- include("./elements/userIcon.ejs",{user: locals.currentUser})%>
+  <h2> <%= user.name %> <%= user.surname  _%></h2>
   <%- include("./elements/username.ejs",{username: user.username}) _%>
   <div>
     <%- include("./elements/tag.ejs",{show: user.is_admin, label: "admin"}) _%>
