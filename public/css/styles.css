@@ -39,7 +39,8 @@
   --block-border-size: 0.1em;
   --block-border-shadow: 0 0 5px var(--txt-col);
 
-  --button-padding: 0.1em 0.5em;
+  --button-padding-tb: 0.1em;
+  --button-padding: var(--button-padding-tb) 0.5em;
 
   font-family: var(--default-font);
   line-height: var(--default-lineheight);
@@ -139,7 +140,22 @@ body > header {
 
 body > header nav {
   display: flex;
+  align-items: center;
   gap: var(--header-nav-gap);
+}
+
+body > header nav .icon {
+  background: var(--txt-col-alt);
+  --icon-size: calc(
+    1lh + 2 * (var(--button-padding-tb) + var(--block-border-size))
+  );
+
+  width: var(--icon-size);
+  height: var(--icon-size);
+}
+
+body > header nav a:hover .icon {
+  background: var(--bg-gradient);
 }
 
 /* || Text and block highlight styles */
@@ -201,4 +217,46 @@ body > header nav {
 .button:hover,
 .button:hover::before {
   background-attachment: unset;
+}
+
+/* || Icon */
+
+.icon {
+  /* Default mask image (empty): <svg xmlns="http://www.w3.org/2000/svg"/> */
+  --mask-image-url: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciLz4=");
+  background: var(--txt-col);
+  font-size: inherit;
+  width: 1em;
+  height: 1em;
+  vertical-align: text-top;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  mask-image: var(--mask-image-url);
+  -webkit-mask-image: var(--mask-image-url);
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  mask-position: center;
+  mask-size: contain;
+}
+
+.icon-guest {
+  /* Phosphor Icons, https://phosphoricons.com/?q=user */
+  --mask-image-url: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIzMiIgaGVpZ2h0PSIzMiIgZmlsbD0iIzAwMDAwMCIgdmlld0JveD0iMCAwIDI1NiAyNTYiPjxwYXRoIGQ9Ik05Ni4yNiwzN0E4LDgsMCwwLDEsMTAyLDI3LjI5YTEwNC4xMSwxMDQuMTEsMCwwLDEsNTIsMCw4LDgsMCwwLDEtMiwxNS43NSw4LjE1LDguMTUsMCwwLDEtMi0uMjYsODgsODgsMCwwLDAtNDQsMEE4LDgsMCwwLDEsOTYuMjYsMzdaTTMzLjM1LDExMGE4LDgsMCwwLDAsOS44NS01LjU3LDg3Ljg4LDg3Ljg4LDAsMCwxLDIyLTM4LjA5QTgsOCwwLDAsMCw1My44LDU1LjE0YTEwMy45MiwxMDMuOTIsMCwwLDAtMjYsNDVBOCw4LDAsMCwwLDMzLjM1LDExMFpNMTUwLDIxMy4yMmE4OCw4OCwwLDAsMS00NCwwLDgsOCwwLDAsMC00LDE1LjQ5LDEwNC4xMSwxMDQuMTEsMCwwLDAsNTIsMCw4LDgsMCwwLDAtNC0xNS40OVptNjIuOC0xMDguNzdhOCw4LDAsMCwwLDE1LjQyLTQuMjgsMTA0LDEwNCwwLDAsMC0yNi00NSw4LDgsMCwxLDAtMTEuNDEsMTEuMjFBODguMTQsODguMTQsMCwwLDEsMjEyLjc5LDEwNC40NVptMTUuNDQsNTEuMzlhMTAzLjY4LDEwMy42OCwwLDAsMS0zMC42OCw0OS40N0E4LDgsMCwwLDEsMTg1LjA3LDIwM2E2NCw2NCwwLDAsMC0xMTQuMTQsMCw4LDgsMCwwLDEtMTIuNDgsMi4zMiwxMDMuNzQsMTAzLjc0LDAsMCwxLTMwLjY4LTQ5LjQ5LDgsOCwwLDAsMSwxNS40Mi00LjI3LDg3LjU4LDg3LjU4LDAsMCwwLDE5LDM0Ljg4LDc5LjU3LDc5LjU3LDAsMCwxLDM2LjEtMjguNzcsNDgsNDgsMCwxLDEsNTkuMzgsMCw3OS41Nyw3OS41NywwLDAsMSwzNi4xLDI4Ljc3LDg3LjU4LDg3LjU4LDAsMCwwLDE5LTM0Ljg4LDgsOCwwLDEsMSwxNS40Miw0LjI4Wk0xMjgsMTUyYTMyLDMyLDAsMSwwLTMyLTMyQTMyLDMyLDAsMCwwLDEyOCwxNTJaIj48L3BhdGg+PC9zdmc+);
+}
+
+.icon-user {
+  /* Phosphor Icons, https://phosphoricons.com/?q=user */
+  --mask-image-url: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIzMiIgaGVpZ2h0PSIzMiIgZmlsbD0iIzAwMDAwMCIgdmlld0JveD0iMCAwIDI1NiAyNTYiPjxwYXRoIGQ9Ik0xMjgsMjRBMTA0LDEwNCwwLDEsMCwyMzIsMTI4LDEwNC4xMSwxMDQuMTEsMCwwLDAsMTI4LDI0Wk03NC4wOCwxOTcuNWE2NCw2NCwwLDAsMSwxMDcuODQsMCw4Ny44Myw4Ny44MywwLDAsMS0xMDcuODQsMFpNOTYsMTIwYTMyLDMyLDAsMSwxLDMyLDMyQTMyLDMyLDAsMCwxLDk2LDEyMFptOTcuNzYsNjYuNDFhNzkuNjYsNzkuNjYsMCwwLDAtMzYuMDYtMjguNzUsNDgsNDgsMCwxLDAtNTkuNCwwLDc5LjY2LDc5LjY2LDAsMCwwLTM2LjA2LDI4Ljc1LDg4LDg4LDAsMSwxLDEzMS41MiwwWiI+PC9wYXRoPjwvc3ZnPg==);
+}
+
+.icon-member {
+  /* Phosphor Icons, merging icons from https://phosphoricons.com/?q=user and https://phosphoricons.com/?q=crown*/
+  --mask-image-url: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIzMiIgaGVpZ2h0PSIzMiIgZmlsbD0iIzAwMDAwMCIgdmlld0JveD0iMCAwIDI1NiAyNTYiPg0KICA8cGF0aCBkPSJNIDIyMS4zNSAxMDQuMTEgQyAyMTYuOTkzIDEwNC44MzkgMjE0LjA1MSAxMDguOTYzIDIxNC43OCAxMTMuMzIgQyAyMTUuNTkyIDExOC4xNzEgMjE2IDEyMy4wODEgMjE2IDEyOCBDIDIxNi4wMTkgMTQ5LjU0MiAyMDguMTAyIDE3MC4zMzYgMTkzLjc2IDE4Ni40MSBDIDE4NC44MzggMTczLjQ4MSAxNzIuMjkyIDE2My40NzggMTU3LjcgMTU3LjY2IEMgMTg2LjcyOCAxMzQuNzk3IDE4MC4xMiA4OS4wODQgMTQ1LjgwNiA3NS4zNzcgQyAxMTEuNDkyIDYxLjY2OSA3NS4yMDggOTAuMjQ4IDgwLjQ5NCAxMjYuODE5IEMgODIuMjU1IDEzOS4wMDIgODguNjI5IDE1MC4wNDMgOTguMyAxNTcuNjYgQyA4My43MDggMTYzLjQ3OCA3MS4xNjIgMTczLjQ4MSA2Mi4yNCAxODYuNDEgQyAxNy4yNzYgMTM1Ljc0MiA0NC4wMjMgNTUuMzk5IDExMC4zODUgNDEuNzkzIEMgMTE2LjE4MiA0MC42MDUgMTIyLjA4MyA0MC4wMDQgMTI4IDQwIEMgMTMyLjkxOSAzOS45OTkgMTM3LjgyOSA0MC40MDcgMTQyLjY4IDQxLjIyIEMgMTQ4Ljc2MyA0Mi4xOCAxNTMuNjA0IDM2LjE5NSAxNTEuMzk0IDMwLjQ0NiBDIDE1MC4zODcgMjcuODI4IDE0OC4wODIgMjUuOTI5IDE0NS4zMiAyNS40NCBDIDY2LjQzMSAxMi4xNjkgMi43NTggODkuMjc0IDMwLjcxIDE2NC4yMyBDIDU4LjY2MSAyMzkuMTg1IDE1Ny4yNzIgMjU1Ljc3NSAyMDguMjEgMTk0LjA5IEMgMjI3LjQwNiAxNzAuODQ1IDIzNS41NjEgMTQwLjQwOSAyMzAuNTYgMTEwLjY4IEMgMjI5LjgzMSAxMDYuMzIzIDIyNS43MDcgMTAzLjM4MSAyMjEuMzUgMTA0LjExIFogTSA5NiAxMjAgQyA5NiA5NS4zNjYgMTIyLjY2NyA3OS45NyAxNDQgOTIuMjg3IEMgMTY1LjMzMyAxMDQuNjA0IDE2NS4zMzMgMTM1LjM5NiAxNDQgMTQ3LjcxMyBDIDEzOS4xMzUgMTUwLjUyMSAxMzMuNjE3IDE1MiAxMjggMTUyIEMgMTEwLjMyNyAxNTIgOTYgMTM3LjY3MyA5NiAxMjAgWiBNIDc0LjA4IDE5Ny41IEMgOTkuMjUgMTU4LjEzNSAxNTYuNzUgMTU4LjEzNSAxODEuOTIgMTk3LjUgQyAxNTAuMjA1IDIyMi4xNjYgMTA1Ljc5NSAyMjIuMTY2IDc0LjA4IDE5Ny41IFoiPjwvcGF0aD4NCiAgPHBhdGggZD0iTSAyMzYuODUzIDM3LjQ4OSBDIDIzNC41OTYgMzYuMzc5IDIzMS44NzYgMzYuOTI3IDIzMC4yMiAzOC44MTYgTCAyMTguNDA4IDUxLjU1MiBMIDIwNS44NDcgMjMuMzc4IEMgMjA1Ljg0NCAyMy4zNjcgMjA1Ljg0NCAyMy4zNTUgMjA1Ljg0NyAyMy4zNDQgQyAyMDQuMDM2IDE5LjQyIDE5OC42NTggMTguOTI3IDE5Ni4xNjMgMjIuNDU0IEMgMTk1Ljk2NCAyMi43MzUgMTk1Ljc5MiAyMy4wMzIgMTk1LjY1IDIzLjM0NCBDIDE5NS42NSAyMy4zNTUgMTk1LjY1IDIzLjM2NyAxOTUuNjUgMjMuMzc4IEwgMTgzLjA4OCA1MS41NTIgTCAxNzEuMjczIDM4LjgxNiBDIDE2OC40MTYgMzUuNTc1IDE2My4xMjIgMzYuNjQgMTYxLjc0IDQwLjczNiBDIDE2MS40NDEgNDEuNjM0IDE2MS4zNyA0Mi41OTMgMTYxLjUzOSA0My41MjYgQyAxNjEuNTM5IDQzLjU2NSAxNjEuNTM5IDQzLjU5OSAxNjEuNTYxIDQzLjYzOSBMIDE2OS41MTkgODAuMDg1IEMgMTcwLjAyNSA4Mi43MzIgMTcyLjMzOSA4NC42NDYgMTc1LjAzNSA4NC42NDYgTCAyMjYuNDY1IDg0LjY0NiBDIDIyOS4xNTYgODQuNjQzIDIzMS40NjkgODIuNzI5IDIzMS45NzUgODAuMDg1IEwgMjM5LjkzMyA0My42MzkgQyAyMzkuOTMzIDQzLjU5OSAyMzkuOTMzIDQzLjU2NSAyMzkuOTU4IDQzLjUyNiBDIDI0MC40MTUgNDEuMDQyIDIzOS4xMzggMzguNTYgMjM2Ljg1MyAzNy40ODkgWiI+PC9wYXRoPg0KPC9zdmc+);
+}
+
+.icon-admin {
+  /* Phosphor Icons, https://phosphoricons.com/?q=user */
+  --mask-image-url: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIzMiIgaGVpZ2h0PSIzMiIgZmlsbD0iIzAwMDAwMCIgdmlld0JveD0iMCAwIDI1NiAyNTYiPjxwYXRoIGQ9Ik0yMjguMjUsNjMuMDdsLTQuNjYtMi42OWEyMy42LDIzLjYsMCwwLDAsMC04Ljc2bDQuNjYtMi42OWE4LDgsMCwwLDAtOC0xMy44NmwtNC42NywyLjdBMjMuOTIsMjMuOTIsMCwwLDAsMjA4LDMzLjM4VjI4YTgsOCwwLDAsMC0xNiwwdjUuMzhhMjMuOTIsMjMuOTIsMCwwLDAtNy41OCw0LjM5bC00LjY3LTIuN2E4LDgsMCwxLDAtOCwxMy44Nmw0LjY2LDIuNjlhMjMuNiwyMy42LDAsMCwwLDAsOC43NmwtNC42NiwyLjY5YTgsOCwwLDAsMCw0LDE0LjkzLDcuOTIsNy45MiwwLDAsMCw0LTEuMDdsNC42Ny0yLjdBMjMuOTIsMjMuOTIsMCwwLDAsMTkyLDc4LjYyVjg0YTgsOCwwLDAsMCwxNiwwVjc4LjYyYTIzLjkyLDIzLjkyLDAsMCwwLDcuNTgtNC4zOWw0LjY3LDIuN2E3LjkyLDcuOTIsMCwwLDAsNCwxLjA3LDgsOCwwLDAsMCw0LTE0LjkzWk0xOTIsNTZhOCw4LDAsMSwxLDgsOEE4LDgsMCwwLDEsMTkyLDU2Wm0yOS4zNSw0OC4xMWE4LDgsMCwwLDAtNi41Nyw5LjIxQTg4Ljg1LDg4Ljg1LDAsMCwxLDIxNiwxMjhhODcuNjIsODcuNjIsMCwwLDEtMjIuMjQsNTguNDEsNzkuNjYsNzkuNjYsMCwwLDAtMzYuMDYtMjguNzUsNDgsNDgsMCwxLDAtNTkuNCwwLDc5LjY2LDc5LjY2LDAsMCwwLTM2LjA2LDI4Ljc1QTg4LDg4LDAsMCwxLDEyOCw0MGE4OC43Niw4OC43NiwwLDAsMSwxNC42OCwxLjIyLDgsOCwwLDAsMCwyLjY0LTE1Ljc4LDEwMy45MiwxMDMuOTIsMCwxLDAsODUuMjQsODUuMjRBOCw4LDAsMCwwLDIyMS4zNSwxMDQuMTFaTTk2LDEyMGEzMiwzMiwwLDEsMSwzMiwzMkEzMiwzMiwwLDAsMSw5NiwxMjBaTTc0LjA4LDE5Ny41YTY0LDY0LDAsMCwxLDEwNy44NCwwLDg3LjgzLDg3LjgzLDAsMCwxLTEwNy44NCwwWiI+PC9wYXRoPjwvc3ZnPg==);
 }

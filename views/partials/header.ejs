@@ -8,12 +8,14 @@
     <a href="/join-the-club" class="button block-border-gradient fill-gradient fixed-gradient">JOIN</a>
     <%_ } _%>
 
-    <%- include("./logoutButtonAndDialog.ejs") _%>
+    <a href="/my-profile"><%- include("./elements/userIcon.ejs",{user: locals.currentUser})%></a>
 
     <%_ } else { // guest _%>
 
     <a href="/login" class="button block-border-gradient">LOGIN</a>
     <a href="/signup" class="button block-border-gradient fill-gradient fixed-gradient">SIGN UP</a>
+
+    <%- include("./elements/userIcon.ejs",{user: locals.currentUser})%>
 
     <%_ } _%>
   </nav>

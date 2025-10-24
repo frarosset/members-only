@@ -1,0 +1,14 @@
+<%_ 
+    let icon, title;
+
+    if(user) {
+        icon = user.is_admin ? "admin" : user.is_member ? "member" : "user";
+        const specialTitle = user.is_admin || user.is_member ? ` (${icon})` : "";
+        title = `${user.username}${specialTitle}`;
+    } else {
+        icon = "guest";
+        title = icon;
+    }
+_%>
+
+<span class="icon icon-<%= icon %>" title="<%= title %>"></span>
