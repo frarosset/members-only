@@ -47,6 +47,14 @@
   --button-padding-tb: 0.1em;
   --button-padding: var(--button-padding-tb) 0.5em;
 
+  --greetings-gap: 0.5em;
+  --greetings-fontsize: 0.8rem;
+  --greetings-first-line-fontsize: 1.1rem;
+  --greetings-name-fontsize: 1.5rem;
+  --greetings-first-line-fontweight: 700;
+  --greetings-name-fontweight: 900;
+  --greetings-a-fontweight: bold;
+
   font-family: var(--default-font);
   line-height: var(--default-lineheight);
   font-weight: 400;
@@ -210,7 +218,7 @@ body > header nav a:hover .icon {
 .button {
   border-radius: var(--small-radius);
   text-align: center;
-  vertical-align: center;
+  vertical-align: middle;
   text-decoration: none;
   padding: var(--button-padding);
 }
@@ -248,6 +256,35 @@ body > main > .main-container {
   align-items: center;
   padding: var(--main-padding);
   gap: var(--main-gap);
+}
+
+/* || Greetings */
+
+.greetings {
+  color: var(--txt-col-alt);
+  text-align: center;
+  text-wrap: balance;
+  display: flex;
+  flex-direction: column;
+  gap: var(--greetings-gap);
+  font-size: var(--greetings-fontsize);
+}
+
+.greetings > *:first-child {
+  font-variant: small-caps;
+  font-weight: var(--greetings-first-line-fontweight);
+  font-size: var(--greetings-first-line-fontsize);
+}
+
+.greetings > *:first-child .user-name {
+  font-variant: normal;
+  font-weight: var(--greetings-name-fontweight);
+  font-size: var(--greetings-name-fontsize);
+}
+
+.greetings a {
+  font-weight: var(--greetings-a-fontweight);
+  font-style: italic;
 }
 
 /* || Icon */
