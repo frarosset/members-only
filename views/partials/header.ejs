@@ -3,17 +3,17 @@
   <nav>
     <%_ if(locals.currentUser) { _%>
 
-    <a href="/new-message" class="button block-border-gradient">POST</a>
+    <%- include("./elements/linkAsSimpleButton.ejs", {href: "/new-message", text: "POST"})%>
     <%_ if(!locals.currentUser.is_member) { _%>
-    <a href="/join-the-club" class="button block-border-gradient fill-gradient fixed-gradient">JOIN</a>
+    <%- include("./elements/linkAsHighlightButton.ejs", {href: "/join-the-club", text: "JOIN"})%>
     <%_ } _%>
 
     <a href="/my-profile"><%- include("./elements/userIcon.ejs",{user: locals.currentUser})%></a>
 
     <%_ } else { // guest _%>
 
-    <a href="/login" class="button block-border-gradient">LOGIN</a>
-    <a href="/signup" class="button block-border-gradient fill-gradient fixed-gradient">SIGN UP</a>
+    <%- include("./elements/linkAsSimpleButton.ejs", {href: "/login", text: "LOGIN"})%>
+    <%- include("./elements/linkAsHighlightButton.ejs", {href: "/signup", text: "SIGN UP"})%>
 
     <%- include("./elements/userIcon.ejs",{user: locals.currentUser})%>
 
