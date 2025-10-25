@@ -47,13 +47,17 @@
   --button-padding-tb: 0.1em;
   --button-padding: var(--button-padding-tb) 0.5em;
 
+  --text-link-font-weight: 700;
+  --text-link-filter: saturate(1.4) brightness(0.9);
+  --text-link-underline-width-hover: 0.1em;
+  --text-link-underline-radius-hover: 0.2em 0.8em;
+
   --greetings-gap: 0.5em;
   --greetings-fontsize: 0.8rem;
   --greetings-first-line-fontsize: 1.1rem;
   --greetings-name-fontsize: 1.5rem;
   --greetings-first-line-fontweight: 700;
   --greetings-name-fontweight: 900;
-  --greetings-a-fontweight: bold;
 
   font-family: var(--default-font);
   line-height: var(--default-lineheight);
@@ -213,7 +217,7 @@ body > header nav a:hover .icon {
   background-attachment: fixed;
 }
 
-/* \\ Buttons */
+/* || Custom links and buttons as buttons */
 
 .button {
   border-radius: var(--small-radius);
@@ -230,6 +234,31 @@ body > header nav a:hover .icon {
 .button:hover,
 .button:hover::before {
   background-attachment: unset;
+}
+
+/* || Custom links: text links */
+
+.text-link {
+  font-weight: var(--text-link-font-weight);
+  text-decoration: none;
+  position: relative;
+  filter: var(--text-link-filter);
+}
+
+.text-link:hover,
+.button:hover::before {
+  background-attachment: unset;
+}
+
+.text-link:hover::before {
+  content: "";
+  position: absolute;
+  top: 100%;
+  width: 100%;
+  left: 0;
+  height: var(--text-link-underline-width-hover);
+  border-radius: var(--text-link-underline-radius-hover);
+  background: var(--bg-gradient);
 }
 
 /* || Main */
@@ -283,7 +312,6 @@ body > main > .main-container {
 }
 
 .greetings a {
-  font-weight: var(--greetings-a-fontweight);
   font-style: italic;
 }
 

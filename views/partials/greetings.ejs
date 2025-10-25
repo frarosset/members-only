@@ -3,7 +3,7 @@
 
    <p>Hello, <i class="text-gradient user-name">guest </i>!</p>
    <p>You're welcome to explore <i>public, anonymous messages</i> shared by our users.</p>
-   <p>To post your own messages, simply <a href="/login" class="text-gradient fixed-gradient" href="/login">log in</a>. You'll also gain access to messages visible only to registered users.</p>
+   <p>To post your own messages, simply <%- include("./elements/textLink.ejs", {href: "/login", text: "log in"})%>. You'll also gain access to messages visible only to registered users.</p>
    <p>Want to see who wrote each message and unlock members-only content? <i>Join our club</i> to get the full experience.</p>
 
    <%_ } else if (locals.currentUser?.is_member) { _%>
@@ -13,7 +13,7 @@
    <%_ } else { _%>
 
    <p>Welcome back, <span class="text-gradient user-name"><%= currentUser.name%> </span>!</p>
-   <p>Curious about who wrote each message? <a href="/join-the-club" class="text-gradient fixed-gradient">Join our club</a> to reveal authors and access members-only content.</p>
+   <p>Curious about who wrote each message? <%- include("./elements/textLink.ejs", {href: "/join-the-club", text: "Join our club"})%> to reveal authors and access members-only content.</p>
 
    <%_ } _%>
  </div>
