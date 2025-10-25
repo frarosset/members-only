@@ -34,6 +34,7 @@
   --base-padding-tb: 0.5rem;
   --base-padding-lr: 0.8rem;
 
+  --radius: 1em;
   --small-radius: 0.5em;
 
   --header-padding: var(--base-padding-tb) var(--base-padding-lr);
@@ -52,12 +53,32 @@
   --text-link-underline-width-hover: 0.1em;
   --text-link-underline-radius-hover: 0.2em 0.8em;
 
+  --light-transparent: #d4d4d433;
+  --light-transparent-filter: blur(20px) saturate(1.2) brightness(1.2);
+  --light-transparent-shadow: 0 0 20px #ffffff33 inset;
+
+  --secondary-text-weight: 300;
+  --secondary-text-current-color-alpha: rgb(from currentColor r g b / 75%);
+
   --greetings-gap: 0.5em;
   --greetings-fontsize: 0.8rem;
   --greetings-first-line-fontsize: 1.1rem;
   --greetings-name-fontsize: 1.5rem;
   --greetings-first-line-fontweight: 700;
   --greetings-name-fontweight: 900;
+
+  --messages-list-gap: 1em;
+  --messages-list-padding: 2em 0;
+  --messages-item-padding: 0.75rem;
+  --messages-item-color: var(--black);
+  --messages-item-border-size: 0.3em;
+
+  --messages-item-header-color: #ffffff75;
+  --messages-item-header-username-fontsize: 1.1em;
+
+  --messages-item-a-backdrop-filter: blur(20px) saturate(1.1) brightness(0.9); /* brightness(1.1) */
+  --messages-item-a-hover-backdrop-filter: blur(20px) saturate(1.1)
+    brightness(0.4);
 
   font-family: var(--default-font);
   line-height: var(--default-lineheight);
@@ -261,6 +282,16 @@ body > header nav a:hover .icon {
   background: var(--bg-gradient);
 }
 
+.secondary-text {
+  font-style: italic;
+  color: var(--secondary-text-current-color-alpha);
+  font-weight: var(--secondary-text-weight);
+}
+
+.secondary-text a {
+  font-style: normal;
+}
+
 /* || Main */
 
 body > main {
@@ -313,6 +344,111 @@ body > main > .main-container {
 
 .greetings a {
   font-style: italic;
+}
+
+/*|| Messages */
+
+.messages__list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--messages-list-gap);
+  padding: var(--messages-list-padding);
+  align-items: center;
+  width: 100%;
+  list-style-type: none;
+}
+
+.messages__list > li,
+.messages__item {
+  width: 100%;
+}
+
+.messages__item_block {
+  width: 100%;
+  border-radius: var(--radius);
+}
+
+.messages__item_content {
+  width: 100%;
+  padding: var(--messages-item-padding);
+  border-radius: calc(var(--radius) - var(--messages-item-border-size));
+  background: var(--light-transparent);
+  backdrop-filter: var(--light-transparent-filter);
+  box-shadow: var(--light-transparent-shadow);
+}
+
+.messages__item_public {
+  background: var(--bg-gradient);
+  background-attachment: fixed;
+}
+
+.messages__item_public,
+.messages__item_users_only {
+  color: var(--messages-item-color);
+}
+
+.messages__item_members_only,
+.messages__item_users_only {
+  --block-border-size: var(--messages-item-border-size);
+  text-shadow: none;
+}
+
+.messages__item_members_only .icon,
+.messages__item_users_only .icon {
+  float: right;
+  font-size: 1lh;
+  margin-left: var(--messages-item-padding);
+  margin-bottom: var(--messages-item-padding);
+}
+
+.messages__item_members_only .icon {
+  background: var(--bg-gradient);
+}
+
+.messages__item header {
+  display: flex;
+  gap: var(--messages-list-gap);
+  align-items: flex-end;
+  justify-content: space-between;
+  padding: 0 var(--radius);
+  color: var(--messages-item-header-color);
+}
+
+.messages__item header .date {
+  margin-left: auto;
+}
+
+.messages__item header > a {
+  border-radius: 0.5lh 0.5lh 0 0;
+
+  background: var(--bg-gradient);
+  background-attachment: fixed;
+
+  font-weight: var(--text-link-font-weight);
+  font-size: var(--messages-item-header-username-fontsize);
+  text-decoration: none;
+}
+
+.messages__item header > a span {
+  display: flex;
+  align-items: center;
+  border-radius: inherit;
+  gap: 0.2em;
+  padding-right: 0.3em;
+  backdrop-filter: var(--messages-item-a-backdrop-filter);
+}
+
+.messages__item header > a .icon {
+  background: var(--messages-item-color);
+  font-size: 1lh;
+}
+
+.messages__item header > a:hover span {
+  backdrop-filter: var(--messages-item-a-hover-backdrop-filter);
+}
+
+.messages__item header a:hover .icon {
+  background: var(--bg-gradient);
 }
 
 /* || Icon */

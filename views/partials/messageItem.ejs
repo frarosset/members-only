@@ -1,4 +1,12 @@
-<div>
+<%_ 
+  const cssClass = members_only
+    ? "messages__item_members_only block-border-gradient"
+    : users_only
+    ? "messages__item_users_only block-border-gradient fill-gradient"
+    : "messages__item_public";
+_%>
+
+<div class="messages__item ">
   <%_ if(locals.currentUser?.is_member){ _%>
   <header>
     <%_ if(!(locals.hideUsername ?? false)) {_%> <a href="/user/<%= author.id _%>"><span><%- include("./elements/userIcon.ejs",{user: author})%><%= author.username _%></span></a><%_ } _%>
@@ -7,8 +15,8 @@
   <%_ } _%>
 
 
-  <div>
-    <div>
+  <div class="messages__item_block <%= cssClass %>">
+    <div class="messages__item_content">
 
       <%_ if(members_only){ _%>
       <span class="icon icon-membership" title="Members-only message"></span>
@@ -21,14 +29,14 @@
       <%_ if(members_only && !locals.currentUser?.is_member){ _%>
 
       <%_ if(locals.currentUser){ _%>
-      <p>This is a members-only message. <%- include("./elements/textLink.ejs", {href: "/join-the-club", text: "Join the club"})%> to read it.</p>
+      <p class="secondary-text">This is a members-only message. <%- include("./elements/textLink.ejs", {href: "/join-the-club", text: "Join the club"})%> to read it.</p>
       <%_ } else { _%>
-      <p>This is a members-only message. <%- include("./elements/textLink.ejs", {href: "/login", text: "Log in"})%> and join the club to read it.</p>
+      <p class="secondary-text">This is a members-only message. <%- include("./elements/textLink.ejs", {href: "/login", text: "Log in"})%> and join the club to read it.</p>
       <%_ } _%>
 
       <%_ } else if(users_only && !locals.currentUser){ _%>
 
-      <p>This is an users-only message. <%- include("./elements/textLink.ejs", {href: "/login", text: "Log in"})%> to read it.</p>
+      <p class="secondary-text">This is an users-only message. <%- include("./elements/textLink.ejs", {href: "/login", text: "Log in"})%> to read it.</p>
 
       <%_ } else { _%>
 
