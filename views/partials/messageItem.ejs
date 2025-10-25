@@ -1,30 +1,43 @@
 <div>
-  <%_ if(members_only && !locals.currentUser?.is_member){ _%>
-
-  <%_ if(locals.currentUser){ _%>
-  <p>This is a members-only message. <a href="/join-the-club">Join the club</a> to read it.</p>
-  <%_ } else { _%>
-  <p>This is a members-only message. <a href="/login">Login</a> and join the club to read it.</p>
-  <%_ } _%>
-
-  <%_ } else if(users_only && !locals.currentUser){ _%>
-
-  <p>This is a users-only message. <a href="/login">Login</a> to read it.</p>
-
-  <%_ } else { _%>
-
   <%_ if(locals.currentUser?.is_member){ _%>
   <header>
-    <%_ if(!(locals.hideUsername ?? false)) {_%> <span><%- include("./elements/userIcon.ejs",{user: author})%><a href="/user/<%= author.id _%>"><%= author.username _%></a></span><%_ } _%>
+    <%_ if(!(locals.hideUsername ?? false)) {_%> <a href="/user/<%= author.id _%>"><span><%- include("./elements/userIcon.ejs",{user: author})%><%= author.username _%></span></a><%_ } _%>
     <%- include("./elements/date.ejs",{date: creation_date}) _%>
   </header>
-  <hr>
-
   <%_ } _%>
-  <main>
-    <h3><%= title _%></h3>
-    <p><%= text _%></p>
-  </main>
 
-  <%_ } _%>
+
+  <div>
+    <div>
+
+      <%_ if(members_only){ _%>
+      <span class="icon icon-membership" title="Members-only message"></span>
+      <%_ } else if(users_only){ _%>
+      <span class="icon icon-user-check" title="Users-only message"></span>
+      <%_ } _%>
+
+
+
+      <%_ if(members_only && !locals.currentUser?.is_member){ _%>
+
+      <%_ if(locals.currentUser){ _%>
+      <p>This is a members-only message. <%- include("./elements/textLink.ejs", {href: "/join-the-club", text: "Join the club"})%> to read it.</p>
+      <%_ } else { _%>
+      <p>This is a members-only message. <%- include("./elements/textLink.ejs", {href: "/login", text: "Log in"})%> and join the club to read it.</p>
+      <%_ } _%>
+
+      <%_ } else if(users_only && !locals.currentUser){ _%>
+
+      <p>This is an users-only message. <%- include("./elements/textLink.ejs", {href: "/login", text: "Log in"})%> to read it.</p>
+
+      <%_ } else { _%>
+
+      <main>
+        <h3><%= title _%></h3>
+        <p><%= text _%></p>
+      </main>
+
+      <%_ } _%>
+    </div>
+  </div>
 </div>
