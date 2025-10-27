@@ -21,6 +21,29 @@
   --bottom-color: transparent;
   --bottom-main-pos: 60dvh;
 
+  --base-radial-gradient-b: radial-gradient(
+    ellipse at bottom,
+    rgb(from var(--top-color) r g b / 40%),
+    var(--bottom-color)
+  );
+
+  --base-radial-gradient-center: radial-gradient(
+    ellipse farthest-corner,
+    rgb(from var(--top-color) r g b / 90%),
+    var(--bottom-color)
+  );
+
+  --base-radial-gradient-entry-index: var(--base-radial-gradient-b),
+    var(--base-radial-gradient-center);
+
+  --base-radial-gradient: var(--base-radial-gradient-center);
+
+  --base-linear-gradient: linear-gradient(
+    to bottom,
+    var(--top-color),
+    var(--bottom-color) var(--bottom-main-pos)
+  );
+
   --default-font: "Alan Sans", monospace;
   --default-lineheight: 1.5;
   --default-fontsize: max(18px, 2vmin);
@@ -29,7 +52,7 @@
   --page-gap: 0; /* 0.5vmin; */
 
   --main-gap: 0.8rem;
-  --main-padding: 0 var(--base-padding-lr);
+  --main-padding: var(--base-padding-tb) var(--base-padding-lr);
 
   --base-padding-tb: 0.5rem;
   --base-padding-lr: 0.8rem;
@@ -41,6 +64,12 @@
   --header-gap: 0.8rem;
   --header-nav-gap: 0.5rem;
   --header-shadow: 0 0 5px var(--top-color);
+
+  --entry-index-icon-size: 30vmin;
+  --entry-index-icon-size-mobile: 50vmin;
+  --entry-index-title-fontsize: 15vmin;
+  --entry-index-title-fontsize-mobile: 15vmin;
+  --entry-index-actions-size: 15em;
 
   --block-border-size: 0.1em;
   --block-border-shadow: 0 0 5px var(--txt-col);
@@ -86,7 +115,7 @@
   font-size: var(--default-fontsize);
 
   color-scheme: light dark;
-  color: var(--txt-col);
+  color: var(--txt-col-alt);
   background-color: var(--bg-col);
 
   /* font-synthesis: none; */
@@ -114,7 +143,7 @@
 
 html {
   background: var(--bg-color);
-  background: var(--bg-gradient);
+  background: var(--base-radial-gradient), var(--bg-gradient);
   background-attachment: fixed;
   /* scrollbar-gutter: stable both-edges; */
 }
@@ -141,6 +170,17 @@ body {
   gap: var(--page-gap);
 }
 
+h1,
+a,
+button {
+  user-select: none;
+}
+
+a,
+button {
+  cursor: pointer;
+}
+
 /* || Customize scrollbars */
 ::-webkit-scrollbar {
   width: 4px; /* width of the entire scrollbar */
@@ -162,7 +202,7 @@ body {
 
 /* || Header */
 
-body > header {
+.top-header {
   width: 100%;
   position: sticky;
   top: 0;
@@ -176,13 +216,13 @@ body > header {
   box-shadow: var(--header-shadow);
 }
 
-body > header nav {
+.top-header nav {
   display: flex;
   align-items: center;
   gap: var(--header-nav-gap);
 }
 
-body > header nav .icon {
+.top-header nav .icon {
   background: var(--txt-col-alt);
   --icon-size: calc(
     1lh + 2 * (var(--button-padding-tb) + var(--block-border-size))
@@ -192,8 +232,93 @@ body > header nav .icon {
   height: var(--icon-size);
 }
 
-body > header nav a:hover .icon {
+.top-header nav a:hover .icon {
   background: var(--bg-gradient);
+}
+
+/* || Main */
+
+body > main {
+  max-width: 100%;
+  width: 100%;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+body > main > .main-container {
+  flex: 1;
+  margin: 0 auto;
+  max-width: 100%;
+  width: var(--page-width);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: var(--main-padding);
+  gap: var(--main-gap);
+}
+
+/* || Index Page */
+.index > main {
+  background: var(--base-linear-gradient);
+  background-attachment: local;
+}
+
+/* || Entry Index Page */
+
+html:has(.entry-index) {
+  --base-radial-gradient: var(--base-radial-gradient-entry-index);
+}
+
+.entry-index header {
+  display: flex;
+  flex: 1;
+  width: 100%;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  flex: 2;
+}
+
+.entry-index main > .main-container {
+  justify-content: space-between;
+}
+
+.entry-index header .icon {
+  font-size: var(--entry-index-icon-size);
+  background: var(--bg-gradient);
+}
+
+.entry-index header h1 {
+  max-width: fit-content;
+  text-align: center;
+  font-size: var(--entry-index-title-fontsize);
+}
+
+.entry-index .text-link {
+  font-weight: normal;
+}
+
+.entry-index .main-container .actions {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  gap: var(--main-gap);
+  width: var(--entry-index-actions-size);
+  max-width: 100%;
+}
+
+@media screen and (orientation: portrait) {
+  .entry-index header h1 {
+    max-width: min-content;
+  }
+}
+
+@media screen and (max-aspect-ratio: 9/16) {
+  .entry-index {
+    --entry-index-icon-size: var(--entry-index-icon-size-mobile);
+    --entry-index-title-fontsize: var(--entry-index-title-fontsize-mobile);
+  }
 }
 
 /* || Text and block highlight styles */
@@ -258,6 +383,15 @@ body > header nav a:hover .icon {
 }
 
 /* || Custom links: text links */
+.secondary-text {
+  font-style: italic;
+  color: var(--secondary-text-current-color-alpha);
+  font-weight: var(--secondary-text-weight);
+}
+
+.secondary-text a {
+  font-style: normal;
+}
 
 .text-link {
   font-weight: var(--text-link-font-weight);
@@ -280,42 +414,6 @@ body > header nav a:hover .icon {
   height: var(--text-link-underline-width-hover);
   border-radius: var(--text-link-underline-radius-hover);
   background: var(--bg-gradient);
-}
-
-.secondary-text {
-  font-style: italic;
-  color: var(--secondary-text-current-color-alpha);
-  font-weight: var(--secondary-text-weight);
-}
-
-.secondary-text a {
-  font-style: normal;
-}
-
-/* || Main */
-
-body > main {
-  max-width: 100%;
-  width: 100%;
-  flex: 1;
-
-  background: linear-gradient(
-    to bottom,
-    var(--top-color),
-    var(--bottom-color) var(--bottom-main-pos)
-  );
-  background-attachment: local;
-}
-
-body > main > .main-container {
-  margin: 0 auto;
-  max-width: 100%;
-  width: var(--page-width);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: var(--main-padding);
-  gap: var(--main-gap);
 }
 
 /* || Greetings */
@@ -507,4 +605,9 @@ body > main > .main-container {
 .icon-membership {
   /* Phosphor Icons, https://phosphoricons.com/?q=crown */
   --mask-image-url: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIzMiIgaGVpZ2h0PSIzMiIgZmlsbD0iIzAwMDAwMCIgdmlld0JveD0iMCAwIDI1NiAyNTYiPjxwYXRoIGQ9Ik0yMzkuNzUsOTAuODFjMCwuMTEsMCwuMjEtLjA3LjMyTDIxNywxOTVhMTYsMTYsMCwwLDEtMTUuNzIsMTNINTQuNzFBMTYsMTYsMCwwLDEsMzksMTk1TDE2LjMyLDkxLjEzYzAtLjExLS4wNS0uMjEtLjA3LS4zMkExNiwxNiwwLDAsMSw0NCw3Ny4zOWwzMy42NywzNi4yOSwzNS44LTgwLjI5YTEsMSwwLDAsMCwwLS4xLDE2LDE2LDAsMCwxLDI5LjA2LDAsMSwxLDAsMCwwLDAsLjFsMzUuOCw4MC4yOUwyMTIsNzcuMzlhMTYsMTYsMCwwLDEsMjcuNzEsMTMuNDJaIj48L3BhdGg+PC9zdmc+);
+}
+
+.icon-logo {
+  /* Phosphor Icons, https://phosphoricons.com/?q=user */
+  --mask-image-url: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIzMiIgaGVpZ2h0PSIzMiIgZmlsbD0iIzAwMDAwMCIgdmlld0JveD0iMCAwIDI1NiAyNTYiPjxwYXRoIGQ9Ik0xNjgsMTQ0YTQwLDQwLDAsMSwxLTQwLTQwQTQwLDQwLDAsMCwxLDE2OCwxNDRaTTY0LDU2QTMyLDMyLDAsMSwwLDk2LDg4LDMyLDMyLDAsMCwwLDY0LDU2Wm0xMjgsMGEzMiwzMiwwLDEsMCwzMiwzMkEzMiwzMiwwLDAsMCwxOTIsNTZaIiBvcGFjaXR5PSIwLjIiPjwvcGF0aD48cGF0aCBkPSJNMjQ0LjgsMTUwLjRhOCw4LDAsMCwxLTExLjItMS42QTUxLjYsNTEuNiwwLDAsMCwxOTIsMTI4YTgsOCwwLDAsMSwwLTE2LDI0LDI0LDAsMSwwLTIzLjI0LTMwLDgsOCwwLDEsMS0xNS41LTRBNDAsNDAsMCwxLDEsMjE5LDExNy41MWE2Ny45NCw2Ny45NCwwLDAsMSwyNy40MywyMS42OEE4LDgsMCwwLDEsMjQ0LjgsMTUwLjRaTTE5MC45MiwyMTJhOCw4LDAsMSwxLTEzLjg1LDgsNTcsNTcsMCwwLDAtOTguMTUsMCw4LDgsMCwxLDEtMTMuODQtOCw3Mi4wNiw3Mi4wNiwwLDAsMSwzMy43NC0yOS45Miw0OCw0OCwwLDEsMSw1OC4zNiwwQTcyLjA2LDcyLjA2LDAsMCwxLDE5MC45MiwyMTJaTTEyOCwxNzZhMzIsMzIsMCwxLDAtMzItMzJBMzIsMzIsMCwwLDAsMTI4LDE3NlpNNzIsMTIwYTgsOCwwLDAsMC04LThBMjQsMjQsMCwxLDEsODcuMjQsODJhOCw4LDAsMSwwLDE1LjUtNEE0MCw0MCwwLDEsMCwzNywxMTcuNTEsNjcuOTQsNjcuOTQsMCwwLDAsOS42LDEzOS4xOWE4LDgsMCwxLDAsMTIuOCw5LjYxQTUxLjYsNTEuNiwwLDAsMSw2NCwxMjgsOCw4LDAsMCwwLDcyLDEyMFoiPjwvcGF0aD48L3N2Zz4=);
 }

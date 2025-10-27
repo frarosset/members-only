@@ -27,18 +27,18 @@
   </main>
 
   <%_ } else { _%>
-
   <header>
-    <h1> <%= pageTitle %></h1>
+    <span class="icon icon-logo"></span>
+    <h1 class="text-gradient"> <%= pageTitle %></h1>
   </header>
   <main>
     <div class="main-container">
-      <div>
-        <a href="/login" class="base-button">LOGIN</a>
-        <a href="/signup" class="highlight-button">SIGN UP</a>
+      <div class="actions">
+        <%- include("./partials/elements/linkAsSimpleButton.ejs", {href: "/login", text: "LOGIN"})%>
+        <%- include("./partials/elements/linkAsHighlightButton.ejs", {href: "/signup", text: "SIGN UP"})%>
       </div>
 
-      <a href="/continue-as-guest">Continue as a guest</a>
+      <%- include("./partials/elements/textLink.ejs", {href: "/continue-as-guest", text: "Continue as a guest"})%>
     </div>
   </main>
   <%_ } _%>
