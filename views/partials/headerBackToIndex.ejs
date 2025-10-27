@@ -1,0 +1,23 @@
+<script>
+  const goBack = (fallbackUrl = "/") => {
+    const referrer = document.referrer ?? null;
+    const isInternal = referrer && referrer.startsWith(window.location.origin) && referrer !== window.location.href;
+
+    // console.log(referrer, "|", window.location.origin, "|", isInternal)
+
+    if (isInternal) {
+      history.back();
+    } else {
+      window.location.replace(fallbackUrl ?? "/");
+      //   window.location.href = fallbackUrl ?? "/";
+    }
+
+  }
+</script>
+
+<header class="top-header">
+  <h1 class="text-gradient fixed-gradient"> <%= pageTitle %></h1>
+  <nav>
+    <a role="button" tabindex="0" onclick="goBack('/')"><%- include("./elements/backIcon.ejs")%></a>
+  </nav>
+</header>

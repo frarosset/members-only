@@ -6,11 +6,16 @@
   <link rel="stylesheet" href="/css/styles.css">
 </head>
 
-<body>
-  <main class="error">
-    <h2><%= code %></h2>
-    <%_ if (locals.message ) { _%><p><%= locals.message %></p><%_ } _%>
-    <%_ if (locals.partial ) { _%><%- include(process.cwd() + locals.partial) %><%_ } _%>
+<body class="error">
+
+  <%- include("./partials/headerBackToIndex.ejs"); _%>
+
+  <main>
+    <div class="main-container">
+      <h2 class="text-gradient"><%= code %></h2>
+      <%_ if (locals.message ) { _%><p><%= locals.message %></p><%_ } _%>
+      <%_ if (locals.partial ) { _%><%- include(process.cwd() + locals.partial) %><%_ } _%>
+    </div>
   </main>
 </body>
 
