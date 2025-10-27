@@ -71,6 +71,8 @@
   --entry-index-title-fontsize-mobile: 15vmin;
   --entry-index-actions-size: 15em;
 
+  --error-h2-fontsize: 40vmin;
+
   --block-border-size: 0.1em;
   --block-border-shadow: 0 0 5px var(--txt-col);
 
@@ -319,6 +321,15 @@ html:has(.entry-index) {
     --entry-index-icon-size: var(--entry-index-icon-size-mobile);
     --entry-index-title-fontsize: var(--entry-index-title-fontsize-mobile);
   }
+}
+
+/* || Error Page */
+body.error .main-container {
+  justify-content: center;
+}
+
+body.error h2 {
+  font-size: var(--error-h2-fontsize);
 }
 
 /* || Text and block highlight styles */
@@ -610,4 +621,9 @@ html:has(.entry-index) {
 .icon-logo {
   /* Phosphor Icons, https://phosphoricons.com/?q=user */
   --mask-image-url: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIzMiIgaGVpZ2h0PSIzMiIgZmlsbD0iIzAwMDAwMCIgdmlld0JveD0iMCAwIDI1NiAyNTYiPjxwYXRoIGQ9Ik0xNjgsMTQ0YTQwLDQwLDAsMSwxLTQwLTQwQTQwLDQwLDAsMCwxLDE2OCwxNDRaTTY0LDU2QTMyLDMyLDAsMSwwLDk2LDg4LDMyLDMyLDAsMCwwLDY0LDU2Wm0xMjgsMGEzMiwzMiwwLDEsMCwzMiwzMkEzMiwzMiwwLDAsMCwxOTIsNTZaIiBvcGFjaXR5PSIwLjIiPjwvcGF0aD48cGF0aCBkPSJNMjQ0LjgsMTUwLjRhOCw4LDAsMCwxLTExLjItMS42QTUxLjYsNTEuNiwwLDAsMCwxOTIsMTI4YTgsOCwwLDAsMSwwLTE2LDI0LDI0LDAsMSwwLTIzLjI0LTMwLDgsOCwwLDEsMS0xNS41LTRBNDAsNDAsMCwxLDEsMjE5LDExNy41MWE2Ny45NCw2Ny45NCwwLDAsMSwyNy40MywyMS42OEE4LDgsMCwwLDEsMjQ0LjgsMTUwLjRaTTE5MC45MiwyMTJhOCw4LDAsMSwxLTEzLjg1LDgsNTcsNTcsMCwwLDAtOTguMTUsMCw4LDgsMCwxLDEtMTMuODQtOCw3Mi4wNiw3Mi4wNiwwLDAsMSwzMy43NC0yOS45Miw0OCw0OCwwLDEsMSw1OC4zNiwwQTcyLjA2LDcyLjA2LDAsMCwxLDE5MC45MiwyMTJaTTEyOCwxNzZhMzIsMzIsMCwxLDAtMzItMzJBMzIsMzIsMCwwLDAsMTI4LDE3NlpNNzIsMTIwYTgsOCwwLDAsMC04LThBMjQsMjQsMCwxLDEsODcuMjQsODJhOCw4LDAsMSwwLDE1LjUtNEE0MCw0MCwwLDEsMCwzNywxMTcuNTEsNjcuOTQsNjcuOTQsMCwwLDAsOS42LDEzOS4xOWE4LDgsMCwxLDAsMTIuOCw5LjYxQTUxLjYsNTEuNiwwLDAsMSw2NCwxMjgsOCw4LDAsMCwwLDcyLDEyMFoiPjwvcGF0aD48L3N2Zz4=);
+}
+
+.icon-back {
+  /* Phosphor Icons, https://phosphoricons.com/?q=close */
+  --mask-image-url: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIzMiIgaGVpZ2h0PSIzMiIgZmlsbD0iIzAwMDAwMCIgdmlld0JveD0iMCAwIDI1NiAyNTYiPjxwYXRoIGQ9Ik0yMDUuNjYsMTk0LjM0YTgsOCwwLDAsMS0xMS4zMiwxMS4zMkwxMjgsMTM5LjMxLDYxLjY2LDIwNS42NmE4LDgsMCwwLDEtMTEuMzItMTEuMzJMMTE2LjY5LDEyOCw1MC4zNCw2MS42NkE4LDgsMCwwLDEsNjEuNjYsNTAuMzRMMTI4LDExNi42OWw2Ni4zNC02Ni4zNWE4LDgsMCwwLDEsMTEuMzIsMTEuMzJMMTM5LjMxLDEyOFoiPjwvcGF0aD48L3N2Zz4=);
 }
