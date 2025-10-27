@@ -10,26 +10,38 @@
 </head>
 
 <body>
+  <%- include("./partials/headerBackToIndex.ejs"); _%>
+
   <main>
-    <h1> <%= pageTitle %></h1>
+    <div class="main-container">
+      <header>
+        <%- include("./partials/userInfo.ejs") _%>
+      </header>
 
-    <header>
-      <%- include("./partials/userInfo.ejs") _%>
-    </header>
-
-    <%- include("./partials/userDetails.ejs") _%>
+      <%- include("./partials/userDetails.ejs") _%>
 
 
-    <div>
-      <a href="/my-messages">My messages</a>
+      <div>
+        <div>
+          <%- include("./partials/elements/linkAsHighlightButton.ejs", {href: "/my-messages", text: "My messages"})%>
+          <%- include("./partials/elements/linkAsHighlightButton.ejs", {href: "/new-message", text: "Post a new message"})%>
+        </div>
 
-      <%_ if(!locals.currentUser.is_member) { _%>
-      <a href="/join-the-club">Join the club</a>
-      <%_ } _%>
+        <div>
+          <%_ if(!locals.currentUser.is_member) { _%>
+          <%- include("./partials/elements/linkAsHighlightButton.ejs", {href: "/join-the-club", text: "Join the club"})%>
+          <%_ } _%>
 
-      <%- include("./partials/logoutButtonAndDialog.ejs") _%>
+          <%_ if(!locals.currentUser.is_admin) { _%>
+          <%- include("./partials/elements/linkAsHighlightButton.ejs", {href: "/become-admin", text: "Become admin"})%>
+          <%_ } _%>
+        </div>
+
+        <div>
+          <%- include("./partials/logoutButtonAndDialog.ejs",{customClass: "button block-border-gradient"}) _%>
+        </div>
+      </div>
     </div>
-
   </main>
 
 </body>
