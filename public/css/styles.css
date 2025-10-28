@@ -703,7 +703,24 @@ body.error h2 {
   background: var(--bg-gradient);
 }
 
+/* || My messages */
+
+.my-messages .messages {
+  width: 100%;
+}
+
+.my-messages .messages h2 {
+  text-align: center;
+  padding-bottom: var(--messages-list-gap);
+  text-align: center;
+}
+
 /* || User profile */
+
+.user .user-messages {
+  width: 100%;
+}
+
 .user .user-messages h2 {
   text-align: center;
   padding-bottom: var(--messages-list-gap);

@@ -9,19 +9,22 @@
   <link rel="stylesheet" href="/css/styles.css">
 </head>
 
-<body>
+<body class="my-messages">
+  <%- include("./partials/headerBackToIndex.ejs"); _%>
+
   <main>
-    <h1> <%= pageTitle %></h1>
+    <div class="main-container">
 
-    <header>
-      <%- include("./partials/userInfo.ejs") _%>
-    </header>
+      <header>
+        <%- include("./partials/userInfo.ejs", {horizontal: true}) _%>
+      </header>
 
-    <div></div>
-    <h3>My messages</h3>
-    <%- include("./partials/messageList.ejs", {messagesArray: user.messages, hideUsername: true}) _%>
+      <div class="messages">
+        <h2>My messages</h2>
+        <%- include("./partials/messageList.ejs", {messagesArray: user.messages, hideUsername: true, my_data: true}) _%>
+      </div>
     </div>
-
+    </div>
   </main>
 
 </body>
