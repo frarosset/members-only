@@ -19,30 +19,31 @@
   --txt-col-alt: var(--white);
   --top-color: var(--pure-black);
   --bottom-color: transparent;
-  --bottom-main-pos: 60dvh;
 
-  --base-radial-gradient-b: radial-gradient(
-    ellipse at bottom,
-    rgb(from var(--top-color) r g b / 40%),
+  --base-radial-gradient-bottom: radial-gradient(
+    200% 50vh at 50% 100%,
+    rgb(from var(--top-color) r g b / 100%),
+    var(--bottom-color)
+  );
+
+  --base-radial-gradient-top: radial-gradient(
+    200% 60vh at 50% 0%,
+    rgb(from var(--top-color) r g b / 100%),
     var(--bottom-color)
   );
 
   --base-radial-gradient-center: radial-gradient(
-    ellipse farthest-corner,
+    100% 60vh at 50% 50%,
     rgb(from var(--top-color) r g b / 90%),
     var(--bottom-color)
   );
 
-  --base-radial-gradient-entry-index: var(--base-radial-gradient-b),
-    var(--base-radial-gradient-center);
-
   --base-radial-gradient: var(--base-radial-gradient-center);
 
-  --base-linear-gradient: linear-gradient(
-    to bottom,
-    var(--top-color),
-    var(--bottom-color) var(--bottom-main-pos)
-  );
+  --base-radial-gradient-entry-index: var(--base-radial-gradient-bottom),
+    var(--base-radial-gradient-center);
+
+  --base-radial-gradient-index-main: var(--base-radial-gradient-top);
 
   --default-font: "Alan Sans", monospace;
   --default-lineheight: 1.5;
@@ -262,7 +263,7 @@ body > main > .main-container {
 
 /* || Index Page */
 .index > main {
-  background: var(--base-linear-gradient);
+  background: var(--base-radial-gradient-index-main);
   background-attachment: local;
 }
 
