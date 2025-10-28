@@ -112,7 +112,7 @@
   --greetings-name-fontweight: 900;
 
   --messages-list-gap: 1em;
-  --messages-list-padding: 2em 0;
+  --messages-list-padding: 0 0;
   --messages-item-padding: 0.75rem;
   --messages-item-color: var(--txt-col-black);
   --messages-item-border-size: 0.3em;
@@ -701,6 +701,13 @@ body.error h2 {
   font-size: var(--user-info-icon-size);
   min-width: 1lh;
   background: var(--bg-gradient);
+}
+
+/* || User profile */
+.user .user-messages h2 {
+  text-align: center;
+  padding-bottom: var(--messages-list-gap);
+  text-align: center;
 }
 
 /* || User details */
