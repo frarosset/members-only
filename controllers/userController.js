@@ -14,6 +14,8 @@ exports.user.get = [
         "",
         "/views/partials/messages/userButNotLoggedIn.ejs"
       );
+    } else if (req.user.id === Number(req.params.id)) {
+      res.redirect("/my-profile");
     } else if (!req.user.is_member) {
       throw new CustomUnauthorizedError(
         "",
