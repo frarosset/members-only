@@ -15,8 +15,10 @@
     rgba(114, 221, 247, 1) 100%
   );
 
-  --txt-col: var(--black);
-  --txt-col-alt: var(--white);
+  --txt-col: var(--white);
+  --txt-col-alt: var(--black);
+  --txt-col-black: var(--black);
+  --txt-col-white: var(--white);
   --top-color: var(--pure-black);
   --bottom-color: transparent;
 
@@ -52,8 +54,8 @@
   --page-width: 50em;
   --page-gap: 0; /* 0.5vmin; */
 
-  --main-gap: 0.8rem;
-  --main-padding: var(--base-padding-tb) var(--base-padding-lr);
+  --main-gap: 4rem;
+  --main-padding: 3rem var(--base-padding-lr) 4rem;
 
   --base-padding-tb: 0.5rem;
   --base-padding-lr: 0.8rem;
@@ -64,7 +66,7 @@
   --header-padding: var(--base-padding-tb) var(--base-padding-lr);
   --header-gap: 0.8rem;
   --header-nav-gap: 0.5rem;
-  --header-shadow: 0 0 5px var(--top-color);
+  --header-shadow: 0 0 5px var(--pure-black);
 
   --entry-index-icon-size: 30vmin;
   --entry-index-icon-size-mobile: 50vmin;
@@ -72,10 +74,20 @@
   --entry-index-title-fontsize-mobile: 15vmin;
   --entry-index-actions-size: 15em;
 
+  --user-details-width: 20em;
+  --user-details-padding: 1em;
+  --user-details-col: var(--txt-col-black);
+
+  --tag-font-size: 0.7rem;
+
+  --actions-gap: 0.8rem;
+
   --error-h2-fontsize: 40vmin;
 
   --block-border-size: 0.1em;
-  --block-border-shadow: 0 0 5px var(--txt-col);
+  --block-border-col: var(--txt-col-white);
+  --block-border-bg-col: var(--pure-black);
+  --block-border-shadow: 0 0 5px var(--txt-col-black);
 
   --button-padding-tb: 0.1em;
   --button-padding: var(--button-padding-tb) 0.5em;
@@ -102,7 +114,7 @@
   --messages-list-gap: 1em;
   --messages-list-padding: 2em 0;
   --messages-item-padding: 0.75rem;
-  --messages-item-color: var(--black);
+  --messages-item-color: var(--txt-col-black);
   --messages-item-border-size: 0.3em;
 
   --messages-item-header-color: #ffffff75;
@@ -112,13 +124,26 @@
   --messages-item-a-hover-backdrop-filter: blur(20px) saturate(1.1)
     brightness(0.4);
 
+  --user-info-fullanme-fontsize: min(3.9rem, 10vw);
+  --user-info-username-fontsize: 1.2rem;
+  --user-info-icon-size: 14rem;
+
+  --user-info-fullanme-fontsize-horizontal: 2rem;
+  --user-info-username-fontsize-horizontal: 1rem;
+  --user-info-icon-size-horizontal: calc(
+    (
+        var(--user-info-fullanme-fontsize-horizontal) +
+          var(--user-info-username-fontsize-horizontal)
+      ) * var(--default-lineheight) + var(--tag-font-size) + 1rem
+  );
+
   font-family: var(--default-font);
   line-height: var(--default-lineheight);
   font-weight: 400;
   font-size: var(--default-fontsize);
 
   color-scheme: light dark;
-  color: var(--txt-col-alt);
+  color: var(--txt-col);
   background-color: var(--bg-col);
 
   /* font-synthesis: none; */
@@ -226,7 +251,7 @@ button {
 }
 
 .top-header nav .icon {
-  background: var(--txt-col-alt);
+  background: var(--txt-col);
   --icon-size: calc(
     1lh + 2 * (var(--button-padding-tb) + var(--block-border-size))
   );
@@ -302,13 +327,28 @@ html:has(.entry-index) {
   font-weight: normal;
 }
 
-.entry-index .main-container .actions {
+.entry-index .actions {
+  flex: 1;
+}
+
+.actions-container,
+.actions {
   display: flex;
   flex-direction: column;
-  flex: 1;
-  gap: var(--main-gap);
+  gap: var(--actions-gap);
   width: var(--entry-index-actions-size);
   max-width: 100%;
+}
+
+.actions-container {
+  flex: 1;
+  width: 100%;
+  align-items: center;
+}
+
+.actions-container {
+  gap: calc(var(--actions-gap) * 2);
+  justify-content: center;
 }
 
 @media screen and (orientation: portrait) {
@@ -344,12 +384,17 @@ body.error h2 {
 .block-border-gradient {
   position: relative;
 
-  color: var(--txt-col-alt);
-  background: var(--top-color);
+  color: var(--block-border-col);
+  background: var(--block-border-bg-col);
+
   background-origin: border-box;
   background-clip: padding-box !important;
   border: var(--block-border-size) solid transparent;
   text-shadow: var(--block-border-shadow);
+}
+
+.block-border-gradient .icon {
+  background-color: var(--block-border-col);
 }
 
 .block-border-gradient::before {
@@ -373,6 +418,13 @@ body.error h2 {
 .fixed-gradient,
 .fixed-gradient::before {
   background-attachment: fixed;
+}
+
+.light-transparent {
+  background: var(--light-transparent);
+  backdrop-filter: var(--light-transparent-filter);
+  box-shadow: var(--light-transparent-shadow);
+  border-radius: inherit;
 }
 
 /* || Custom links and buttons as buttons */
@@ -431,7 +483,7 @@ body.error h2 {
 /* || Greetings */
 
 .greetings {
-  color: var(--txt-col-alt);
+  color: var(--txt-col);
   text-align: center;
   text-wrap: balance;
   display: flex;
@@ -482,9 +534,6 @@ body.error h2 {
   width: 100%;
   padding: var(--messages-item-padding);
   border-radius: calc(var(--radius) - var(--messages-item-border-size));
-  background: var(--light-transparent);
-  backdrop-filter: var(--light-transparent-filter);
-  box-shadow: var(--light-transparent-shadow);
 }
 
 .messages__item_public {
@@ -497,10 +546,22 @@ body.error h2 {
   color: var(--messages-item-color);
 }
 
+.messages__item_public .icon,
+.messages__item_users_only .icon {
+  background-color: var(--messages-item-color);
+}
+
 .messages__item_members_only,
 .messages__item_users_only {
   --block-border-size: var(--messages-item-border-size);
   text-shadow: none;
+}
+
+.messages__item_members_only h3 {
+  font-weight: 600;
+}
+.messages__item_members_only p {
+  font-weight: 300;
 }
 
 .messages__item_members_only .icon,
@@ -559,6 +620,125 @@ body.error h2 {
 
 .messages__item header a:hover .icon {
   background: var(--bg-gradient);
+}
+
+/* || My profile */
+
+.my-profile .main-container {
+  flex-direction: row;
+  justify-content: center;
+}
+
+.my-profile .main-container > * {
+  flex: 1;
+  max-width: 100%;
+}
+
+.my-profile .main-container .my-profile-side {
+  display: flex;
+  flex-direction: column;
+  gap: var(--main-gap);
+  align-items: center;
+}
+
+@media screen and (orientation: portrait) {
+  .my-profile .main-container {
+    flex-direction: column;
+  }
+}
+
+/* || User Info Div */
+
+.user-info {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.user-info .username-and-tags-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.user-info .fullname {
+  font-size: var(--user-info-fullanme-fontsize);
+}
+
+.user-info .username {
+  font-size: var(--user-info-username-fontsize);
+}
+
+.user-info .username,
+.user-info .fullname {
+  text-align: center;
+  text-wrap: balance;
+  overflow-wrap: anywhere;
+}
+
+.user-info.horizontal {
+  --user-info-icon-size: var(--user-info-icon-size-horizontal);
+  --user-info-fullanme-fontsize: var(--user-info-fullanme-fontsize-horizontal);
+  --user-info-username-fontsize: var(--user-info-username-fontsize-horizontal);
+
+  gap: 1em;
+  flex-direction: row;
+}
+
+.user-info.horizontal .fullname,
+.user-info.horizontal .username {
+  text-align: left;
+  text-wrap: pretty;
+}
+
+.user-info.horizontal .username-and-tags-container {
+  align-items: flex-start;
+}
+
+.user-info .icon {
+  font-size: var(--user-info-icon-size);
+  min-width: 1lh;
+  background: var(--bg-gradient);
+}
+
+/* || User details */
+
+.user-details {
+  background: var(--bg-gradient);
+  background-attachment: fixed;
+  border-radius: var(--radius);
+  width: var(--user-details-width);
+  max-width: 100%;
+}
+
+.user-details ul {
+  color: var(--user-details-col);
+  padding: var(--user-details-padding);
+  list-style: none;
+  width: 100%;
+}
+
+.user-details li {
+  display: flex;
+  gap: 0.5em;
+  align-items: flex-start;
+  width: 100%;
+}
+
+.user-details li .icon {
+  background: var(--bg-gradient);
+  background-attachment: fixed;
+  height: 1lh;
+}
+
+/* || Tag */
+
+.tag {
+  font-size: var(--tag-font-size);
+  padding: 0 0.5em;
+  border-radius: 1lh;
 }
 
 /* || Icon */
@@ -627,4 +807,14 @@ body.error h2 {
 .icon-back {
   /* Phosphor Icons, https://phosphoricons.com/?q=close */
   --mask-image-url: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIzMiIgaGVpZ2h0PSIzMiIgZmlsbD0iIzAwMDAwMCIgdmlld0JveD0iMCAwIDI1NiAyNTYiPjxwYXRoIGQ9Ik0yMDUuNjYsMTk0LjM0YTgsOCwwLDAsMS0xMS4zMiwxMS4zMkwxMjgsMTM5LjMxLDYxLjY2LDIwNS42NmE4LDgsMCwwLDEtMTEuMzItMTEuMzJMMTE2LjY5LDEyOCw1MC4zNCw2MS42NkE4LDgsMCwwLDEsNjEuNjYsNTAuMzRMMTI4LDExNi42OWw2Ni4zNC02Ni4zNWE4LDgsMCwwLDEsMTEuMzIsMTEuMzJMMTM5LjMxLDEyOFoiPjwvcGF0aD48L3N2Zz4=);
+}
+
+.icon-joined-date {
+  /* Phosphor Icons, https://phosphoricons.com/?q=cake */
+  --mask-image-url: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIzMiIgaGVpZ2h0PSIzMiIgZmlsbD0iIzAwMDAwMCIgdmlld0JveD0iMCAwIDI1NiAyNTYiPjxwYXRoIGQ9Ik0yMzIsMTEyYTI0LDI0LDAsMCwwLTI0LTI0SDEzNlY3OWEzMi4wNiwzMi4wNiwwLDAsMCwyNC0zMWMwLTI4LTI2LjQ0LTQ1LjkxLTI3LjU2LTQ2LjY2YTgsOCwwLDAsMC04Ljg4LDBDMTIyLjQ0LDIuMDksOTYsMjAsOTYsNDhhMzIuMDYsMzIuMDYsMCwwLDAsMjQsMzF2OUg0OGEyNCwyNCwwLDAsMC0yNCwyNHYyMy4zM2E0MC44NCw0MC44NCwwLDAsMCw4LDI0LjI0VjIwMGEyNCwyNCwwLDAsMCwyNCwyNEgyMDBhMjQsMjQsMCwwLDAsMjQtMjRWMTU5LjU3YTQwLjg0LDQwLjg0LDAsMCwwLDgtMjQuMjRaTTExMiw0OGMwLTEzLjU3LDEwLTI0LjQ2LDE2LTI5Ljc5LDYsNS4zMywxNiwxNi4yMiwxNiwyOS43OWExNiwxNiwwLDAsMS0zMiwwWk00MCwxMTJhOCw4LDAsMCwxLDgtOEgyMDhhOCw4LDAsMCwxLDgsOHYyMy4zM2MwLDEzLjI1LTEwLjQ2LDI0LjMxLTIzLjMyLDI0LjY2QTI0LDI0LDAsMCwxLDE2OCwxMzZhOCw4LDAsMCwwLTE2LDAsMjQsMjQsMCwwLDEtNDgsMCw4LDgsMCwwLDAtMTYsMCwyNCwyNCwwLDAsMS0yNC42OCwyNEM1MC40NiwxNTkuNjQsNDAsMTQ4LjU4LDQwLDEzNS4zM1ptMTYwLDk2SDU2YTgsOCwwLDAsMS04LThWMTcyLjU2QTM4Ljc3LDM4Ljc3LDAsMCwwLDYyLjg4LDE3NmEzOS42OSwzOS42OSwwLDAsMCwyOS0xMS4zMUE0MC4zNiw0MC4zNiwwLDAsMCw5NiwxNjBhNDAsNDAsMCwwLDAsNjQsMCw0MC4zNiw0MC4zNiwwLDAsMCw0LjEzLDQuNjdBMzkuNjcsMzkuNjcsMCwwLDAsMTkyLDE3NmMuMzgsMCwuNzYsMCwxLjE0LDBBMzguNzcsMzguNzcsMCwwLDAsMjA4LDE3Mi41NlYyMDBBOCw4LDAsMCwxLDIwMCwyMDhaIj48L3BhdGg+PC9zdmc+);
+}
+
+.icon-joined-with {
+  /* Phosphor Icons, https://phosphoricons.com/?q=feather */
+  --mask-image-url: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIzMiIgaGVpZ2h0PSIzMiIgZmlsbD0iIzAwMDAwMCIgdmlld0JveD0iMCAwIDI1NiAyNTYiPjxwYXRoIGQ9Ik0yMjEuMjgsMzQuNzVhNjQsNjQsMCwwLDAtOTAuNDksMEw2MC42OSwxMDRBMTUuOSwxNS45LDAsMCwwLDU2LDExNS4zMXY3My4zOEwyNi4zNCwyMTguMzRhOCw4LDAsMCwwLDExLjMyLDExLjMyTDY3LjMyLDIwMEgxNDAuN0ExNS45MiwxNS45MiwwLDAsMCwxNTIsMTk1LjMybDAsMCw2OS4yMy03MEE2NCw2NCwwLDAsMCwyMjEuMjgsMzQuNzVaTTE0Mi4wNyw0Ni4wNkE0OCw0OCwwLDAsMSwyMTEuNzksMTEySDE1NS4zM2wzNC4zNS0zNC4zNGE4LDgsMCwwLDAtMTEuMzItMTEuMzJMMTIwLDEyNC42OVY2Ny44N1pNNzIsMTE1LjM1bDMyLTMxLjY3djU3bC0zMiwzMlpNMTQwLjcsMTg0SDgzLjMybDU2LTU2aDU2Ljc0WiI+PC9wYXRoPjwvc3ZnPg==);
 }

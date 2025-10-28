@@ -9,39 +9,40 @@
   <link rel="stylesheet" href="/css/styles.css">
 </head>
 
-<body>
+<body class="my-profile">
   <%- include("./partials/headerBackToIndex.ejs"); _%>
 
   <main>
     <div class="main-container">
+
       <header>
         <%- include("./partials/userInfo.ejs") _%>
       </header>
 
-      <%- include("./partials/userDetails.ejs") _%>
+      <div class="my-profile-side">
+        <%- include("./partials/userDetails.ejs") _%>
 
+        <div class="actions-container">
+          <div class="actions">
+            <%- include("./partials/elements/linkAsHighlightButton.ejs", {href: "/my-messages", text: "My messages"})%>
+            <%- include("./partials/elements/linkAsHighlightButton.ejs", {href: "/new-message", text: "Post a new message"})%>
+          </div>
 
-      <div>
-        <div>
-          <%- include("./partials/elements/linkAsHighlightButton.ejs", {href: "/my-messages", text: "My messages"})%>
-          <%- include("./partials/elements/linkAsHighlightButton.ejs", {href: "/new-message", text: "Post a new message"})%>
-        </div>
+          <div class="actions">
+            <%_ if(!locals.currentUser.is_member) { _%>
+            <%- include("./partials/elements/linkAsHighlightButton.ejs", {href: "/join-the-club", text: "Join the club"})%>
+            <%_ } _%>
 
-        <div>
-          <%_ if(!locals.currentUser.is_member) { _%>
-          <%- include("./partials/elements/linkAsHighlightButton.ejs", {href: "/join-the-club", text: "Join the club"})%>
-          <%_ } _%>
+            <%_ if(!locals.currentUser.is_admin) { _%>
+            <%- include("./partials/elements/linkAsHighlightButton.ejs", {href: "/become-admin", text: "Become admin"})%>
+            <%_ } _%>
+          </div>
 
-          <%_ if(!locals.currentUser.is_admin) { _%>
-          <%- include("./partials/elements/linkAsHighlightButton.ejs", {href: "/become-admin", text: "Become admin"})%>
-          <%_ } _%>
-        </div>
-
-        <div>
-          <%- include("./partials/logoutButtonAndDialog.ejs",{customClass: "button block-border-gradient"}) _%>
+          <div class="actions">
+            <%- include("./partials/logoutButtonAndDialog.ejs",{customClass: "button block-border-gradient"}) _%>
+          </div>
         </div>
       </div>
-    </div>
   </main>
 
 </body>
