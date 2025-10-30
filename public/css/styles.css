@@ -22,6 +22,9 @@
   --top-color: var(--pure-black);
   --bottom-color: transparent;
 
+  --col: rgb(from var(--top-color) r g b / 50%);
+  --bg-gradient-alt: linear-gradient(var(--col), var(--col)), var(--bg-gradient);
+
   --base-radial-gradient-bottom: radial-gradient(
     200% 50vh at 50% 100%,
     rgb(from var(--top-color) r g b / 100%),
@@ -84,6 +87,12 @@
   --entry-index-title-fontsize: 15vmin;
   --entry-index-title-fontsize-mobile: 15vmin;
   --entry-index-actions-size: 15em;
+
+  --form-padding: 2rem;
+  --form-gap: 3rem;
+  --form-input-gap: 1rem;
+  --form-input-padding: 0.25em 0.5em;
+  --form-label-padding: 0 0.25em;
 
   --user-details-width: 20em;
   --user-details-padding: 1em;
@@ -209,6 +218,12 @@ body {
   gap: var(--page-gap);
 }
 
+html:has(.entry-index),
+html:has(.login),
+html:has(.signup) {
+  --base-radial-gradient: var(--base-radial-gradient-entry-index);
+}
+
 h1,
 a,
 button {
@@ -320,10 +335,6 @@ h2 {
 }
 
 /* || Entry Index Page */
-
-html:has(.entry-index) {
-  --base-radial-gradient: var(--base-radial-gradient-entry-index);
-}
 
 .entry-index header {
   display: flex;
@@ -839,6 +850,7 @@ dialog .dialog-modal {
   height: fit-content;
 
   background: var(--bg-gradient);
+  background-attachment: fixed;
 
   border-radius: var(--radius);
   filter: drop-shadow(var(--block-border-shadow));
@@ -873,6 +885,66 @@ dialog.logout form {
   gap: var(--dialog-gap);
   text-wrap: balance;
   text-align: center;
+}
+
+/* || Main forms */
+
+.main-container-form {
+  flex: 1;
+  width: 100%;
+}
+
+.main-container-form.small-form {
+  width: fit-content;
+}
+
+.main-container-form > form {
+  background: var(--bg-gradient-alt);
+  background-attachment: fixed;
+  border-radius: var(--radius);
+}
+
+.main-container-form > form > .form-container {
+  padding: var(--form-padding);
+}
+
+.main-container-form > form > .form-container,
+.main-container-form > form > .form-container > .form-inputs,
+.main-container-form > form > .form-container > .form-inputs label {
+  display: flex;
+  flex-direction: column;
+}
+
+.main-container-form > form > .form-container .form-inputs-row {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+.main-container-form > form > .form-container {
+  gap: var(--form-gap);
+}
+
+.main-container-form .form-inputs,
+.main-container-form .form-inputs-row {
+  gap: var(--form-input-gap);
+}
+
+.main-container-form.small-form label {
+  flex: 1;
+}
+
+.main-container-form label > span {
+  color: var(--secondary-text-current-color-alpha);
+  padding: var(--form-label-padding);
+}
+
+.main-container-form input,
+.main-container-form textarea {
+  border-radius: var(--small-radius);
+  color: var(--txt-col-black);
+  border: none;
+  padding: var(--form-input-padding);
 }
 
 /* || Icon */

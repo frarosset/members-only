@@ -8,18 +8,26 @@
   <link rel="stylesheet" href="/css/styles.css">
 </head>
 
-<body>
+<body class="signup">
+  <%- include("./partials/headerBackToIndex.ejs"); _%>
+
   <main>
-    <%- include("partials/h2Heading.ejs", {text: "Create your account"}) _%>
+    <div class="main-container">
+      <%- include("partials/h2Heading.ejs", {text: "Create your account"}) _%>
 
-    <%_ if(locals.currentUser) { _%>
+      <%_ if(locals.currentUser) { _%>
 
-    <p>You already have an account as <%= currentUser.username _%>. <%- include("./partials/logoutButtonAndDialog.ejs",{useLink:true}) _%> to create a new account.</p>
+      <div class="main-container-text">
+        <p>You already have an account as <%= currentUser.username _%>. <%- include("./partials/logoutButtonAndDialog.ejs",{useLink:true}) _%> to create a new account.</p>
+      </div>
 
-    <%_ } else { _%>
+      <%_ } else { _%>
 
-    <%- include("./partials/form/signupForm.ejs") _%>
-    <p>Already have an account? <a href="/login">Login</a></p>
+      <div class="main-container-form small-form">
+        <%- include("./partials/form/signupForm.ejs") _%>
+      </div>
+      <p>Already have an account? <%- include("./partials/elements/textLink.ejs", {href: "/login", text: "Login"})%></p>
+    </div>
   </main>
 
   <%_ } _%>
