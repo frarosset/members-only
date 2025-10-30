@@ -22,7 +22,7 @@
       <%- include("./partials/userDetails.ejs") _%>
 
       <div class="user-messages">
-        <h2>Messages from this user</h2>
+        <%- include("partials/h2Heading.ejs", {text: "Messages from this user"}) _%>
         <%- include("./partials/messageList.ejs", {messagesArray: user.messages, hideUsername: true}) _%>
       </div>
     </div>

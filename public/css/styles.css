@@ -70,6 +70,9 @@
   --header-shadow: 0 0 5px var(--pure-black);
   --header-height: calc(var(--base-padding-tb) * 2 + 1rlh);
 
+  --h2-shadow: 0 0 20px var(--txt-col-alt);
+  --h2-fontsize: 1.2em;
+
   --dialog-margin: calc(var(--header-height) * 1.5 + var(--base-padding-tb))
     var(--base-padding-lr);
   --dialog-padding: min(2rem, 5vh) min(2rem, 5vw);
@@ -298,6 +301,16 @@ body > main > .main-container {
   align-items: center;
   padding: var(--main-padding);
   gap: var(--main-gap);
+}
+
+h2 {
+  filter: drop-shadow(var(--h2-shadow));
+}
+
+.h2-heading {
+  text-transform: uppercase;
+  font-weight: bold;
+  font-size: var(--h2-fontsize);
 }
 
 /* || Index Page */

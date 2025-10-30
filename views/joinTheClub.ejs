@@ -11,7 +11,7 @@
 <body>
   <main>
     <h1> <%= pageTitle %></h1>
-    <h2>Join the club</h2>
+    <%- include("partials/h2Heading.ejs", {text: "Join the club"}) _%>
 
     <%_ if(locals.currentUser?.is_member) { _%>
 

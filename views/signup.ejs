@@ -10,8 +10,7 @@
 
 <body>
   <main>
-    <h1> <%= pageTitle %></h1>
-    <h2>Create your account</h2>
+    <%- include("partials/h2Heading.ejs", {text: "Create your account"}) _%>
 
     <%_ if(locals.currentUser) { _%>
 

@@ -20,7 +20,7 @@
       </header>
 
       <div class="messages">
-        <h2>My messages</h2>
+        <%- include("partials/h2Heading.ejs", {text: "My messages"}) _%>
         <%- include("./partials/messageList.ejs", {messagesArray: user.messages, hideUsername: true, my_data: true}) _%>
       </div>
     </div>
