@@ -51,6 +51,7 @@
   --default-lineheight: 1.5;
   --default-fontsize: max(18px, 2vmin);
 
+  --page-min-width: 320px;
   --page-width: 50em;
   --page-gap: 0; /* 0.5vmin; */
 
@@ -67,6 +68,13 @@
   --header-gap: 0.8rem;
   --header-nav-gap: 0.5rem;
   --header-shadow: 0 0 5px var(--pure-black);
+  --header-height: calc(var(--base-padding-tb) * 2 + 1rlh);
+
+  --dialog-margin: calc(var(--header-height) * 1.5 + var(--base-padding-tb))
+    var(--base-padding-lr);
+  --dialog-padding: min(2rem, 5vh) min(2rem, 5vw);
+  --dialog-gap: min(2rem, 5vmin);
+  --dialog-backdrop-filter: blur(2px) brightness(0.8);
 
   --entry-index-icon-size: 30vmin;
   --entry-index-icon-size-mobile: 50vmin;
@@ -183,7 +191,7 @@ body {
   /* height: 100vh; /*it is assumed the same for <html>*/
   /* height: 100dvh; /* if supported */
 
-  min-width: 320px;
+  min-width: var(--page-min-width);
   width: 100%;
   /* or max-width -- this avoids horizontal scroll bars */
 
@@ -260,7 +268,13 @@ button {
   height: var(--icon-size);
 }
 
-.top-header nav a:hover .icon {
+.top-header nav button {
+  background: none;
+  border: none;
+}
+
+.top-header nav a:hover .icon,
+.top-header nav button:hover .icon {
   background: var(--bg-gradient);
 }
 
@@ -751,6 +765,10 @@ body.error h2 {
   width: 100%;
 }
 
+.user-details li span {
+  text-wrap: pretty;
+}
+
 .user-details li .icon {
   background: var(--bg-gradient);
   background-attachment: fixed;
@@ -763,6 +781,85 @@ body.error h2 {
   font-size: var(--tag-font-size);
   padding: 0 0.5em;
   border-radius: 1lh;
+}
+
+/* || Dialogs */
+
+dialog {
+  max-width: 100vw;
+  max-height: 100dvh;
+  width: 100vw;
+  height: 100dvh;
+
+  outline: none;
+  border: none;
+
+  background-color: transparent;
+}
+
+dialog .dialog-container {
+  width: 100%;
+  height: 100%;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: var(--dialog-margin);
+}
+
+dialog::backdrop {
+  backdrop-filter: var(--dialog-backdrop-filter);
+}
+
+body:has(dialog[open]) {
+  /* Disable scroll on page behind */
+  overflow: hidden;
+}
+
+dialog .dialog-modal {
+  max-width: var(--page-width);
+  max-height: 100%;
+  /* min-width: var(--page-min-width); */
+
+  width: fit-content;
+  height: fit-content;
+
+  background: var(--bg-gradient);
+
+  border-radius: var(--radius);
+  filter: drop-shadow(var(--block-border-shadow));
+  overflow: hidden;
+
+  display: flex;
+  flex-direction: column;
+}
+
+dialog .dialog-modal main {
+  flex: 1;
+  width: 100%;
+  padding: var(--dialog-padding);
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border-radius: 0 !important;
+
+  color: var(--txt-col-black);
+
+  overflow: hidden;
+}
+
+dialog.logout form {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--dialog-gap);
+  text-wrap: balance;
+  text-align: center;
 }
 
 /* || Icon */

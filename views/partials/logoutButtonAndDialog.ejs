@@ -1,9 +1,15 @@
 <dialog class='logout'>
-  <form action="/logout" method="POST">
-    Are you sure you want to log out?
-    <button class='close' type="button">Close</button>
-    <button type="submit" autofocus>LOGOUT</button>
-  </form>
+  <div class="dialog-container">
+    <div class="dialog-modal">
+      <%- include("./headerCloseDialog.ejs", {title: "Logout"}); _%>
+      <main class="light-transparent">
+        <form action="/logout" method="POST">
+          Are you sure you want to log out?
+          <button class="button block-border-gradient fill-gradient fixed-gradient" type="submit" autofocus>LOGOUT</button>
+        </form>
+      </main>
+    </div>
+  </div>
 </dialog>
 <%_ 
   const showLogoutModalLabel = locals.label ?? "Logout";
@@ -17,14 +23,9 @@ _%>
 <script>
   const logoutDialog = document.querySelector("dialog.logout");
   const logoutShowButton = document.querySelector("dialog.logout + .show-logout-modal");
-  const logoutCloseButton = document.querySelector("dialog.logout button.close");
 
   logoutShowButton.addEventListener("click", (e) => {
     e.preventDefault();
     logoutDialog.showModal();
-  });
-
-  logoutCloseButton.addEventListener("click", (e) => {
-    logoutDialog.close();
   });
 </script>
