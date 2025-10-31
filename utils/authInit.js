@@ -13,7 +13,7 @@ passport.use(
 
         if (!user) {
           return done(null, false, {
-            message: "This username does not exists!",
+            message: "This username does not exist!",
           });
         }
 

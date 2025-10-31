@@ -1,11 +1,19 @@
 <%_ if(locals.message){ _%>
-<dialog open class='message'>
-  <%= locals.message _%>
-  <%_ if(locals.onCloseRedirectTo){ _%>
-  <a href="<%= locals.onCloseRedirectTo _%>">Close</a>
-  <%_ } else { _%>
-  <button class='close' type="button">Close</button>
-  <%_ } _%>
+<dialog class='message'>
+  <div class="dialog-container">
+    <div class="dialog-modal">
+      <main class="light-transparent">
+        <div class="content">
+          <%= locals.message _%>
+          <%_ if(locals.onCloseRedirectTo){ _%>
+          <a href="<%= locals.onCloseRedirectTo _%>">Close</a>
+          <%_ } else { _%>
+          <button class='close button block-border-gradient fill-gradient fixed-gradient' type="button" autofocus><%= locals.closeLabel ?? "Close" _%></button>
+          <%_ } _%>
+        </div>
+      </main>
+    </div>
+  </div>
 </dialog>
 
 <script>
@@ -15,5 +23,7 @@
   messageCloseButton.addEventListener("click", (e) => {
     messageDialog.close();
   });
+
+  messageDialog.showModal();
 </script>
 <%_ } _%>

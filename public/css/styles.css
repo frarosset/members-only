@@ -889,6 +889,7 @@ dialog .dialog-modal main {
   overflow: hidden;
 }
 
+dialog main > *,
 dialog.logout form {
   flex: 1;
   display: flex;

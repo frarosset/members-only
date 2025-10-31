@@ -5,10 +5,6 @@
           <%- include("../base/input.ejs",{type: "password", name: "password", label: "Password", maxlength: process.env.PASSWORD_MAX_LENGTH, required: true}) _%>
         </div>
 
-        <%_ if(locals.message){ _%>
-        <div><%= locals.message _%></div>
-        <%_ } _%>
-
         <%- include("../base/submitButton.ejs", {label: "LOGIN"}) _%>
       </div>
     </form>

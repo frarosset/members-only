@@ -31,7 +31,7 @@ exports.user.get = [
     const user = await db.read.userPublicFromId(id);
 
     if (!user) {
-      throw new CustomNotFoundError("This user does not exists.");
+      throw new CustomNotFoundError("This user does not exist.");
     }
 
     user.messages = await db.read.allMessagesPerUserId(id, true);
