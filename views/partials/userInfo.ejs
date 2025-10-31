@@ -3,7 +3,7 @@
   <div class="user-info-container">
     <h2 class="fullname"> <%= user.name %> <%= user.surname  _%></h2>
     <div class="username-and-tags-container">
-      <div class="secondary-text"><%- include("./elements/username.ejs",{username: user.username}) _%></div>
+      <div class="secondary-text secondary-text-italic"><%- include("./elements/username.ejs",{username: user.username}) _%></div>
       <div>
         <%- include("./elements/tag.ejs",{show: user.is_admin, label: "admin"}) _%>
         <%- include("./elements/tag.ejs",{show: user.is_member, label: "member"}) _%>

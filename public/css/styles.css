@@ -364,6 +364,11 @@ h2 {
 
 .entry-index .text-link {
   font-weight: normal;
+  opacity: 0.5;
+}
+
+.entry-index .text-link:hover {
+  opacity: 1;
 }
 
 .entry-index .actions {
@@ -491,9 +496,12 @@ body.error span {
 
 /* || Custom links: text links */
 .secondary-text {
-  font-style: italic;
   color: var(--secondary-text-current-color-alpha);
   font-weight: var(--secondary-text-weight);
+}
+
+.secondary-text-italic {
+  font-style: italic;
 }
 
 .secondary-text a {

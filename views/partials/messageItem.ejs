@@ -29,14 +29,14 @@ _%>
       <%_ if(members_only && !locals.currentUser?.is_member){ _%>
 
       <%_ if(locals.currentUser){ _%>
-      <p class="secondary-text">This is a members-only message. <%- include("./elements/textLink.ejs", {href: "/join-the-club", text: "Join the club"})%> to read it.</p>
+      <p class="secondary-text secondary-text-italic">This is a members-only message. <%- include("./elements/textLink.ejs", {href: "/join-the-club", text: "Join the club"})%> to read it.</p>
       <%_ } else { _%>
-      <p class="secondary-text">This is a members-only message. <%- include("./elements/textLink.ejs", {href: "/login", text: "Log in"})%> and join the club to read it.</p>
+      <p class="secondary-text secondary-text-italic">This is a members-only message. <%- include("./elements/textLink.ejs", {href: "/login", text: "Log in"})%> and join the club to read it.</p>
       <%_ } _%>
 
       <%_ } else if(users_only && !locals.currentUser){ _%>
 
-      <p class="secondary-text">This is an users-only message. <%- include("./elements/textLink.ejs", {href: "/login", text: "Log in"})%> to read it.</p>
+      <p class="secondary-text secondary-text-italic">This is an users-only message. <%- include("./elements/textLink.ejs", {href: "/login", text: "Log in"})%> to read it.</p>
 
       <%_ } else { _%>
 
