@@ -3,6 +3,7 @@ const asyncHandler = require("express-async-handler");
 const db = require("../db/queries.js");
 const passport = require("passport");
 const CustomUnauthenticatedError = require("../errors/CustomUnauthenticatedError.js");
+const CustomConflictError = require("../errors/CustomConflictError.js");
 
 exports.signup = {};
 exports.login = {};
@@ -11,10 +12,24 @@ exports.continueAsGuest = {};
 exports.joinTheClub = {};
 
 exports.signup.get = (req, res) => {
+  if (req.user) {
+    throw new CustomConflictError(
+      "",
+      "/views/partials/messages/signupButAlreadyLoggedIn.ejs"
+    );
+  }
+
   res.render("signup", { pageTitle: process.env.TITLE });
 };
 
 exports.login.get = (req, res) => {
+  if (req.user) {
+    throw new CustomConflictError(
+      "",
+      "/views/partials/messages/loginButAlreadyLoggedIn.ejs"
+    );
+  }
+
   res.render("login", {
     pageTitle: process.env.TITLE,
     message: res.locals.messages?.[0],

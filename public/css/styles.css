@@ -73,7 +73,7 @@
   --header-shadow: 0 0 5px var(--pure-black);
   --header-height: calc(var(--base-padding-tb) * 2 + 1rlh);
 
-  --h2-shadow: 0 0 20px var(--txt-col-alt);
+  --h2-shadow: 0px 0px 20px var(--txt-col-black);
   --h2-fontsize: 1.2em;
 
   --dialog-margin: calc(var(--header-height) * 1.5 + var(--base-padding-tb))
@@ -318,6 +318,7 @@ body > main > .main-container {
   gap: var(--main-gap);
 }
 
+h1,
 h2 {
   filter: drop-shadow(var(--h2-shadow));
 }
@@ -409,6 +410,10 @@ body.error .main-container {
 
 body.error h2 {
   font-size: var(--error-h2-fontsize);
+}
+
+body.error span {
+  text-align: center;
 }
 
 /* || Text and block highlight styles */

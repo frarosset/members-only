@@ -15,7 +15,7 @@
   const showLogoutModalLabel = locals.label ?? "Logout";
   if(locals.useLink) { 
 _%>
-<a class='show-logout-modal' href="#"><%= showLogoutModalLabel _%></a>
+<a class='show-logout-modal text-link text-gradient fixed-gradient' href="#"><%= showLogoutModalLabel _%></a>
 <%_ } else { _%>
 <button class='show-logout-modal <%= locals.customClass ?? ""-%>' type="button"><%= showLogoutModalLabel _%></button>
 <%_ } _%>
