@@ -8,36 +8,46 @@
   <link rel="stylesheet" href="/css/styles.css">
 </head>
 
-<body>
+<body class="join-the-club">
+  <%- include("./partials/headerBackToIndex.ejs"); _%>
+
   <main>
-    <h1> <%= pageTitle %></h1>
-    <%- include("partials/h2Heading.ejs", {text: "Join the club"}) _%>
+    <div class="main-container">
+      <%- include("partials/h2Heading.ejs", {text: "Join the club"}) _%>
 
-    <%_ if(locals.currentUser?.is_member) { _%>
+      <%_ if(locals.currentUser?.is_member) { _%>
 
-    <p>Congratulations, <%= locals.currentUser.name _%>! You are already a member of our club!</p>
+      <p>Congratulations, <%= locals.currentUser.name _%>! You are already a member of our club!</p>
 
-    <p>As a member you can:
-      <%- include("partials/memberFeatures.ejs") _%>
-    </p>
-
-    <%_ } else { _%>
-
-    <div>
-      <p>Join our club to unlock new features:
+      <p>As a member you can:
         <%- include("partials/memberFeatures.ejs") _%>
       </p>
+
+      <%_ } else { _%>
+
+      <div class="join-the-club-info block-border-gradient">
+        <div class="join-the-club-features">
+          <p>Join our club to unlock new features: </p>
+          <%- include("partials/memberFeatures.ejs") _%>
+        </div>
+
+        <p class="join-the-club-riddle">So, <strong class="user-name text-gradient"><%= locals.currentUser.name%> <%= locals.currentUser.surname%></strong>, will you join our club?</p>
+
+        <p class="text-gradient join-the-club-riddle">You are allowed in only if you bring <i>a special animal, plant, vegetable, gem, natural entity, or fantasy creature</i>.</p>
+      </div>
+
+      <div class="main-container-form">
+        <%- include("./partials/form/joinTheClubForm.ejs") _%>
+      </div>
+
+      <div class="join-the-club-hints">
+        <%- include("./partials/joinTheClubHints.ejs",{useLink:true, preP: "Need some help?",label: "Here are some hints."}) _%>
+      </div>
+
+      <%- include("./partials/messageDialog.ejs",{closeLabel: "Try again"}) _%>
+
+      <%_ } _%>
     </div>
-
-    <p>So, <strong><%= locals.currentUser.name%> <%= locals.currentUser.surname%></strong>, will you join our club? You are allowed in only if you bring a special animal, plant, vegetable, gem, natural entity, or fantasy creature.</p>
-
-    <%- include("./partials/form/joinTheClubForm.ejs") _%>
-
-    <%- include("./partials/joinTheClubHints.ejs",{useLink:true}) _%>
-
-    <%- include("./partials/messageDialog.ejs") _%>
-
-    <%_ } _%>
   </main>
 
 </body>

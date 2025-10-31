@@ -1,28 +1,36 @@
-    <form action="/join-the-club" method="POST">
-      <p>What will you bring? <i>Type a single-word trait (adjective) and a single-word noun to describe it.</i></p>
+<form action="/join-the-club" method="POST">
+  <div class="form-container light-transparent">
 
-      <%- include("../base/input.ejs",{type: "text", name: "trait", label: "Trait", maxlength: process.env.MEMBERSHIP_RIDDLE_MAX_LENGTH, required: true,  pattern: process.env.MEMBERSHIP_RIDDLE_REGEX, title: process.env.MEMBERSHIP_RIDDLE_REGEX_MSG}) _%>
-      <%- include("../base/input.ejs",{type: "text", name: "noun", label: "Noun", maxlength: process.env.MEMBERSHIP_RIDDLE_MAX_LENGTH,  required: true,  pattern: process.env.MEMBERSHIP_RIDDLE_REGEX, title: process.env.MEMBERSHIP_RIDDLE_REGEX_MSG}) _%>
+    <div class="form-inputs">
+      <div>
+        <p>What are you bringing?</p>
+        <p class="secondary-text secondary-text-italic"><i>Type a single-word trait (adjective) and a single-word noun to describe it.</i></p>
+      </div>
+      <div class="form-inputs-row">
+        <%- include("../base/input.ejs",{type: "text", name: "trait", label: "Trait", maxlength: process.env.MEMBERSHIP_RIDDLE_MAX_LENGTH, required: true,  pattern: process.env.MEMBERSHIP_RIDDLE_REGEX, title: process.env.MEMBERSHIP_RIDDLE_REGEX_MSG}) _%>
+        <%- include("../base/input.ejs",{type: "text", name: "noun", label: "Noun", maxlength: process.env.MEMBERSHIP_RIDDLE_MAX_LENGTH,  required: true,  pattern: process.env.MEMBERSHIP_RIDDLE_REGEX, title: process.env.MEMBERSHIP_RIDDLE_REGEX_MSG}) _%>
+      </div>
+    </div>
 
-      <%- include("../base/submitButton.ejs", {fallbackUrl: "/", label: "I'm bringing a ..."}) _%>
+    <%- include("../base/submitButton.ejs", {fallbackUrl: "/", label: "I'm bringing a ..."}) _%>
 
-      <script>
-        const traitInput = document.querySelector('input[name="trait"]');
-        const nounInput = document.querySelector('input[name="noun"]');
-        const joinBtn = document.querySelector('button[type="submit"]');
+    <script>
+      const traitInput = document.querySelector('input[name="trait"]');
+      const nounInput = document.querySelector('input[name="noun"]');
+      const joinBtn = document.querySelector('button[type="submit"]');
 
-        function updateButton() {
-          const trait = traitInput.value.trim();
-          const noun = nounInput.value.trim();
+      function updateButton() {
+        const trait = traitInput.value.trim();
+        const noun = nounInput.value.trim();
 
-          const startsWithVowel = (word) => /^[aeiou]/i.test(word);
-          const article = startsWithVowel(trait) ? "an" : "a";
+        const startsWithVowel = (word) => /^[aeiou]/i.test(word);
+        const article = startsWithVowel(trait) ? "an" : "a";
 
-          joinBtn.textContent = trait || noun ? `I'm bringing ${article} ${trait || "..."} ${noun || "..."}` : "I'm bringing a ...";
-        }
+        joinBtn.textContent = trait || noun ? `I'm bringing ${article} ${trait || "..."} ${noun || "..."}` : "I'm bringing a ...";
+      }
 
-        traitInput.addEventListener('input', updateButton);
-        nounInput.addEventListener('input', updateButton);
-      </script>
-
-    </form>
+      traitInput.addEventListener('input', updateButton);
+      nounInput.addEventListener('input', updateButton);
+    </script>
+  </div>
+</form>

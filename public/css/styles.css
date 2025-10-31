@@ -103,6 +103,14 @@
   --form-note-fontsize: 0.75rem;
   --form-note-opacity: 0.75;
 
+  --join-the-club-info-gap: 2em;
+  --join-the-club-info-ul-gap: 0.5em;
+  --join-the-club-info-ul-fontsize: 0.8em;
+  --join-the-club-info-ul-padding-top: 1em;
+  --join-the-club-info-ul-li-padding: 0.25em 0.75em;
+  --join-the-club-riddle-fontsize: 1.3rem;
+  --join-the-club-riddle-weight: 700;
+
   --user-details-width: 20em;
   --user-details-padding: 1em;
   --user-details-col: var(--txt-col-black);
@@ -146,7 +154,7 @@
   --messages-list-padding: 0 0;
   --messages-item-padding: 0.75rem;
   --messages-item-color: var(--txt-col-black);
-  --messages-item-border-size: 0.3em;
+  --messages-item-border-size: 0.1rem;
 
   --messages-item-header-color: #ffffff75;
   --messages-item-header-username-fontsize: 1.1em;
@@ -232,7 +240,8 @@ body {
 html:has(.entry-index),
 html:has(.login),
 html:has(.signup),
-html:has(.new-message) {
+html:has(.new-message),
+html:has(.join-the-club) {
   --base-radial-gradient: var(--base-radial-gradient-entry-index);
 }
 
@@ -463,7 +472,7 @@ body.error span {
   inset: 0;
   z-index: -1;
   margin: calc(-1 * var(--block-border-size));
-  border-radius: inherit;
+  border-radius: var(--messages-item-border-size-radius, inherit);
   background: var(--bg-gradient);
 }
 
@@ -591,12 +600,15 @@ body.error span {
 .messages__item_block {
   width: 100%;
   border-radius: var(--radius);
+  --messages-item-border-size-radius: calc(
+    var(--radius) - var(--messages-item-border-size)
+  );
 }
 
 .messages__item_content {
   width: 100%;
   padding: var(--messages-item-padding);
-  border-radius: calc(var(--radius) - var(--messages-item-border-size));
+  border-radius: var(--messages-item-border-size-radius);
 }
 
 .messages__item_public {
@@ -956,7 +968,7 @@ dialog.logout form {
   gap: var(--form-input-gap);
 }
 
-.main-container-form.small-form label {
+.main-container-form label {
   flex: 1;
 }
 
@@ -1049,6 +1061,61 @@ dialog.logout form {
 
 .main-container-form label div[role="alert"] ul li {
   vertical-align: top;
+}
+
+/* || Join the club */
+
+.join-the-club-info {
+  border-radius: var(--radius);
+  padding: var(--form-padding);
+  text-shadow: none;
+  display: flex;
+  flex-direction: column;
+  gap: var(--join-the-club-info-gap);
+  text-align: center;
+}
+
+.join-the-club-info ul {
+  display: flex;
+  text-align: center;
+  flex-wrap: wrap;
+  justify-content: center;
+  font-size: var(--join-the-club-info-ul-fontsize);
+  gap: var(--join-the-club-info-ul-gap);
+  list-style: none;
+  text-wrap: balance;
+  width: 100%;
+  padding-top: var(--join-the-club-info-ul-padding-top);
+}
+
+.join-the-club-info ul li {
+  background: var(--bg-gradient);
+  background-attachment: fixed;
+  color: var(--txt-col-black);
+  border-radius: var(--small-radius);
+  padding: var(--join-the-club-info-ul-li-padding);
+}
+
+.join-the-club-riddle {
+  font-weight: var(--join-the-club-riddle-weight);
+  font-size: var(--join-the-club-riddle-fontsize);
+  text-align: center;
+  text-wrap: balance;
+}
+
+.join-the-club-hints {
+  text-align: center;
+}
+
+dialog.join-the-club-hints-dialog ul {
+  padding-left: 1em;
+  gap: 0.5em;
+  align-items: flex-start;
+}
+
+dialog.join-the-club-hints-dialog li {
+  text-wrap: pretty;
+  text-align: left;
 }
 
 /* || Icon */
