@@ -88,11 +88,20 @@
   --entry-index-title-fontsize-mobile: 15vmin;
   --entry-index-actions-size: 15em;
 
-  --form-padding: 2rem;
+  --form-padding: 2rem min(2rem, 3vw);
   --form-gap: 3rem;
   --form-input-gap: 1rem;
   --form-input-padding: 0.25em 0.5em;
   --form-label-padding: 0 0.25em;
+
+  --input-bg-col: white;
+  --multi-radio-padding: 0.2em;
+  --multi-radio-gap: 0.1em;
+  --multi-radio-input-bg-col: rgb(207, 207, 207);
+  --multi-radio-input-padding: 0.5em 0;
+  --multi-radio-input-disabled-opacity: 0.4;
+  --form-note-fontsize: 0.75rem;
+  --form-note-opacity: 0.75;
 
   --user-details-width: 20em;
   --user-details-padding: 1em;
@@ -222,7 +231,8 @@ body {
 
 html:has(.entry-index),
 html:has(.login),
-html:has(.signup) {
+html:has(.signup),
+html:has(.new-message) {
   --base-radial-gradient: var(--base-radial-gradient-entry-index);
 }
 
@@ -950,17 +960,81 @@ dialog.logout form {
   flex: 1;
 }
 
-.main-container-form label > span {
+.main-container-form label > span,
+.main-container-form legend {
   color: var(--secondary-text-current-color-alpha);
   padding: var(--form-label-padding);
+}
+
+.main-container-form .multi-radio {
+  display: flex;
+  flex-wrap: wrap;
+  border-radius: var(--small-radius);
+  overflow: hidden;
+  background: var(--input-bg-col);
+  padding: var(--multi-radio-padding);
+  gap: var(--multi-radio-gap);
+}
+
+.main-container-form fieldset:has(.multi-radio) {
+  border: none;
+}
+
+.main-container-form .multi-radio label:has(input[type="radio"]) {
+  flex: 1;
+  background: var(--multi-radio-input-bg-col);
+  color: var(--txt-col-black);
+  text-align: center;
+  vertical-align: middle;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-wrap: balance;
+  border-radius: var(--small-radius);
+  padding: var(--multi-radio-input-padding);
+  cursor: pointer;
+  user-select: none;
+}
+
+.main-container-form .multi-radio label:has(input[type="radio"]:checked) {
+  background: var(--bg-gradient);
+  background-attachment: fixed;
+  color: var(--txt-col);
+  cursor: auto;
+}
+
+.main-container-form .multi-radio label:has(input[type="radio"]:disabled) {
+  opacity: var(--multi-radio-input-disabled-opacity);
+  cursor: not-allowed;
+}
+
+.main-container-form .multi-radio input[type="radio"] {
+  display: none;
 }
 
 .main-container-form input,
 .main-container-form textarea {
   border-radius: var(--small-radius);
   color: var(--txt-col-black);
+  background: var(--input-bg-col);
   border: none;
   padding: var(--form-input-padding);
+  resize: none;
+}
+
+.main-container-form .note,
+.main-container-form label div[role="alert"] ul,
+.main-container-form label div[role="alert"] li {
+  line-height: 1;
+  font-size: var(--form-note-fontsize);
+  text-wrap: pretty;
+  opacity: var(--form-note-opacity);
+}
+
+.main-container-form .note,
+.main-container-form label div[role="alert"] ul {
+  width: 100%;
+  padding: 0.25em 0;
 }
 
 .main-container-form label:has(div[role="alert"]) input,
@@ -968,24 +1042,13 @@ dialog.logout form {
   background: #f1b0c3;
 }
 
-.main-container-form label div[role="alert"] {
-  width: 100%;
-  padding: 0.5em 0;
-  color: inherit;
-}
-
 .main-container-form label div[role="alert"] ul {
-  line-height: 1;
-  font-size: 0.75em;
-  text-wrap: pretty;
   margin-left: 1em;
   list-style-type: disc;
-  opacity: 0.75;
 }
 
 .main-container-form label div[role="alert"] ul li {
   vertical-align: top;
-  line-height: 1;
 }
 
 /* || Icon */
