@@ -59,3 +59,11 @@ exports.joinTheClub = [
   ,
   handleValidationErrorsFcn("joinTheClub"),
 ];
+
+exports.becomeAdmin = [
+  body("password")
+    .trim()
+    .notEmpty()
+    .withMessage(msg.notEmpty("admin password")),
+  handleValidationErrorsFcn("becomeAdmin"),
+];

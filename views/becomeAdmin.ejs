@@ -12,7 +12,7 @@
   <%- include("./partials/headerBackToIndex.ejs"); _%>
 
   <%_ if(locals.message){ _%>
-  <%- include("./partials/messageDialog.ejs", {closeLabel: "Try again"}) _%>
+  <%- include("./partials/messageDialog.ejs", {closeLabel: locals.onCloseRedirectTo ? "Continue" : "Try again"}) _%>
   <%_ } _%>
 
   <main>

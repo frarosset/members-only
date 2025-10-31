@@ -168,3 +168,50 @@ exports.joinTheClub.post = [
     });
   }),
 ];
+
+exports.becomeAdmin.post = [
+  (req, res, next) => {
+    if (!req.user) {
+      throw new CustomUnauthenticatedError(
+        "",
+        "/views/partials/messages/becomeAdminButNotLoggedIn.ejs"
+      );
+    } else if (!req.user.is_member) {
+      throw new CustomUnauthorizedError(
+        "",
+        "/views/partials/messages/becomeAdminButNotMember.ejs"
+      );
+    } else if (req.user.is_admin) {
+      throw new CustomConflictError(
+        "",
+        "/views/partials/messages/becomeAdminButAlreadyAdmin.ejs"
+      );
+    } else {
+      next();
+    }
+  },
+  userValidator.becomeAdmin,
+  asyncHandler(async (req, res, next) => {
+    // Check validity of admin password
+    const isValid = req.body.password === process.env.ADMIN_PASSWORD;
+
+    let outcomeStr = "";
+    let onCloseRedirectTo = null;
+
+    if (isValid) {
+      // db.update.upgradeUserToMember(id, trait, noun);
+      outcomeStr = `Congratulations! You're an admin now!`;
+      onCloseRedirectTo = "/";
+    } else {
+      outcomeStr = `Incorrect admin password! Please try again.`;
+    }
+
+    // Note: currentUser is automatically passed through res.locals
+    // However, its admin status is not updated, yet, so you can show a custom message
+    res.render("becomeAdmin", {
+      pageTitle: process.env.TITLE,
+      message: outcomeStr,
+      onCloseRedirectTo: onCloseRedirectTo,
+    });
+  }),
+];

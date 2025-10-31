@@ -9,5 +9,6 @@ router.get("/join-the-club", userController.joinTheClub.get);
 router.get("/become-admin", userController.becomeAdmin.get);
 
 router.post("/join-the-club", userController.joinTheClub.post);
+router.post("/become-admin", userController.becomeAdmin.post);
 
 module.exports = router;
