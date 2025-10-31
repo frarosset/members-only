@@ -70,6 +70,7 @@ exports.login.post = [
       next();
     }
   },
+  authValidators.login,
   passport.authenticate("local", {
     successRedirect: "/",
     failureRedirect: "/login",

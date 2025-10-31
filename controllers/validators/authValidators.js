@@ -105,3 +105,9 @@ exports.signup = [
     }),
   handleValidationErrorsFcn("signup"),
 ];
+
+exports.login = [
+  body("username").trim().notEmpty().withMessage(msg.notEmpty("username")),
+  body("password").trim().notEmpty().withMessage(msg.notEmpty("password")),
+  handleValidationErrorsFcn("login"),
+];
