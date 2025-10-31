@@ -80,6 +80,6 @@ exports.becomeAdmin.get = [
     }
   },
   (req, res) => {
-    res.send("becomeAdmin");
+    res.render("becomeAdmin", { pageTitle: process.env.TITLE, user: req.user });
   },
 ];

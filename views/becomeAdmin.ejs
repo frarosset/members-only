@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= pageTitle %> | Become an admin</title>
+  <link rel="stylesheet" href="/css/styles.css">
+</head>
+
+<body class="login">
+  <%- include("./partials/headerBackToIndex.ejs"); _%>
+
+  <%_ if(locals.message){ _%>
+  <%- include("./partials/messageDialog.ejs", {closeLabel: "Try again"}) _%>
+  <%_ } _%>
+
+  <main>
+    <div class="main-container">
+      <%- include("partials/h2Heading.ejs", {text: "Become an admin"}) _%>
+
+      <div class="main-container-form small-form">
+        <%- include("./partials/form/becomeAdminForm.ejs") _%>
+      </div>
+    </div>
+  </main>
+
+</body>
+
+</html>
