@@ -3,9 +3,11 @@ const db = require("../db/queries.js");
 const CustomUnauthenticatedError = require("../errors/CustomUnauthenticatedError.js");
 const CustomUnauthorizedError = require("../errors/CustomUnauthorizedError.js");
 const CustomNotFoundError = require("../errors/CustomNotFoundError.js");
+const CustomConflictError = require("../errors/CustomConflictError.js");
 
 exports.user = {};
 exports.myProfile = {};
+exports.becomeAdmin = {};
 
 exports.user.get = [
   (req, res, next) => {
@@ -53,5 +55,31 @@ exports.myProfile.get = [
   },
   (req, res) => {
     res.render("myProfile", { pageTitle: process.env.TITLE, user: req.user });
+  },
+];
+
+exports.becomeAdmin.get = [
+  (req, res, next) => {
+    if (!req.user) {
+      throw new CustomUnauthenticatedError(
+        "",
+        "/views/partials/messages/becomeAdminButNotLoggedIn.ejs"
+      );
+    } else if (!req.user.is_member) {
+      throw new CustomUnauthorizedError(
+        "",
+        "/views/partials/messages/becomeAdminButNotMember.ejs"
+      );
+    } else if (req.user.is_admin) {
+      throw new CustomConflictError(
+        "",
+        "/views/partials/messages/becomeAdminButAlreadyAdmin.ejs"
+      );
+    } else {
+      next();
+    }
+  },
+  (req, res) => {
+    res.send("becomeAdmin");
   },
 ];

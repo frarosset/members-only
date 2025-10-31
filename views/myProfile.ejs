@@ -30,11 +30,13 @@
 
           <div class="actions">
             <%_ if(!locals.currentUser.is_member) { _%>
-            <%- include("./partials/elements/linkAsHighlightButton.ejs", {href: "/join-the-club", text: "Join the club"})%>
-            <%_ } _%>
 
-            <%_ if(!locals.currentUser.is_admin) { _%>
+            <%- include("./partials/elements/linkAsHighlightButton.ejs", {href: "/join-the-club", text: "Join the club"})%>
+
+            <%_ } else if(!locals.currentUser.is_admin ) { _%>
+
             <%- include("./partials/elements/linkAsHighlightButton.ejs", {href: "/become-admin", text: "Become admin"})%>
+
             <%_ } _%>
           </div>
 

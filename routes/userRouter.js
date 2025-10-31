@@ -5,5 +5,6 @@ const router = Router();
 
 router.get("/user/:id", userController.user.get);
 router.get("/my-profile", userController.myProfile.get);
+router.get("/become-admin", userController.becomeAdmin.get);
 
 module.exports = router;
