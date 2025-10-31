@@ -29,6 +29,7 @@ CREATE TABLE users (
     surname VARCHAR(${Number(process.env.NAME_SURNAME_MAX_LENGTH)}) NOT NULL,
     signup_date TIMESTAMPTZ NOT NULL DEFAULT CURRENT_TIMESTAMP,
     membership_start_date TIMESTAMPTZ DEFAULT NULL,
+    admin_start_date TIMESTAMPTZ DEFAULT NULL,
     is_member BOOLEAN NOT NULL DEFAULT FALSE,
     is_admin BOOLEAN NOT NULL DEFAULT FALSE,
     membership_trait_noun VARCHAR(${

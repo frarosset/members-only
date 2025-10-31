@@ -147,7 +147,7 @@ exports.joinTheClub.post = [
       );
 
       if (isNotAlreadyBrought) {
-        db.update.upgradeUserToMember(id, trait, noun);
+        await db.update.upgradeUserToMember(id, trait, noun);
         outcomeStr = `You’ve got it! You and your ${trait} ${noun} are in. Welcome to the club!`;
         onCloseRedirectTo = "/";
       } else {
@@ -192,6 +192,8 @@ exports.becomeAdmin.post = [
   },
   userValidator.becomeAdmin,
   asyncHandler(async (req, res, next) => {
+    const id = req.user.id;
+
     // Check validity of admin password
     const isValid = req.body.password === process.env.ADMIN_PASSWORD;
 
@@ -199,7 +201,7 @@ exports.becomeAdmin.post = [
     let onCloseRedirectTo = null;
 
     if (isValid) {
-      // db.update.upgradeUserToMember(id, trait, noun);
+      await db.update.upgradeUserToAdmin(id);
       outcomeStr = `Congratulations! You're an admin now!`;
       onCloseRedirectTo = "/";
     } else {
