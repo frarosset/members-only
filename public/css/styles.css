@@ -113,7 +113,9 @@
   --button-padding: var(--button-padding-tb) 0.5em;
 
   --text-link-font-weight: 700;
-  --text-link-filter: saturate(1.4) brightness(0.9);
+  --text-link-shadow: 0px 0px 10px var(--txt-col-black);
+  --text-link-filter: drop-shadow(var(--text-link-shadow)) saturate(1.4)
+    brightness(1.1);
   --text-link-underline-width-hover: 0.1em;
   --text-link-underline-radius-hover: 0.2em 0.8em;
 
@@ -959,6 +961,31 @@ dialog.logout form {
   color: var(--txt-col-black);
   border: none;
   padding: var(--form-input-padding);
+}
+
+.main-container-form label:has(div[role="alert"]) input,
+.main-container-form label:has(div[role="alert"]) textarea {
+  background: #f1b0c3;
+}
+
+.main-container-form label div[role="alert"] {
+  width: 100%;
+  padding: 0.5em 0;
+  color: inherit;
+}
+
+.main-container-form label div[role="alert"] ul {
+  line-height: 1;
+  font-size: 0.75em;
+  text-wrap: pretty;
+  margin-left: 1em;
+  list-style-type: disc;
+  opacity: 0.75;
+}
+
+.main-container-form label div[role="alert"] ul li {
+  vertical-align: top;
+  line-height: 1;
 }
 
 /* || Icon */
