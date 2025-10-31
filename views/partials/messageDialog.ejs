@@ -6,7 +6,7 @@
         <div class="content">
           <%= locals.message _%>
           <%_ if(locals.onCloseRedirectTo){ _%>
-          <a href="<%= locals.onCloseRedirectTo _%>">Close</a>
+          <a href="<%= locals.onCloseRedirectTo _%>" class="button block-border-gradient fill-gradient fixed-gradient"><%= locals.closeLabel ?? "Close" _%></a>
           <%_ } else { _%>
           <button class='close button block-border-gradient fill-gradient fixed-gradient' type="button" autofocus><%= locals.closeLabel ?? "Close" _%></button>
           <%_ } _%>
@@ -18,11 +18,16 @@
 
 <script>
   const messageDialog = document.querySelector("dialog.message");
+
+  <%_ if(!locals.onCloseRedirectTo){ _%>
+
   const messageCloseButton = document.querySelector("dialog.message button.close");
 
   messageCloseButton.addEventListener("click", (e) => {
     messageDialog.close();
   });
+
+  <%_ } _%>
 
   messageDialog.showModal();
 </script>

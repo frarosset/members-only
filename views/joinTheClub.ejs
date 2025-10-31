@@ -44,7 +44,7 @@
         <%- include("./partials/joinTheClubHints.ejs",{useLink:true, preP: "Need some help?",label: "Here are some hints."}) _%>
       </div>
 
-      <%- include("./partials/messageDialog.ejs",{closeLabel: "Try again"}) _%>
+      <%- include("./partials/messageDialog.ejs",{closeLabel: locals.onCloseRedirectTo ? "Continue" : "Try again"}) _%>
 
       <%_ } _%>
     </div>
