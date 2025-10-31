@@ -49,6 +49,11 @@ exports.joinTheClub.get = (req, res) => {
       "",
       "/views/partials/messages/joinTheClubButNotLoggedIn.ejs"
     );
+  } else if (req.user.is_member) {
+    throw new CustomConflictError(
+      "",
+      "/views/partials/messages/joinTheClubButAlreadyMember.ejs"
+    );
   }
 
   res.render("joinTheClub", {
@@ -111,7 +116,11 @@ exports.joinTheClub.post = [
         "/views/partials/messages/joinTheClubButNotLoggedIn.ejs"
       );
     } else if (req.user.is_member) {
-      res.redirect("/join-the-club");
+      throw new CustomConflictError(
+        "",
+        "/views/partials/messages/joinTheClubButAlreadyMember.ejs"
+      );
+      // res.redirect("/join-the-club");
     } else {
       next();
     }

@@ -925,6 +925,11 @@ dialog.logout form {
   text-align: center;
 }
 
+dialog.message,
+dialog.logout {
+  font-weight: bold;
+}
+
 /* || Main forms */
 
 .main-container-form {

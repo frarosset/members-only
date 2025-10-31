@@ -15,16 +15,6 @@
     <div class="main-container">
       <%- include("partials/h2Heading.ejs", {text: "Join the club"}) _%>
 
-      <%_ if(locals.currentUser?.is_member) { _%>
-
-      <p>Congratulations, <%= locals.currentUser.name _%>! You are already a member of our club!</p>
-
-      <p>As a member you can:
-        <%- include("partials/memberFeatures.ejs") _%>
-      </p>
-
-      <%_ } else { _%>
-
       <div class="join-the-club-info block-border-gradient">
         <div class="join-the-club-features">
           <p>Join our club to unlock new features: </p>
@@ -46,7 +36,6 @@
 
       <%- include("./partials/messageDialog.ejs",{closeLabel: locals.onCloseRedirectTo ? "Continue" : "Try again"}) _%>
 
-      <%_ } _%>
     </div>
   </main>
 
