@@ -83,6 +83,7 @@ db.read.userPublicFromId = async (id) => {
       surname,
       signup_date,
       membership_start_date,
+      admin_start_date,
       is_member,
       is_admin,
       membership_trait_noun

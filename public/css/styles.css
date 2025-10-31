@@ -432,6 +432,8 @@ h2 {
 /* || Error Page */
 body.error .main-container {
   justify-content: center;
+  text-align: center;
+  text-wrap: balance;
 }
 
 body.error h2 {
@@ -675,7 +677,7 @@ body.error span {
   text-decoration: none;
 }
 
-.messages__item header > a span {
+.messages__item header > a > span {
   display: flex;
   align-items: center;
   border-radius: inherit;
@@ -1040,6 +1042,8 @@ dialog.logout {
 }
 
 .main-container-form .note,
+.main-container-form div[role="alert"] ul,
+.main-container-form div[role="alert"] li,
 .main-container-form label div[role="alert"] ul,
 .main-container-form label div[role="alert"] li {
   line-height: 1;
@@ -1049,21 +1053,25 @@ dialog.logout {
 }
 
 .main-container-form .note,
+.main-container-form div[role="alert"] ul,
 .main-container-form label div[role="alert"] ul {
   width: 100%;
   padding: 0.25em 0;
 }
 
+.main-container-form div.multi-radio:has(+ div[role="alert"]),
 .main-container-form label:has(div[role="alert"]) input,
 .main-container-form label:has(div[role="alert"]) textarea {
   background: #f1b0c3;
 }
 
+.main-container-form div[role="alert"] ul,
 .main-container-form label div[role="alert"] ul {
   margin-left: 1em;
   list-style-type: disc;
 }
 
+.main-container-form div[role="alert"] ul li,
 .main-container-form label div[role="alert"] ul li {
   vertical-align: top;
 }
@@ -1179,6 +1187,11 @@ dialog.join-the-club-hints-dialog li {
 .icon-membership {
   /* Phosphor Icons, https://phosphoricons.com/?q=crown */
   --mask-image-url: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIzMiIgaGVpZ2h0PSIzMiIgZmlsbD0iIzAwMDAwMCIgdmlld0JveD0iMCAwIDI1NiAyNTYiPjxwYXRoIGQ9Ik0yMzkuNzUsOTAuODFjMCwuMTEsMCwuMjEtLjA3LjMyTDIxNywxOTVhMTYsMTYsMCwwLDEtMTUuNzIsMTNINTQuNzFBMTYsMTYsMCwwLDEsMzksMTk1TDE2LjMyLDkxLjEzYzAtLjExLS4wNS0uMjEtLjA3LS4zMkExNiwxNiwwLDAsMSw0NCw3Ny4zOWwzMy42NywzNi4yOSwzNS44LTgwLjI5YTEsMSwwLDAsMCwwLS4xLDE2LDE2LDAsMCwxLDI5LjA2LDAsMSwxLDAsMCwwLDAsLjFsMzUuOCw4MC4yOUwyMTIsNzcuMzlhMTYsMTYsMCwwLDEsMjcuNzEsMTMuNDJaIj48L3BhdGg+PC9zdmc+);
+}
+
+.icon-admin-symbol {
+  /* Phosphor Icons, https://phosphoricons.com/?q=gear */
+  --mask-image-url: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIzMiIgaGVpZ2h0PSIzMiIgZmlsbD0iIzAwMDAwMCIgdmlld0JveD0iMCAwIDI1NiAyNTYiPjxwYXRoIGQ9Ik0yMzcuOTQsMTA3LjIxYTgsOCwwLDAsMC0zLjg5LTUuNGwtMjkuODMtMTctLjEyLTMzLjYyYTgsOCwwLDAsMC0yLjgzLTYuMDgsMTExLjkxLDExMS45MSwwLDAsMC0zNi43Mi0yMC42Nyw4LDgsMCwwLDAtNi40Ni41OUwxMjgsNDEuODUsOTcuODgsMjVhOCw4LDAsMCwwLTYuNDctLjZBMTExLjkyLDExMS45MiwwLDAsMCw1NC43Myw0NS4xNWE4LDgsMCwwLDAtMi44Myw2LjA3bC0uMTUsMzMuNjUtMjkuODMsMTdhOCw4LDAsMCwwLTMuODksNS40LDEwNi40NywxMDYuNDcsMCwwLDAsMCw0MS41Niw4LDgsMCwwLDAsMy44OSw1LjRsMjkuODMsMTcsLjEyLDMzLjYzYTgsOCwwLDAsMCwyLjgzLDYuMDgsMTExLjkxLDExMS45MSwwLDAsMCwzNi43MiwyMC42Nyw4LDgsMCwwLDAsNi40Ni0uNTlMMTI4LDIxNC4xNSwxNTguMTIsMjMxYTcuOTEsNy45MSwwLDAsMCwzLjksMSw4LjA5LDguMDksMCwwLDAsMi41Ny0uNDIsMTEyLjEsMTEyLjEsMCwwLDAsMzYuNjgtMjAuNzMsOCw4LDAsMCwwLDIuODMtNi4wN2wuMTUtMzMuNjUsMjkuODMtMTdhOCw4LDAsMCwwLDMuODktNS40QTEwNi40NywxMDYuNDcsMCwwLDAsMjM3Ljk0LDEwNy4yMVpNMTI4LDE2OGE0MCw0MCwwLDEsMSw0MC00MEE0MCw0MCwwLDAsMSwxMjgsMTY4WiI+PC9wYXRoPjwvc3ZnPg==);
 }
 
 .icon-logo {

@@ -7,12 +7,23 @@
             const startsWithVowel = (word) => /^[aeiou]/i.test(word);
             const article = startsWithVowel(user.membership_trait_noun) ? "an" : "a";
         _%>
+
     <li>
       <span class="icon icon-membership"></span><span>
         Member since <strong><%- include("./elements/date.ejs",{date: user.membership_start_date}) _%></strong></span>
     <li>
-    <li><span class="icon icon-joined-with"></span><span>Joined the club with <strong><%= article %> <%= user.membership_trait_noun _%></strong></span>
+
+    <li>
+      <span class="icon icon-joined-with"></span><span>Joined the club with <strong><%= article %> <%= user.membership_trait_noun _%></strong></span>
     </li>
-    <%_ } _%>
+
+    <%_ if(user.is_admin) { _%>
+    <li>
+      <span class="icon icon-admin-symbol"></span><span>
+        Admin since <strong><%- include("./elements/date.ejs",{date: user.admin_start_date}) _%></strong></span>
+    <li>
+      <%_ } _%>
+
+      <%_ } _%>
   </ul>
 </div>

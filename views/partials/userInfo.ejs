@@ -1,5 +1,5 @@
 <div class="user-info <%= locals.horizontal ? "horizontal" : "" _%>">
-  <%- include("./elements/userIcon.ejs",{user: locals.currentUser})%>
+  <%- include("./elements/userIcon.ejs")%>
   <div class="user-info-container">
     <h2 class="fullname"> <%= user.name %> <%= user.surname  _%></h2>
     <div class="username-and-tags-container">
