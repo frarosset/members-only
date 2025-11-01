@@ -79,6 +79,10 @@ async function main() {
         user.membership_noun
       );
     }
+
+    if (user.is_admin) {
+      await db.update.upgradeUserToAdmin(id);
+    }
   }
 
   for (const msg of messages) {
