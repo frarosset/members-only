@@ -5,6 +5,7 @@ const db = require("../db/queries.js");
 
 exports.newMessage = {};
 exports.myMessages = {};
+exports.deleteMessage = {};
 
 exports.newMessage.get = [
   messageErrors.newMessage,
@@ -32,5 +33,12 @@ exports.newMessage.post = [
     await db.create.message({ ...req.body, userId: req.user.id });
 
     res.redirect("/");
+  }),
+];
+
+exports.deleteMessage.post = [
+  messageErrors.deleteMessage,
+  asyncHandler(async (req, res) => {
+    res.send("Delete message" + req.params.id);
   }),
 ];

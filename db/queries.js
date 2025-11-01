@@ -189,4 +189,14 @@ db.read.allMessagesPerUserId = async (userId, isMember = true) => {
   return results.rows;
 };
 
+db.read.userWroteMessage = async (userId, messageId) => {
+  const sql =
+    "SELECT id, author_id FROM messages WHERE id = $1 AND author_id = $2;";
+  const sqlData = [userId, messageId];
+
+  const results = await pool.query(sql, sqlData);
+
+  return results.rows.length > 0;
+};
+
 module.exports = db;
