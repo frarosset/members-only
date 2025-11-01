@@ -1,38 +1,30 @@
 const authValidators = require("./validators/authValidators.js");
+const authErrors = require("./errors/authErrors.js");
 const asyncHandler = require("express-async-handler");
 const db = require("../db/queries.js");
 const passport = require("passport");
-const CustomConflictError = require("../errors/CustomConflictError.js");
 
 exports.signup = {};
 exports.login = {};
 exports.logout = {};
 exports.continueAsGuest = {};
 
-exports.signup.get = (req, res) => {
-  if (req.user) {
-    throw new CustomConflictError(
-      "",
-      "/views/partials/messages/signupButAlreadyLoggedIn.ejs"
-    );
-  }
+exports.signup.get = [
+  authErrors.signup,
+  (req, res) => {
+    res.render("signup", { pageTitle: process.env.TITLE });
+  },
+];
 
-  res.render("signup", { pageTitle: process.env.TITLE });
-};
-
-exports.login.get = (req, res) => {
-  if (req.user) {
-    throw new CustomConflictError(
-      "",
-      "/views/partials/messages/loginButAlreadyLoggedIn.ejs"
-    );
-  }
-
-  res.render("login", {
-    pageTitle: process.env.TITLE,
-    message: res.locals.messages?.[0],
-  });
-};
+exports.login.get = [
+  authErrors.login,
+  (req, res) => {
+    res.render("login", {
+      pageTitle: process.env.TITLE,
+      message: res.locals.messages?.[0],
+    });
+  },
+];
 
 exports.continueAsGuest.get = (req, res) => {
   if (!req.user) {
@@ -42,13 +34,7 @@ exports.continueAsGuest.get = (req, res) => {
 };
 
 exports.signup.post = [
-  (req, res, next) => {
-    if (req.user) {
-      res.redirect("/signup"); // This shows an invite to logout to the user to proceed
-    } else {
-      next();
-    }
-  },
+  authErrors.signup,
   authValidators.signup,
   asyncHandler(async (req, res, next) => {
     const id = await db.create.user(req.body);
@@ -63,13 +49,7 @@ exports.signup.post = [
 ];
 
 exports.login.post = [
-  (req, res, next) => {
-    if (req.user) {
-      res.redirect("/login"); // This shows an invite to logout to the user to proceed
-    } else {
-      next();
-    }
-  },
+  authErrors.login,
   authValidators.login,
   passport.authenticate("local", {
     successRedirect: "/",

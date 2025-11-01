@@ -1,10 +1,8 @@
 const userValidator = require("./validators/userValidator.js");
+const userErrors = require("./errors/userErrors.js");
 const asyncHandler = require("express-async-handler");
 const db = require("../db/queries.js");
-const CustomUnauthenticatedError = require("../errors/CustomUnauthenticatedError.js");
-const CustomUnauthorizedError = require("../errors/CustomUnauthorizedError.js");
 const CustomNotFoundError = require("../errors/CustomNotFoundError.js");
-const CustomConflictError = require("../errors/CustomConflictError.js");
 
 exports.user = {};
 exports.myProfile = {};
@@ -12,23 +10,7 @@ exports.joinTheClub = {};
 exports.becomeAdmin = {};
 
 exports.user.get = [
-  (req, res, next) => {
-    if (!req.user) {
-      throw new CustomUnauthenticatedError(
-        "",
-        "/views/partials/messages/userButNotLoggedIn.ejs"
-      );
-    } else if (req.user.id === Number(req.params.id)) {
-      res.redirect("/my-profile");
-    } else if (!req.user.is_member) {
-      throw new CustomUnauthorizedError(
-        "",
-        "/views/partials/messages/userButNotMember.ejs"
-      );
-    } else {
-      next();
-    }
-  },
+  userErrors.user,
   asyncHandler(async (req, res) => {
     const id = req.params.id;
 
@@ -45,60 +27,23 @@ exports.user.get = [
 ];
 
 exports.myProfile.get = [
-  (req, res, next) => {
-    if (!req.user) {
-      throw new CustomUnauthenticatedError(
-        "",
-        "/views/partials/messages/myProfileButNotLoggedIn.ejs"
-      );
-    } else {
-      next();
-    }
-  },
+  userErrors.myProfile,
   (req, res) => {
     res.render("myProfile", { pageTitle: process.env.TITLE, user: req.user });
   },
 ];
 
-exports.joinTheClub.get = (req, res) => {
-  if (!req.user) {
-    throw new CustomUnauthenticatedError(
-      "",
-      "/views/partials/messages/joinTheClubButNotLoggedIn.ejs"
-    );
-  } else if (req.user.is_member) {
-    throw new CustomConflictError(
-      "",
-      "/views/partials/messages/joinTheClubButAlreadyMember.ejs"
-    );
-  }
-
-  res.render("joinTheClub", {
-    pageTitle: process.env.TITLE,
-  });
-};
+exports.joinTheClub.get = [
+  userErrors.joinTheClub,
+  (req, res) => {
+    res.render("joinTheClub", {
+      pageTitle: process.env.TITLE,
+    });
+  },
+];
 
 exports.becomeAdmin.get = [
-  (req, res, next) => {
-    if (!req.user) {
-      throw new CustomUnauthenticatedError(
-        "",
-        "/views/partials/messages/becomeAdminButNotLoggedIn.ejs"
-      );
-    } else if (!req.user.is_member) {
-      throw new CustomUnauthorizedError(
-        "",
-        "/views/partials/messages/becomeAdminButNotMember.ejs"
-      );
-    } else if (req.user.is_admin) {
-      throw new CustomConflictError(
-        "",
-        "/views/partials/messages/becomeAdminButAlreadyAdmin.ejs"
-      );
-    } else {
-      next();
-    }
-  },
+  userErrors.becomeAdmin,
   (req, res) => {
     res.render("becomeAdmin", { pageTitle: process.env.TITLE, user: req.user });
   },
@@ -107,22 +52,7 @@ exports.becomeAdmin.get = [
 const startsWithVowel = (word) => /^[aeiou]/i.test(word);
 
 exports.joinTheClub.post = [
-  (req, res, next) => {
-    if (!req.user) {
-      throw new CustomUnauthenticatedError(
-        "",
-        "/views/partials/messages/joinTheClubButNotLoggedIn.ejs"
-      );
-    } else if (req.user.is_member) {
-      throw new CustomConflictError(
-        "",
-        "/views/partials/messages/joinTheClubButAlreadyMember.ejs"
-      );
-      // res.redirect("/join-the-club");
-    } else {
-      next();
-    }
-  },
+  userErrors.joinTheClub,
   userValidator.joinTheClub,
   asyncHandler(async (req, res, next) => {
     const id = req.user.id;
@@ -170,26 +100,7 @@ exports.joinTheClub.post = [
 ];
 
 exports.becomeAdmin.post = [
-  (req, res, next) => {
-    if (!req.user) {
-      throw new CustomUnauthenticatedError(
-        "",
-        "/views/partials/messages/becomeAdminButNotLoggedIn.ejs"
-      );
-    } else if (!req.user.is_member) {
-      throw new CustomUnauthorizedError(
-        "",
-        "/views/partials/messages/becomeAdminButNotMember.ejs"
-      );
-    } else if (req.user.is_admin) {
-      throw new CustomConflictError(
-        "",
-        "/views/partials/messages/becomeAdminButAlreadyAdmin.ejs"
-      );
-    } else {
-      next();
-    }
-  },
+  userErrors.becomeAdmin,
   userValidator.becomeAdmin,
   asyncHandler(async (req, res, next) => {
     const id = req.user.id;

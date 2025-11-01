@@ -1,33 +1,20 @@
 const messageValidators = require("./validators/messageValidators.js");
+const messageErrors = require("./errors/messageErrors.js");
 const asyncHandler = require("express-async-handler");
 const db = require("../db/queries.js");
-const CustomUnauthenticatedError = require("../errors/CustomUnauthenticatedError.js");
 
 exports.newMessage = {};
 exports.myMessages = {};
 
-exports.newMessage.get = (req, res) => {
-  if (!req.user) {
-    throw new CustomUnauthenticatedError(
-      "",
-      "/views/partials/messages/newMessageButNotLoggedIn.ejs"
-    );
-  }
-
-  res.render("newMessage", { pageTitle: process.env.TITLE });
-};
+exports.newMessage.get = [
+  messageErrors.newMessage,
+  (req, res) => {
+    res.render("newMessage", { pageTitle: process.env.TITLE });
+  },
+];
 
 exports.myMessages.get = [
-  (req, res, next) => {
-    if (!req.user) {
-      throw new CustomUnauthenticatedError(
-        "",
-        "/views/partials/messages/myMessagesButNotLoggedIn.ejs"
-      );
-    } else {
-      next();
-    }
-  },
+  messageErrors.myMessages,
   asyncHandler(async (req, res) => {
     req.user.messages = await db.read.allMessagesPerUserId(req.user.id, true);
 
@@ -39,16 +26,7 @@ exports.myMessages.get = [
 ];
 
 exports.newMessage.post = [
-  (req, res, next) => {
-    if (!req.user) {
-      throw new CustomUnauthenticatedError(
-        "",
-        "/views/partials/messages/newMessageButNotLoggedIn.ejs"
-      );
-    } else {
-      next();
-    }
-  },
+  messageErrors.newMessage,
   messageValidators.newMessage,
   asyncHandler(async (req, res) => {
     await db.create.message({ ...req.body, userId: req.user.id });
