@@ -10,7 +10,14 @@ _%>
   <%_ if(locals.currentUser?.is_member || locals.my_data){ _%>
   <header>
     <%_ if(!(locals.hideUsername ?? false)) {_%> <a href="/user/<%= author.id _%>"><span><%- include("./elements/userIcon.ejs",{user: author})%><%= author.username _%></span></a><%_ } _%>
-    <%- include("./elements/date.ejs",{date: creation_date}) _%>
+
+    <div class="header-right-side">
+      <%- include("./elements/date.ejs",{date: creation_date}) _%>
+
+      <%_ if(locals.currentUser?.is_admin || locals.my_data){ _%>
+      <%- include("./deleteMessageButtonAndDialog.ejs") _%>
+      <%_ } _%>
+    </div>
   </header>
   <%_ } _%>
 

@@ -662,8 +662,26 @@ body.error span {
   color: var(--messages-item-header-color);
 }
 
-.messages__item header .date {
+.messages__item header .header-right-side {
   margin-left: auto;
+  display: flex;
+  gap: 0.45em;
+  align-items: center;
+}
+
+.messages__item header .header-right-side a,
+.messages__item header .header-right-side button {
+  display: flex;
+  align-items: center;
+  position: relative;
+  top: -0.03em;
+  border: none;
+  background: none;
+}
+
+.messages__item header .header-right-side a .icon,
+.messages__item header .header-right-side button .icon {
+  background-color: var(--messages-item-header-color);
 }
 
 .messages__item header > a {
@@ -695,8 +713,23 @@ body.error span {
   backdrop-filter: var(--messages-item-a-hover-backdrop-filter);
 }
 
-.messages__item header a:hover .icon {
+.messages__item header a:hover .icon,
+.messages__item header button:hover .icon {
   background: var(--bg-gradient);
+}
+
+.dialog-message-to-delete-container {
+  font-style: italic;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex-wrap: balance;
+  opacity: 0.75;
+  font-weight: normal;
+}
+
+.dialog-message-to-delete-title {
+  font-weight: bold;
 }
 
 /* || My profile */
@@ -928,7 +961,8 @@ dialog.logout form {
 }
 
 dialog.message,
-dialog.logout {
+dialog.logout,
+dialog.delete-message {
   font-weight: bold;
 }
 
@@ -1212,4 +1246,9 @@ dialog.join-the-club-hints-dialog li {
 .icon-joined-with {
   /* Phosphor Icons, https://phosphoricons.com/?q=feather */
   --mask-image-url: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIzMiIgaGVpZ2h0PSIzMiIgZmlsbD0iIzAwMDAwMCIgdmlld0JveD0iMCAwIDI1NiAyNTYiPjxwYXRoIGQ9Ik0yMjEuMjgsMzQuNzVhNjQsNjQsMCwwLDAtOTAuNDksMEw2MC42OSwxMDRBMTUuOSwxNS45LDAsMCwwLDU2LDExNS4zMXY3My4zOEwyNi4zNCwyMTguMzRhOCw4LDAsMCwwLDExLjMyLDExLjMyTDY3LjMyLDIwMEgxNDAuN0ExNS45MiwxNS45MiwwLDAsMCwxNTIsMTk1LjMybDAsMCw2OS4yMy03MEE2NCw2NCwwLDAsMCwyMjEuMjgsMzQuNzVaTTE0Mi4wNyw0Ni4wNkE0OCw0OCwwLDAsMSwyMTEuNzksMTEySDE1NS4zM2wzNC4zNS0zNC4zNGE4LDgsMCwwLDAtMTEuMzItMTEuMzJMMTIwLDEyNC42OVY2Ny44N1pNNzIsMTE1LjM1bDMyLTMxLjY3djU3bC0zMiwzMlpNMTQwLjcsMTg0SDgzLjMybDU2LTU2aDU2Ljc0WiI+PC9wYXRoPjwvc3ZnPg==);
+}
+
+.icon-trash {
+  /* Phosphor Icons, https://phosphoricons.com/?q=trash */
+  --mask-image-url: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIzMiIgaGVpZ2h0PSIzMiIgZmlsbD0iIzAwMDAwMCIgdmlld0JveD0iMCAwIDI1NiAyNTYiPjxwYXRoIGQ9Ik0yMTYsNDhIMTc2VjQwYTI0LDI0LDAsMCwwLTI0LTI0SDEwNEEyNCwyNCwwLDAsMCw4MCw0MHY4SDQwYTgsOCwwLDAsMCwwLDE2aDhWMjA4YTE2LDE2LDAsMCwwLDE2LDE2SDE5MmExNiwxNiwwLDAsMCwxNi0xNlY2NGg4YTgsOCwwLDAsMCwwLTE2Wk05Niw0MGE4LDgsMCwwLDEsOC04aDQ4YTgsOCwwLDAsMSw4LDh2OEg5NlptOTYsMTY4SDY0VjY0SDE5MlpNMTEyLDEwNHY2NGE4LDgsMCwwLDEtMTYsMFYxMDRhOCw4LDAsMCwxLDE2LDBabTQ4LDB2NjRhOCw4LDAsMCwxLTE2LDBWMTA0YTgsOCwwLDAsMSwxNiwwWiI+PC9wYXRoPjwvc3ZnPg==);
 }

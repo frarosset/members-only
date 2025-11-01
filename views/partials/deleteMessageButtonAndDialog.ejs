@@ -1,0 +1,46 @@
+<%_ 
+   const maxLen = 30;
+   const clipText = (text) => text.length > maxLen ? text.substring(0,maxLen) + "..." : text;
+_%>
+<button class='show-delete-message-modal text-gradient fixed-gradient <%= locals.customClass ?? ""-%>' data-id="<%= id %>" data-title="<%= clipText(title) %>" data-text="<%= clipText(text) %>" type="button"><span class=" icon icon-trash" title="Delete"></button>
+
+<%_ if(locals.includeScript ?? true) { _%>
+<dialog class='delete-message'>
+  <div class="dialog-container">
+    <div class="dialog-modal">
+      <%- include("./headerCloseDialog.ejs", {title: "Delete"}); _%>
+      <main class="light-transparent">
+        <form method="POST">
+          Are you sure you want to delete this message?
+
+          <div class="dialog-message-to-delete-container">
+            <span class="dialog-message-to-delete-title"></span>
+            <span class="dialog-message-to-delete-text"></span>
+          </div>
+
+          <button class="button block-border-gradient fill-gradient fixed-gradient" type="submit" autofocus>DELETE</button>
+        </form>
+      </main>
+    </div>
+  </div>
+</dialog>
+
+<script>
+  const deleteMessageDialog = document.querySelector("dialog.delete-message");
+  const deleteForm = deleteMessageDialog.querySelector("form");
+  const messageToDeleteTitle = deleteMessageDialog.querySelector(".dialog-message-to-delete-title");
+  const messageToDeleteText = deleteMessageDialog.querySelector(".dialog-message-to-delete-text");
+  const deleteMessageShowButtonAll = document.querySelectorAll(".show-delete-message-modal");
+
+  deleteMessageShowButtonAll.forEach(button => {
+    button.addEventListener("click", (e) => {
+      e.preventDefault();
+      const messageId = button.dataset.id;
+      deleteForm.action = `/message/${messageId}/delete`;
+      messageToDeleteTitle.textContent = button.dataset.title;
+      messageToDeleteText.textContent = button.dataset.text;
+      deleteMessageDialog.showModal();
+    });
+  });
+</script>
+<%_ } _%>
