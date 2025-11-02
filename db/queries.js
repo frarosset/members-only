@@ -47,7 +47,7 @@ db.update.upgradeUserToMember = async (id, trait, noun) => {
 
   const results = await pool.query(sql, sqlData);
 
-  return results.rows?.[0].id;
+  return !!results.rowCount;
 };
 
 db.update.upgradeUserToAdmin = async (id) => {
@@ -62,7 +62,20 @@ db.update.upgradeUserToAdmin = async (id) => {
 
   const results = await pool.query(sql, sqlData);
 
-  return results.rows?.[0].id;
+  return !!results.rowCount;
+};
+
+db.delete.deleteMessageFromId = async (id) => {
+  const sql = `
+    DELETE FROM messages 
+    WHERE id = $1 
+    RETURNING id;
+  `;
+  const sqlData = [id];
+
+  const results = await pool.query(sql, sqlData);
+
+  return !!results.rowCount;
 };
 
 db.read.userFromId = async (id) => {

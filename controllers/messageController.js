@@ -2,6 +2,7 @@ const messageValidators = require("./validators/messageValidators.js");
 const messageErrors = require("./errors/messageErrors.js");
 const asyncHandler = require("express-async-handler");
 const db = require("../db/queries.js");
+const CustomNotFoundError = require("../errors/CustomNotFoundError.js");
 
 exports.newMessage = {};
 exports.myMessages = {};
@@ -39,6 +40,16 @@ exports.newMessage.post = [
 exports.deleteMessage.post = [
   messageErrors.deleteMessage,
   asyncHandler(async (req, res) => {
-    res.send("Delete message" + req.params.id);
+    const id = req.params.id;
+
+    const isDeleted = await db.delete.deleteMessageFromId(id);
+
+    if (!isDeleted) {
+      throw new CustomNotFoundError(
+        "Cannot delete: this message does not exist or is already deleted"
+      );
+    }
+
+    res.redirect("/");
   }),
 ];
