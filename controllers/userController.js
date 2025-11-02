@@ -77,7 +77,12 @@ exports.joinTheClub.post = [
       );
 
       if (isNotAlreadyBrought) {
-        await db.update.upgradeUserToMember(id, trait, noun);
+        const success = await db.update.upgradeUserToMember(id, trait, noun);
+
+        if (!success) {
+          throw new Error(`Cannot upgrade user with id ${id} to member`);
+        }
+
         outcomeStr = `You’ve got it! You and your ${trait} ${noun} are in. Welcome to the club!`;
         onCloseRedirectTo = "/";
       } else {
@@ -112,7 +117,12 @@ exports.becomeAdmin.post = [
     let onCloseRedirectTo = null;
 
     if (isValid) {
-      await db.update.upgradeUserToAdmin(id);
+      const success = await db.update.upgradeUserToAdmin(id);
+
+      if (!success) {
+        throw new Error(`Cannot upgrade user with id ${id} to admin`);
+      }
+
       outcomeStr = `Congratulations! You're an admin now!`;
       onCloseRedirectTo = "/";
     } else {
