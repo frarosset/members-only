@@ -5,7 +5,11 @@ const session = require("express-session");
 const passport = require("passport");
 const pgSession = require("connect-pg-simple")(session);
 const pool = require("./db/pool.js");
-const { useFlashMessages } = require("./utils/flashMessages.js");
+const {
+  useFlashMessages,
+  setReqSessionFlashMessages,
+  getFlashMessage,
+} = require("./utils/flashMessages.js");
 
 const CustomNotFoundError = require("./errors/CustomNotFoundError.js");
 
@@ -54,6 +58,8 @@ app.use((req, res, next) => {
   res.locals.hasMessages = !!msg.length;
   req.session.messages = [];
 
+  res.locals.currentUrl = req.originalUrl;
+
   res.locals.currentUser = req.user;
 
   res.locals.isGuest = req.session.isGuest;
@@ -73,14 +79,34 @@ app.use("/", authRouter);
 app.use("/", messageRouter);
 app.use("/", userRouter);
 
+// Error handling
+
+app.use("/error", (req, res, next) => {
+  const notGetError = getFlashMessage(res, "notGetError");
+
+  if (notGetError) {
+    next(notGetError);
+  } else {
+    next();
+  }
+});
+
 // catch-all route throwing a 404 error
 app.use((req, res, next) => {
   throw new CustomNotFoundError("Page not found");
 });
 
-// Error handling
 app.use((error, req, res, next) => {
-  console.log(error);
+  console.error(`[${req.method}] ${req.originalUrl} >`, error);
+
+  // enforce PRG pattern
+  if (req.method !== "GET") {
+    const redirectTo = res.locals.onNotGetErrorRedirectTo ?? "/error";
+    const notGetError = { ...error, message: error.message };
+    setReqSessionFlashMessages(req, "notGetError", notGetError);
+
+    return res.redirect(303, redirectTo);
+  }
 
   const code = error.statusCode || 500;
   const message = code !== 500 ? error.message : "Internal server error";
