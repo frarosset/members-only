@@ -5,6 +5,7 @@ const session = require("express-session");
 const passport = require("passport");
 const pgSession = require("connect-pg-simple")(session);
 const pool = require("./db/pool.js");
+const { useFlashMessages } = require("./utils/flashMessages.js");
 
 const CustomNotFoundError = require("./errors/CustomNotFoundError.js");
 
@@ -59,6 +60,9 @@ app.use((req, res, next) => {
 
   next();
 });
+
+// Save flash messages [requires session initialized]
+app.use(useFlashMessages);
 
 // Parse data for req.body
 app.use(express.urlencoded({ extended: true }));
