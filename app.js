@@ -7,7 +7,7 @@ const pgSession = require("connect-pg-simple")(session);
 const pool = require("./db/pool.js");
 const {
   useFlashMessages,
-  setReqSessionFlashMessages,
+  setFlashMessage,
   getFlashMessage,
 } = require("./utils/flashMessages.js");
 
@@ -103,7 +103,7 @@ app.use((error, req, res, next) => {
   if (req.method !== "GET") {
     const redirectTo = res.locals.onNotGetErrorRedirectTo ?? "/error";
     const notGetError = { ...error, message: error.message };
-    setReqSessionFlashMessages(req, "notGetError", notGetError);
+    setFlashMessage(req, "notGetError", notGetError);
 
     return res.redirect(303, redirectTo);
   }

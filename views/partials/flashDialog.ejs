@@ -1,0 +1,21 @@
+<%_ 
+const flashDialog = locals.flashMessages?.flashDialog;
+if(flashDialog) {
+_%>
+<dialog class='flash-dialog'>
+  <div class="dialog-container">
+    <div class="dialog-modal">
+      <%- include("./headerCloseDialog.ejs", {title: flashDialog.title}); _%>
+      <main class="light-transparent">
+        <%= flashDialog.msg _%>
+      </main>
+    </div>
+  </div>
+</dialog>
+
+<script>
+  const messageDialog = document.querySelector("dialog.flash-dialog");
+  messageDialog.showModal();
+</script>
+
+<%_ } _%>

@@ -1,6 +1,10 @@
-function setReqSessionFlashMessages(req, name, data) {
+function setFlashMessage(req, name, data) {
   if (!req.session.flashMessages) {
     req.session.flashMessages = {};
+  }
+
+  if (req.session.flashMessages[name] != null) {
+    throw new Error(`Flash message '${name}' has already been set.`);
   }
 
   req.session.flashMessages[name] = data;
@@ -17,7 +21,7 @@ function getFlashMessage(res, name) {
 }
 
 module.exports = {
-  setReqSessionFlashMessages,
+  setFlashMessage,
   useFlashMessages,
   getFlashMessage,
 };
