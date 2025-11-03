@@ -3,6 +3,7 @@ const authErrors = require("./errors/authErrors.js");
 const asyncHandler = require("express-async-handler");
 const db = require("../db/queries.js");
 const passport = require("passport");
+const setOnNotGetErrorRedirectTo = require("./redirectOnError/setOnNotGetErrorRedirectTo.js");
 
 exports.signup = {};
 exports.login = {};
@@ -34,6 +35,7 @@ exports.continueAsGuest.get = (req, res) => {
 };
 
 exports.signup.post = [
+  setOnNotGetErrorRedirectTo.signup,
   authErrors.signup,
   authValidators.signup,
   asyncHandler(async (req, res, next) => {
@@ -49,6 +51,7 @@ exports.signup.post = [
 ];
 
 exports.login.post = [
+  setOnNotGetErrorRedirectTo.login,
   authErrors.login,
   authValidators.login,
   passport.authenticate("local", {
@@ -58,11 +61,14 @@ exports.login.post = [
   }),
 ];
 
-exports.logout.post = (req, res, next) => {
-  req.logout((err) => {
-    if (err) {
-      return next(err);
-    }
-    res.redirect("/");
-  });
-};
+exports.logout.post = [
+  setOnNotGetErrorRedirectTo.logout,
+  (req, res, next) => {
+    req.logout((err) => {
+      if (err) {
+        return next(err);
+      }
+      res.redirect("/");
+    });
+  },
+];

@@ -5,7 +5,7 @@ _%>
 <button class='show-delete-message-modal text-gradient fixed-gradient <%= locals.customClass ?? ""-%>' data-id="<%= id %>" data-title="<%= clipText(title) %>" data-text="<%= clipText(text) %>" type="button"><span class=" icon icon-trash" title="Delete"></button>
 
 <%_ if(locals.includeScript ?? true) { _%>
-<dialog class='delete-message'>
+<dialog class='delete-message-dialog'>
   <div class="dialog-container">
     <div class="dialog-modal">
       <%- include("./headerCloseDialog.ejs", {title: "Delete"}); _%>
@@ -18,6 +18,7 @@ _%>
             <span class="dialog-message-to-delete-text"></span>
           </div>
 
+          <%- include("./referrerHiddenInput.ejs"); _%>
           <button class="button block-border-gradient fill-gradient fixed-gradient" type="submit" autofocus>DELETE</button>
         </form>
       </main>
@@ -26,7 +27,7 @@ _%>
 </dialog>
 
 <script>
-  const deleteMessageDialog = document.querySelector("dialog.delete-message");
+  const deleteMessageDialog = document.querySelector("dialog.delete-message-dialog");
   const deleteForm = deleteMessageDialog.querySelector("form");
   const messageToDeleteTitle = deleteMessageDialog.querySelector(".dialog-message-to-delete-title");
   const messageToDeleteText = deleteMessageDialog.querySelector(".dialog-message-to-delete-text");

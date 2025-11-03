@@ -3,6 +3,7 @@ const userErrors = require("./errors/userErrors.js");
 const asyncHandler = require("express-async-handler");
 const db = require("../db/queries.js");
 const CustomNotFoundError = require("../errors/CustomNotFoundError.js");
+const setOnNotGetErrorRedirectTo = require("./redirectOnError/setOnNotGetErrorRedirectTo.js");
 
 exports.user = {};
 exports.myProfile = {};
@@ -52,6 +53,7 @@ exports.becomeAdmin.get = [
 const startsWithVowel = (word) => /^[aeiou]/i.test(word);
 
 exports.joinTheClub.post = [
+  setOnNotGetErrorRedirectTo.joinTheClub,
   userErrors.joinTheClub,
   userValidator.joinTheClub,
   asyncHandler(async (req, res, next) => {
@@ -105,6 +107,7 @@ exports.joinTheClub.post = [
 ];
 
 exports.becomeAdmin.post = [
+  setOnNotGetErrorRedirectTo.becomeAdmin,
   userErrors.becomeAdmin,
   userValidator.becomeAdmin,
   asyncHandler(async (req, res, next) => {

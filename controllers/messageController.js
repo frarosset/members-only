@@ -3,6 +3,7 @@ const messageErrors = require("./errors/messageErrors.js");
 const asyncHandler = require("express-async-handler");
 const db = require("../db/queries.js");
 const CustomNotFoundError = require("../errors/CustomNotFoundError.js");
+const setOnNotGetErrorRedirectTo = require("./redirectOnError/setOnNotGetErrorRedirectTo.js");
 
 exports.newMessage = {};
 exports.myMessages = {};
@@ -28,6 +29,7 @@ exports.myMessages.get = [
 ];
 
 exports.newMessage.post = [
+  setOnNotGetErrorRedirectTo.newMessage,
   messageErrors.newMessage,
   messageValidators.newMessage,
   asyncHandler(async (req, res) => {
@@ -38,6 +40,7 @@ exports.newMessage.post = [
 ];
 
 exports.deleteMessage.post = [
+  setOnNotGetErrorRedirectTo.deleteMessage,
   messageErrors.deleteMessage,
   asyncHandler(async (req, res) => {
     const id = req.params.id;

@@ -1,5 +1,5 @@
 <%_ if(locals.message){ _%>
-<dialog class='message'>
+<dialog class='message-dialog'>
   <div class="dialog-container">
     <div class="dialog-modal">
       <main class="light-transparent">
@@ -17,11 +17,11 @@
 </dialog>
 
 <script>
-  const messageDialog = document.querySelector("dialog.message");
+  const messageDialog = document.querySelector("dialog.message-dialog");
 
   <%_ if(!locals.onCloseRedirectTo){ _%>
 
-  const messageCloseButton = document.querySelector("dialog.message button.close");
+  const messageCloseButton = document.querySelector("dialog.message-dialog button.close");
 
   messageCloseButton.addEventListener("click", (e) => {
     messageDialog.close();
