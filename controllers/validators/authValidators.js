@@ -103,11 +103,11 @@ exports.signup = [
       }
       return true;
     }),
-  handleValidationErrorsFcn("signup"),
+  handleValidationErrorsFcn("signup", "/signup"),
 ];
 
 exports.login = [
   body("username").trim().notEmpty().withMessage(msg.notEmpty("username")),
   body("password").trim().notEmpty().withMessage(msg.notEmpty("password")),
-  handleValidationErrorsFcn("login"),
+  handleValidationErrorsFcn("login", "/login"),
 ];

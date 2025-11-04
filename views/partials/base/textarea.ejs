@@ -1,7 +1,8 @@
 <%# Required: locals.label %>
-<%# Optional: locals.data.[name], class, input attributes, locals.validationErrors %>
+<%# Optional: locals.flashMessages.data.[name], locals.data.[name], class, input attributes, locals.validationErrors %>
+<%_ const dataValue = locals.flashMessages?.data?.[name] ?? locals.data?.[name]; _%>
 <label>
   <span><%= label %></span>
-  <textarea rows="6" <%- include("inputParams.ejs") _%>><%= locals.data?.[name] || "" %></textarea>
+  <textarea rows="6" <%- include("inputParams.ejs") _%>><%= dataValue ?? "" %></textarea>
   <%- include("inputValidationErrors.ejs") _%>
 </label>

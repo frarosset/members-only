@@ -57,7 +57,7 @@ exports.joinTheClub = [
       return true;
     }),
   ,
-  handleValidationErrorsFcn("joinTheClub"),
+  handleValidationErrorsFcn("joinTheClub", "/join-the-club"),
 ];
 
 exports.becomeAdmin = [
@@ -65,5 +65,5 @@ exports.becomeAdmin = [
     .trim()
     .notEmpty()
     .withMessage(msg.notEmpty("admin password")),
-  handleValidationErrorsFcn("becomeAdmin"),
+  handleValidationErrorsFcn("becomeAdmin", "/become-admin"),
 ];

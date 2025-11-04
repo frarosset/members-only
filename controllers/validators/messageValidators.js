@@ -58,5 +58,5 @@ exports.newMessage = [
 
       return true;
     }),
-  handleValidationErrorsFcn("newMessage"),
+  handleValidationErrorsFcn("newMessage", "/new-message"),
 ];

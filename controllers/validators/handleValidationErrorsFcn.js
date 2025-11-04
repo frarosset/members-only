@@ -1,7 +1,9 @@
 const { validationResult, matchedData } = require("express-validator");
+const CustomBadReqestError = require("../../errors/CustomBadReqestError.js");
+const { setFlashMessage } = require("../../utils/flashMessages.js");
 
 const handleValidationErrorsFcn =
-  (ejsTemplate, params = {}) =>
+  (ejsTemplate, nonGetRedirectTo, params = {}) =>
   (req, res, next) => {
     const result = validationResult(req);
     if (!result.isEmpty()) {
@@ -17,15 +19,31 @@ const handleValidationErrorsFcn =
         includeOptionals: true,
       });
 
-      return res.status(400).render(ejsTemplate, {
-        pageTitle: process.env.TITLE,
-        validationErrors: {
-          orderedMsgNames: orderedErrorsNames(errors),
-          groupedMsg: groupedErrors(errors),
-        },
-        data,
-        ...params,
-      });
+      const validationErrors = {
+        orderedMsgNames: orderedErrorsNames(errors),
+        groupedMsg: groupedErrors(errors),
+      };
+
+      // Throw error and redirect in case of non-GET requests
+      if (res.method !== "GET") {
+        setFlashMessage(req, "validationErrors", validationErrors);
+
+        setFlashMessage(req, "data", data);
+
+        // set the redirect to url for this error
+        res.locals.onNotGetErrorRedirectTo = nonGetRedirectTo;
+
+        throw new CustomBadReqestError(
+          "Validation errors detected in the submitted form"
+        );
+      } else {
+        return res.status(400).render(ejsTemplate, {
+          pageTitle: process.env.TITLE,
+          validationErrors,
+          data,
+          ...params,
+        });
+      }
     }
     // no errors
     next();
