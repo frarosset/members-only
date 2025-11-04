@@ -13,6 +13,8 @@ const fromBodyReferrerOnNotGetErrorRedirectTo =
     if (ref && safeReferrerRegex.test(ref)) {
       res.locals.onNotGetErrorRedirectTo = ref;
     } else {
+      // reset the referrer: it is not valid
+      req.body.referrer = null;
       // let it undefined: let it be handled by error middleware with some default route
       // res.locals.onNotGetErrorRedirectTo = fallbackRedirect;
     }

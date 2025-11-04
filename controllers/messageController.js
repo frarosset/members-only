@@ -4,6 +4,7 @@ const asyncHandler = require("express-async-handler");
 const db = require("../db/queries.js");
 const CustomNotFoundError = require("../errors/CustomNotFoundError.js");
 const setOnNotGetErrorRedirectTo = require("./redirectOnError/setOnNotGetErrorRedirectTo.js");
+const { setFlashMessage } = require("../utils/flashMessages.js");
 
 exports.newMessage = {};
 exports.myMessages = {};
@@ -48,11 +49,14 @@ exports.deleteMessage.post = [
     const isDeleted = await db.delete.deleteMessageFromId(id);
 
     if (!isDeleted) {
-      throw new CustomNotFoundError(
-        "Cannot delete: this message does not exist or is already deleted"
-      );
+      setFlashMessage(req, "flashDialog", {
+        title: "Error",
+        msg: "Cannot delete: this message does not exist or is already deleted",
+      });
+      throw new CustomNotFoundError("Message not found or already deleted");
     }
 
-    res.redirect("/");
+    // Note: req.body.referrer is validated/sanitized by setOnNotGetErrorRedirectTo.deleteMessage
+    res.redirect(req.body.referrer ?? "/");
   }),
 ];

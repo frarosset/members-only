@@ -4,6 +4,7 @@ const asyncHandler = require("express-async-handler");
 const db = require("../db/queries.js");
 const passport = require("passport");
 const setOnNotGetErrorRedirectTo = require("./redirectOnError/setOnNotGetErrorRedirectTo.js");
+const { setFlashMessage } = require("../utils/flashMessages.js");
 
 exports.signup = {};
 exports.login = {};
@@ -66,6 +67,11 @@ exports.logout.post = [
   (req, res, next) => {
     req.logout((err) => {
       if (err) {
+        // As a post request, this will be redirected to the defined redirect route
+        setFlashMessage(req, "flashDialog", {
+          title: "Error",
+          msg: "Failed to logout.",
+        });
         return next(err);
       }
       res.redirect("/");
