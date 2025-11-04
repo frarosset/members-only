@@ -99,17 +99,24 @@ app.use((req, res, next) => {
 app.use((error, req, res, next) => {
   console.error(`[${req.method}] ${req.originalUrl} >`, error);
 
+  error.statusCode = error.statusCode || 500;
+  error.message =
+    error.statusCode !== 500 ? error.message : "Internal server error";
+
   // enforce PRG pattern
   if (req.method !== "GET") {
     const redirectTo = res.locals.onNotGetErrorRedirectTo ?? "/error";
     const notGetError = { ...error, message: error.message };
+
     setFlashMessage(req, "notGetError", notGetError);
+
+    console.log("REDIRECT TO:", redirectTo);
 
     return res.redirect(303, redirectTo);
   }
 
-  const code = error.statusCode || 500;
-  const message = code !== 500 ? error.message : "Internal server error";
+  const code = error.statusCode;
+  const message = error.message;
   const partial = error.partial;
 
   res.status(code).render("error", {
