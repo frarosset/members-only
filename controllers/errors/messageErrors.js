@@ -49,10 +49,10 @@ exports.deleteMessage = asyncHandler(async (req, res, next) => {
     if (!allowed) {
       setFlashMessage(req, "flashDialog", {
         title: "Error",
-        msg: "You are not authorized to delete this message.",
+        msg: "Cannot delete: you are not authorized or the message does not exist or is already deleted.",
       });
       throw new CustomUnauthorizedError(
-        `Non-authorized user with id ${req.user.id} is trying to delete message with id ${req.params.id}`
+        `Non-authorized user with id ${req.user.id} is trying to delete possibly non-existing message with id ${req.params.id}`
       );
     } else {
       // the author can proceed
