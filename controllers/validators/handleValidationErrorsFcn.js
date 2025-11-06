@@ -1,6 +1,7 @@
 const { validationResult, matchedData } = require("express-validator");
-const CustomBadReqestError = require("../../errors/CustomBadReqestError.js");
+// const CustomBadReqestError = require("../../errors/CustomBadReqestError.js");
 const { setFlashMessage } = require("../../utils/flashMessages.js");
+const saveSessionAndRedirect = require("../../utils/saveSessionAndRedirect.js");
 
 const handleValidationErrorsFcn =
   (ejsTemplate, nonGetRedirectTo, params = {}) =>
@@ -31,7 +32,7 @@ const handleValidationErrorsFcn =
         setFlashMessage(req, "data", data);
 
         // redirect directly (avoids logging the ss validation errors)
-        return res.redirect(303, nonGetRedirectTo);
+        return saveSessionAndRedirect(req, res, nonGetRedirectTo);
 
         // set the redirect to url for this error
         // res.locals.onNotGetErrorRedirectTo = nonGetRedirectTo;

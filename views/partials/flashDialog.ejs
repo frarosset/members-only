@@ -24,19 +24,19 @@ _%>
 </dialog>
 
 <script>
-  const messageDialog = document.querySelector("dialog.flash-dialog");
+  const dialog = document.querySelector("dialog.flash-dialog");
 
   <%_ if(!onCloseRedirectTo){ _%>
 
   const messageCloseButton = document.querySelector("dialog.flash-dialog button.close");
 
   messageCloseButton.addEventListener("click", (e) => {
-    messageDialog.close();
+    dialog.close();
   });
 
   <%_ } _%>
 
-  messageDialog.showModal();
+  dialog.showModal();
 </script>
 
 <%_ } _%>

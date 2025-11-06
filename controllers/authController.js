@@ -5,6 +5,7 @@ const db = require("../db/queries.js");
 const passport = require("passport");
 const setOnNotGetErrorRedirectTo = require("./redirectOnError/setOnNotGetErrorRedirectTo.js");
 const { setFlashMessage } = require("../utils/flashMessages.js");
+const saveSessionAndRedirect = require("../utils/saveSessionAndRedirect.js");
 
 exports.signup = {};
 exports.login = {};
@@ -30,8 +31,10 @@ exports.login.get = [
 exports.continueAsGuest.get = (req, res) => {
   if (!req.user) {
     req.session.isGuest = true;
+    saveSessionAndRedirect(req, res, "/");
+  } else {
+    res.redirect("/");
   }
-  res.redirect("/");
 };
 
 exports.signup.post = [
@@ -45,7 +48,7 @@ exports.signup.post = [
       if (err) {
         return next(err);
       }
-      res.redirect("/");
+      saveSessionAndRedirect(req, res, "/");
     });
   }),
 ];
@@ -63,7 +66,7 @@ exports.login.post = [
 
 exports.logout.post = [
   setOnNotGetErrorRedirectTo.logout,
-  (req, res, next) => {
+  asyncHandler((req, res, next) => {
     req.logout((err) => {
       if (err) {
         // As a post request, this will be redirected to the defined redirect route
@@ -73,7 +76,7 @@ exports.logout.post = [
         });
         return next(err);
       }
-      res.redirect("/");
+      saveSessionAndRedirect(req, res, "/");
     });
-  },
+  }),
 ];

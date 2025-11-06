@@ -10,6 +10,7 @@ const {
   setFlashMessage,
   getFlashMessage,
 } = require("./utils/flashMessages.js");
+const saveSessionAndRedirect = require("./utils/saveSessionAndRedirect.js");
 
 const CustomNotFoundError = require("./errors/CustomNotFoundError.js");
 
@@ -114,7 +115,7 @@ app.use((error, req, res, next) => {
 
     console.log("REDIRECT TO:", redirectTo);
 
-    return res.redirect(303, redirectTo);
+    return saveSessionAndRedirect(req, res, redirectTo);
   }
 
   const code = error.statusCode;

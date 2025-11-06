@@ -5,6 +5,7 @@ const db = require("../db/queries.js");
 const CustomNotFoundError = require("../errors/CustomNotFoundError.js");
 const setOnNotGetErrorRedirectTo = require("./redirectOnError/setOnNotGetErrorRedirectTo.js");
 const { setFlashMessage } = require("../utils/flashMessages.js");
+const saveSessionAndRedirect = require("../utils/saveSessionAndRedirect.js");
 
 exports.user = {};
 exports.myProfile = {};
@@ -102,7 +103,7 @@ exports.joinTheClub.post = [
       closeLabel,
     });
 
-    res.redirect(redirectTo);
+    saveSessionAndRedirect(req, res, redirectTo);
   }),
 ];
 
@@ -139,6 +140,6 @@ exports.becomeAdmin.post = [
       closeLabel,
     });
 
-    res.redirect(redirectTo);
+    saveSessionAndRedirect(req, res, redirectTo);
   }),
 ];
