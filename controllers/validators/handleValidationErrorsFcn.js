@@ -30,12 +30,15 @@ const handleValidationErrorsFcn =
 
         setFlashMessage(req, "data", data);
 
-        // set the redirect to url for this error
-        res.locals.onNotGetErrorRedirectTo = nonGetRedirectTo;
+        // redirect directly (avoids logging the ss validation errors)
+        return res.redirect(303, nonGetRedirectTo);
 
-        throw new CustomBadReqestError(
-          "Validation errors detected in the submitted form"
-        );
+        // set the redirect to url for this error
+        // res.locals.onNotGetErrorRedirectTo = nonGetRedirectTo;
+
+        // throw new CustomBadReqestError(
+        //   "Validation errors detected in the submitted form"
+        // );
       } else {
         return res.status(400).render(ejsTemplate, {
           pageTitle: process.env.TITLE,
