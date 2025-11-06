@@ -14,7 +14,7 @@ exports.continueAsGuest = {};
 exports.signup.get = [
   authErrors.signup,
   (req, res) => {
-    res.render("signup", { pageTitle: process.env.TITLE });
+    res.render("signup");
   },
 ];
 
@@ -22,7 +22,6 @@ exports.login.get = [
   authErrors.login,
   (req, res) => {
     res.render("login", {
-      pageTitle: process.env.TITLE,
       message: res.locals.messages?.[0],
     });
   },

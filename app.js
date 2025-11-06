@@ -53,6 +53,8 @@ app.use(passport.session());
 
 // Save useful data in res.locals
 app.use((req, res, next) => {
+  res.locals.pageTitle = process.env.TITLE;
+
   const msg = req.session.messages || [];
   res.locals.messages = msg;
   res.locals.hasMessages = !!msg.length;
@@ -120,7 +122,6 @@ app.use((error, req, res, next) => {
   const partial = error.partial;
 
   res.status(code).render("error", {
-    pageTitle: process.env.TITLE,
     code,
     message,
     partial,

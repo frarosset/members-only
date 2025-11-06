@@ -41,7 +41,6 @@ const handleValidationErrorsFcn =
         // );
       } else {
         return res.status(400).render(ejsTemplate, {
-          pageTitle: process.env.TITLE,
           validationErrors,
           data,
           ...params,

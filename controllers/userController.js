@@ -23,30 +23,28 @@ exports.user.get = [
 
     user.messages = await db.read.allMessagesPerUserId(id, true);
 
-    res.render("user", { pageTitle: process.env.TITLE, user });
+    res.render("user", { user });
   }),
 ];
 
 exports.myProfile.get = [
   userErrors.myProfile,
   (req, res) => {
-    res.render("myProfile", { pageTitle: process.env.TITLE, user: req.user });
+    res.render("myProfile");
   },
 ];
 
 exports.joinTheClub.get = [
   userErrors.joinTheClub,
   (req, res) => {
-    res.render("joinTheClub", {
-      pageTitle: process.env.TITLE,
-    });
+    res.render("joinTheClub");
   },
 ];
 
 exports.becomeAdmin.get = [
   userErrors.becomeAdmin,
   (req, res) => {
-    res.render("becomeAdmin", { pageTitle: process.env.TITLE, user: req.user });
+    res.render("becomeAdmin");
   },
 ];
 
@@ -99,7 +97,6 @@ exports.joinTheClub.post = [
     // Note: currentUser is automatically passed through res.locals
     // However, its membership is not updated, yet, so you can show a custom message
     res.render("joinTheClub", {
-      pageTitle: process.env.TITLE,
       message: outcomeStr,
       onCloseRedirectTo: onCloseRedirectTo,
     });
@@ -135,7 +132,6 @@ exports.becomeAdmin.post = [
     // Note: currentUser is automatically passed through res.locals
     // However, its admin status is not updated, yet, so you can show a custom message
     res.render("becomeAdmin", {
-      pageTitle: process.env.TITLE,
       message: outcomeStr,
       onCloseRedirectTo: onCloseRedirectTo,
     });

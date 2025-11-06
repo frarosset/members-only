@@ -16,11 +16,11 @@
     <div class="main-container">
 
       <header>
-        <%- include("./partials/userInfo.ejs") _%>
+        <%- include("./partials/userInfo.ejs", {user: currentUser}) _%>
       </header>
 
       <div class="my-profile-side">
-        <%- include("./partials/userDetails.ejs") _%>
+        <%- include("./partials/userDetails.ejs", {user: currentUser}) _%>
 
         <div class="actions-container">
           <div class="actions">

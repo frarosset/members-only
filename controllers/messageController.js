@@ -13,7 +13,7 @@ exports.deleteMessage = {};
 exports.newMessage.get = [
   messageErrors.newMessage,
   (req, res) => {
-    res.render("newMessage", { pageTitle: process.env.TITLE });
+    res.render("newMessage");
   },
 ];
 
@@ -22,10 +22,7 @@ exports.myMessages.get = [
   asyncHandler(async (req, res) => {
     req.user.messages = await db.read.allMessagesPerUserId(req.user.id, true);
 
-    res.render("myMessages", {
-      pageTitle: process.env.TITLE,
-      user: req.user,
-    });
+    res.render("myMessages");
   }),
 ];
 

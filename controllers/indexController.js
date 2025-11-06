@@ -4,7 +4,7 @@ const db = require("../db/queries.js");
 exports.get = [
   (req, res, next) => {
     if (!req.session.isGuest && !req.user) {
-      res.render("index", { pageTitle: process.env.TITLE });
+      res.render("index");
       return;
     }
 
@@ -15,7 +15,6 @@ exports.get = [
     const allMessages = await db.read.allMessages(isMember);
 
     res.render("index", {
-      pageTitle: process.env.TITLE,
       messagesArray: allMessages,
     });
   }),

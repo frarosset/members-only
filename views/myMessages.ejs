@@ -16,12 +16,12 @@
     <div class="main-container">
 
       <header>
-        <%- include("./partials/userInfo.ejs", {horizontal: true}) _%>
+        <%- include("./partials/userInfo.ejs", {user: currentUser, horizontal: true}) _%>
       </header>
 
       <div class="messages">
         <%- include("partials/h2Heading.ejs", {text: "My messages"}) _%>
-        <%- include("./partials/messageList.ejs", {messagesArray: user.messages, hideUsername: true, my_data: true}) _%>
+        <%- include("./partials/messageList.ejs", {messagesArray: currentUser.messages, hideUsername: true, my_data: true}) _%>
       </div>
     </div>
     </div>
