@@ -4,6 +4,7 @@ const asyncHandler = require("express-async-handler");
 const db = require("../db/queries.js");
 const CustomNotFoundError = require("../errors/CustomNotFoundError.js");
 const setOnNotGetErrorRedirectTo = require("./redirectOnError/setOnNotGetErrorRedirectTo.js");
+const { setFlashMessage } = require("../utils/flashMessages.js");
 
 exports.user = {};
 exports.myProfile = {};
@@ -66,8 +67,8 @@ exports.joinTheClub.post = [
       noun
     );
 
+    let success;
     let outcomeStr = "";
-    let onCloseRedirectTo = null;
 
     if (isValid) {
       // Check if another user has already brought this item
@@ -77,14 +78,13 @@ exports.joinTheClub.post = [
       );
 
       if (isNotAlreadyBrought) {
-        const success = await db.update.upgradeUserToMember(id, trait, noun);
+        success = await db.update.upgradeUserToMember(id, trait, noun);
 
         if (!success) {
           throw new Error(`Cannot upgrade user with id ${id} to member`);
         }
 
         outcomeStr = `You’ve got it! You and your ${trait} ${noun} are in. Welcome to the club!`;
-        onCloseRedirectTo = "/";
       } else {
         const article = startsWithVowel(trait) ? "an" : "a";
         outcomeStr = `You’re on the right path: you could have entered with ${article} ${trait} ${noun}. However, another member has already brought that. Try once more.`;
@@ -94,12 +94,15 @@ exports.joinTheClub.post = [
       outcomeStr = `${article} ${trait} ${noun}? No, you can't enter with that! Please try again.`;
     }
 
-    // Note: currentUser is automatically passed through res.locals
-    // However, its membership is not updated, yet, so you can show a custom message
-    res.render("joinTheClub", {
-      message: outcomeStr,
-      onCloseRedirectTo: onCloseRedirectTo,
+    const redirectTo = success ? "/" : "/join-the-club";
+    const closeLabel = success ? "Continue" : "Try again";
+
+    setFlashMessage(req, "flashDialog", {
+      msg: outcomeStr,
+      closeLabel,
     });
+
+    res.redirect(redirectTo);
   }),
 ];
 
@@ -113,27 +116,29 @@ exports.becomeAdmin.post = [
     // Check validity of admin password
     const isValid = req.body.password === process.env.ADMIN_PASSWORD;
 
+    let success = false;
     let outcomeStr = "";
-    let onCloseRedirectTo = null;
 
     if (isValid) {
-      const success = await db.update.upgradeUserToAdmin(id);
+      success = await db.update.upgradeUserToAdmin(id);
 
       if (!success) {
         throw new Error(`Cannot upgrade user with id ${id} to admin`);
       }
 
       outcomeStr = `Congratulations! You're an admin now!`;
-      onCloseRedirectTo = "/";
     } else {
       outcomeStr = `Incorrect admin password! Please try again.`;
     }
 
-    // Note: currentUser is automatically passed through res.locals
-    // However, its admin status is not updated, yet, so you can show a custom message
-    res.render("becomeAdmin", {
-      message: outcomeStr,
-      onCloseRedirectTo: onCloseRedirectTo,
+    const redirectTo = success ? "/" : "/become-admin";
+    const closeLabel = success ? "Continue" : "Try again";
+
+    setFlashMessage(req, "flashDialog", {
+      msg: outcomeStr,
+      closeLabel,
     });
+
+    res.redirect(redirectTo);
   }),
 ];

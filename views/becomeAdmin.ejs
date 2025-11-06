@@ -11,10 +11,6 @@
 <body class="login">
   <%- include("./partials/headerBackToIndex.ejs"); _%>
 
-  <%_ if(locals.message){ _%>
-  <%- include("./partials/messageDialog.ejs", {closeLabel: locals.onCloseRedirectTo ? "Continue" : "Try again"}) _%>
-  <%_ } _%>
-
   <main>
     <div class="main-container">
       <%- include("partials/h2Heading.ejs", {text: "Become an admin"}) _%>

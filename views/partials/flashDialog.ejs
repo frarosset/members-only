@@ -1,13 +1,23 @@
 <%_ 
 const flashDialog = locals.flashMessages?.flashDialog;
 if(flashDialog) {
+  const onCloseRedirectTo = flashDialog.onCloseRedirectTo;
+  const closeLabel = flashDialog.closeLabel ?? "Close";
 _%>
 <dialog class='flash-dialog'>
   <div class="dialog-container">
     <div class="dialog-modal">
-      <%- include("./headerCloseDialog.ejs", {title: flashDialog.title}); _%>
+      <!-- <%- include("./headerCloseDialog.ejs", {title: flashDialog.title}); _%> -->
       <main class="light-transparent">
-        <%= flashDialog.msg _%>
+        <!-- <%= flashDialog.msg _%> -->
+        <div class="content">
+          <%= flashDialog.msg _%>
+          <%_ if(onCloseRedirectTo){ _%>
+          <a href="<%= onCloseRedirectTo _%>" class="button block-border-gradient fill-gradient fixed-gradient"><%= closeLabel _%></a>
+          <%_ } else { _%>
+          <button class='close button block-border-gradient fill-gradient fixed-gradient' type="button" autofocus><%= closeLabel _%></button>
+          <%_ } _%>
+        </div>
       </main>
     </div>
   </div>
@@ -15,6 +25,17 @@ _%>
 
 <script>
   const messageDialog = document.querySelector("dialog.flash-dialog");
+
+  <%_ if(!onCloseRedirectTo){ _%>
+
+  const messageCloseButton = document.querySelector("dialog.flash-dialog button.close");
+
+  messageCloseButton.addEventListener("click", (e) => {
+    messageDialog.close();
+  });
+
+  <%_ } _%>
+
   messageDialog.showModal();
 </script>
 

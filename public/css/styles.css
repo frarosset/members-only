@@ -80,7 +80,7 @@
     var(--base-padding-lr);
   --dialog-padding: min(2rem, 5vh) min(2rem, 5vw);
   --dialog-gap: min(2rem, 5vmin);
-  --dialog-backdrop-filter: blur(2px) brightness(0.8);
+  --dialog-backdrop-filter: blur(20px) brightness(0.5);
 
   --entry-index-icon-size: 30vmin;
   --entry-index-icon-size-mobile: 50vmin;
