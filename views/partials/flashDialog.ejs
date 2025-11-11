@@ -1,5 +1,6 @@
 <%_ 
-const flashDialog = locals.flashMessages?.flashDialog;
+const flashDialog = locals.flashMessages?.flashDialog || locals.flashDialog;
+
 if(flashDialog) {
   const onCloseRedirectTo = flashDialog.onCloseRedirectTo;
   const closeLabel = flashDialog.closeLabel ?? "Close";

@@ -22,9 +22,12 @@ exports.signup.get = [
 exports.login.get = [
   authErrors.login,
   (req, res) => {
-    res.render("login", {
-      message: res.locals.messages?.[0],
-    });
+    const flashDialog =
+      res.locals.messages?.length > 0
+        ? { msg: res.locals.messages[0], closeLabel: "Try again" }
+        : null;
+
+    res.render("login", { flashDialog });
   },
 ];
 
