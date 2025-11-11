@@ -3,17 +3,17 @@
 
        <div class="form-inputs">
          <div class="form-inputs-row">
-           <%- include("../base/input.ejs",{type: "text", name: "username", label: "Username", maxlength: process.env.USERNAME_MAX_LENGTH, minlength: process.env.USERNAME_MIN_LENGTH, required: true,  pattern: process.env.USERNAME_REGEX, title: process.env.USERNAME_REGEX_MSG}) _%>
+           <%- include("../base/input.ejs",{type: "text", name: "username", label: "Username", maxlength: process.env.USERNAME_MAX_LENGTH, minlength: process.env.USERNAME_MIN_LENGTH, required: true,  pattern: process.env.USERNAME_REGEX, title: process.env.USERNAME_REGEX_MSG, autocomplete: "username"}) _%>
          </div>
 
          <div class="form-inputs-row">
-           <%- include("../base/input.ejs",{type: "text", name: "name", label: "Name", maxlength: process.env.NAME_SURNAME_MAX_LENGTH, minlength: process.env.NAME_SURNAME_MIN_LENGTH, required: true,  pattern: process.env.NAME_SURNAME_REGEX, title: process.env.NAME_SURNAME_REGEX_MSG}) _%>
-           <%- include("../base/input.ejs",{type: "text", name: "surname", label: "Surname", maxlength: process.env.NAME_SURNAME_MAX_LENGTH,  minlength: process.env.NAME_SURNAME_MIN_LENGTH, required: true,  pattern: process.env.NAME_SURNAME_REGEX, title: process.env.NAME_SURNAME_REGEX_MSG}) _%>
+           <%- include("../base/input.ejs",{type: "text", name: "name", label: "Name", maxlength: process.env.NAME_SURNAME_MAX_LENGTH, minlength: process.env.NAME_SURNAME_MIN_LENGTH, required: true,  pattern: process.env.NAME_SURNAME_REGEX, title: process.env.NAME_SURNAME_REGEX_MSG, autocomplete: "given-name"}) _%>
+           <%- include("../base/input.ejs",{type: "text", name: "surname", label: "Surname", maxlength: process.env.NAME_SURNAME_MAX_LENGTH,  minlength: process.env.NAME_SURNAME_MIN_LENGTH, required: true,  pattern: process.env.NAME_SURNAME_REGEX, title: process.env.NAME_SURNAME_REGEX_MSG, autocomplete: "family-name"}) _%>
          </div>
 
          <div class="form-inputs-row">
-           <%- include("../base/input.ejs",{type: "password", name: "password", label: "Password", maxlength: process.env.PASSWORD_MAX_LENGTH, minlength: process.env.PASSWORD_MIN_LENGTH, required: true,  pattern: process.env.PASSWORD_REGEX, title: process.env.PASSWORD_REGEX_MSG}) _%>
-           <%- include("../base/input.ejs",{type: "password", name: "confirm_password", label: "Confirm Password", maxlength: process.env.PASSWORD_MAX_LENGTH,required: true}) _%>
+           <%- include("../base/input.ejs",{type: "password", name: "password", label: "Password", maxlength: process.env.PASSWORD_MAX_LENGTH, minlength: process.env.PASSWORD_MIN_LENGTH, required: true,  pattern: process.env.PASSWORD_REGEX, title: process.env.PASSWORD_REGEX_MSG, autocomplete: "new-password"}) _%>
+           <%- include("../base/input.ejs",{type: "password", name: "confirm_password", label: "Confirm Password", maxlength: process.env.PASSWORD_MAX_LENGTH,required: true, autocomplete: "new-password"}) _%>
          </div>
        </div>
 
