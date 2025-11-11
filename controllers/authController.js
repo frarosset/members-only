@@ -57,10 +57,35 @@ exports.login.post = [
   setOnNotGetErrorRedirectTo.login,
   authErrors.login,
   authValidators.login,
-  passport.authenticate("local", {
-    successRedirect: "/",
-    failureRedirect: "/login",
-    failureMessage: true,
+  // !!! Fixing session not being saved before redirect when using authentication failure messages with
+  //   passport.authenticate("local", {
+  //     successRedirect: "/",
+  //     failureRedirect: "/login",
+  //     failureMessage: true,
+  //   }),
+  // In express session, it is necessary to call session.save(callback) when setting data on the
+  // session and redirecting. Using the following ensures that data are available on the redirected page:
+  //  req.session.save((err) => {
+  //    if (err) return next(err);
+  //    res.redirect('/');
+  //  })
+  // Source: https://expressjs.com/en/resources/middleware/session.html#sessionsavecallback
+  // However, passport.authenticate(), used as above, does not do this and redirects directly
+  // Source: https://github.com/jaredhanson/passport/blob/master/lib/middleware/authenticate.js [#da379a0]
+  // This is known but not fixed as of now: https://github.com/jaredhanson/passport/issues/703
+  // A temporarily fix is providing a callback to passport.authenticate, as done next.
+  asyncHandler((req, res, next) => {
+    passport.authenticate("local", (err, user, info) => {
+      if (err) return next(err);
+      if (!user) {
+        req.session.messages = [info.message];
+        return saveSessionAndRedirect(req, res, "/login");
+      }
+      req.login(user, (err) => {
+        if (err) return next(err);
+        saveSessionAndRedirect(req, res, "/");
+      });
+    })(req, res, next);
   }),
 ];
 
