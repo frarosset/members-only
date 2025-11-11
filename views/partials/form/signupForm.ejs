@@ -18,5 +18,23 @@
        </div>
 
        <%- include("../base/submitButton.ejs", {fallbackUrl: "/pizzas", label: "REGISTER"}) _%>
+
+       <script>
+         (() => {
+           const pwInput = document.querySelector('input[name = "password"]');
+           const pwConfirmInput = document.querySelector('input[name = "confirm_password"]');
+
+           function checkPasswordMatch(e) {
+             if (pwInput.value !== pwConfirmInput.value) {
+               pwConfirmInput.setCustomValidity("Passwords do not match.");
+             } else {
+               pwConfirmInput.setCustomValidity("");
+             }
+           }
+
+           pwInput.addEventListener('input', checkPasswordMatch);
+           pwConfirmInput.addEventListener('input', checkPasswordMatch);
+         })();
+       </script>
      </div>
    </form>
