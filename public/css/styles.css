@@ -256,6 +256,13 @@ button {
   cursor: pointer;
 }
 
+p,
+*:not(button) span,
+*:not(h1) span,
+*:not(h2) span {
+  overflow-wrap: anywhere;
+}
+
 /* || Customize scrollbars */
 ::-webkit-scrollbar {
   width: 4px; /* width of the entire scrollbar */
@@ -312,6 +319,11 @@ button {
   border: none;
 }
 
+.top-header nav button,
+.top-header nav .button {
+  width: max-content;
+}
+
 .top-header nav a:hover .icon,
 .top-header nav button:hover .icon {
   background: var(--bg-gradient);
@@ -337,6 +349,7 @@ body > main > .main-container {
   align-items: center;
   padding: var(--main-padding);
   gap: var(--main-gap);
+  flex-wrap: wrap;
 }
 
 h1,
@@ -614,6 +627,10 @@ body.error span {
   border-radius: var(--messages-item-border-size-radius);
 }
 
+.messages__item_content a {
+  filter: saturate(1.4) brightness(0.8);
+}
+
 .messages__item_public {
   background: var(--bg-gradient);
   background-attachment: fixed;
@@ -670,6 +687,10 @@ body.error span {
   align-items: center;
 }
 
+.messages__item header .header-right-side .date {
+  width: max-content;
+}
+
 .messages__item header .header-right-side a,
 .messages__item header .header-right-side button {
   display: flex;
@@ -694,6 +715,8 @@ body.error span {
   font-weight: var(--text-link-font-weight);
   font-size: var(--messages-item-header-username-fontsize);
   text-decoration: none;
+
+  min-width: 0;
 }
 
 .messages__item header > a > span {
@@ -703,6 +726,13 @@ body.error span {
   gap: 0.2em;
   padding-right: 0.3em;
   backdrop-filter: var(--messages-item-a-backdrop-filter);
+}
+
+.messages__item header > a > span .messages__item_author {
+  max-width: 100%;
+  overflow-wrap: normal;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .messages__item header > a .icon {
@@ -1174,6 +1204,7 @@ dialog.join-the-club-hints-dialog li {
   --mask-image-url: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciLz4=");
   background: var(--txt-col);
   font-size: inherit;
+  min-width: 1em;
   width: 1em;
   height: 1em;
   vertical-align: text-top;
