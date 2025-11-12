@@ -56,6 +56,9 @@ exports.deleteMessage.post = [
     }
 
     // Note: req.body.referrer is validated/sanitized by setOnNotGetErrorRedirectTo.deleteMessage
+    setFlashMessage(req, "flashDialog", {
+      msg: "The message was successfully deleted.",
+    });
     res.redirect(req.body.referrer ?? "/");
   }),
 ];
