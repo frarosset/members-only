@@ -25,19 +25,31 @@ _%>
 </dialog>
 
 <script>
-  const dialog = document.querySelector("dialog.flash-dialog");
+  (() => {
+    const dialog = document.querySelector("dialog.flash-dialog");
 
-  <%_ if(!onCloseRedirectTo){ _%>
+    <%_ if(!onCloseRedirectTo){ _%>
 
-  const messageCloseButton = document.querySelector("dialog.flash-dialog button.close");
+    const messageCloseButton = document.querySelector("dialog.flash-dialog button.close");
 
-  messageCloseButton.addEventListener("click", (e) => {
-    dialog.close();
-  });
+    messageCloseButton.addEventListener("click", (e) => {
+      dialog.close();
+    });
 
-  <%_ } _%>
+    <%_ } _%>
 
-  dialog.showModal();
+    const firstAutofocus = document.querySelector('.autofocus-on-dialog-close');
+    if (firstAutofocus) {
+      dialog.addEventListener('close', () => {
+        firstAutofocus?.focus();
+      });
+    }
+
+    console.log(firstAutofocus)
+
+    dialog.showModal();
+
+  })();
 </script>
 
 <%_ } _%>

@@ -3,7 +3,7 @@
 
        <div class="form-inputs">
          <div class="form-inputs-row">
-           <%- include("../base/input.ejs",{type: "text", name: "username", label: "Username", maxlength: process.env.USERNAME_MAX_LENGTH, minlength: process.env.USERNAME_MIN_LENGTH, required: true,  pattern: process.env.USERNAME_REGEX, title: process.env.USERNAME_REGEX_MSG, autocomplete: "username"}) _%>
+           <%- include("../base/input.ejs",{class: "autofocus-on-dialog-close", type: "text", name: "username", label: "Username", maxlength: process.env.USERNAME_MAX_LENGTH, minlength: process.env.USERNAME_MIN_LENGTH, required: true,  pattern: process.env.USERNAME_REGEX, title: process.env.USERNAME_REGEX_MSG, autofocus: true, autocomplete: "username"}) _%>
          </div>
 
          <div class="form-inputs-row">
