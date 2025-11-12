@@ -1,12 +1,16 @@
 <%_ 
+  const isUserNewMessage = id === locals.flashMessages?.userNewMessageId;
+
   const cssClass = members_only
     ? "messages__item_members_only block-border-gradient"
     : users_only
     ? "messages__item_users_only block-border-gradient fill-gradient"
     : "messages__item_public";
+
+  const itemCssClass = isUserNewMessage ? "user-new-message" : "";
 _%>
 
-<div class="messages__item ">
+<div class="messages__item <%= itemCssClass %>">
   <%_ if(locals.currentUser?.is_member || locals.my_data){ _%>
   <header>
     <%_ if(!(locals.hideUsername ?? false)) {_%> <a href="/user/<%= author.id _%>"><span><%- include("./elements/userIcon.ejs",{user: author})%><span class="messages__item_author"><%= author.username _%></span></span></a><%_ } _%>

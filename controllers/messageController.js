@@ -5,6 +5,7 @@ const db = require("../db/queries.js");
 const CustomNotFoundError = require("../errors/CustomNotFoundError.js");
 const setOnNotGetErrorRedirectTo = require("./redirectOnError/setOnNotGetErrorRedirectTo.js");
 const { setFlashMessage } = require("../utils/flashMessages.js");
+const saveSessionAndRedirect = require("../utils/saveSessionAndRedirect.js");
 
 exports.newMessage = {};
 exports.myMessages = {};
@@ -31,9 +32,10 @@ exports.newMessage.post = [
   messageErrors.newMessage,
   messageValidators.newMessage,
   asyncHandler(async (req, res) => {
-    await db.create.message({ ...req.body, userId: req.user.id });
+    const id = await db.create.message({ ...req.body, userId: req.user.id });
 
-    res.redirect("/");
+    setFlashMessage(req, "userNewMessageId", id);
+    saveSessionAndRedirect(req, res, "/");
   }),
 ];
 

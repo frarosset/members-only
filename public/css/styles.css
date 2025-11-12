@@ -749,6 +749,17 @@ body.error span {
   background: var(--bg-gradient);
 }
 
+@keyframes fadeIn {
+  100% {
+    filter: none;
+  }
+}
+
+.messages__item.user-new-message {
+  filter: blur(20px) opacity(0); /* pre-state before animation */
+  animation: fadeIn 500ms 100ms ease-out forwards;
+}
+
 .dialog-message-to-delete-container {
   font-style: italic;
   display: flex;
