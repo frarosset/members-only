@@ -47,7 +47,12 @@ app.use(
     resave: false,
     saveUninitialized: false,
     store: sessionStore,
-    cookie: { secure: false, maxAge: 1000 * 60 * 60 * 24 },
+    cookie: {
+      httpOnly: true, // prevent client-side JS access (keeps cookies inaccessible to JS), mitigating XSS attaks
+      sameSite: "strict", // mitigate CSRF
+      secure: process.env.NODE_ENV !== "dev", // if true, ensures cookies are transmitted only over HTTPS
+      // Do not specify maxAge or expires: the cookies is deleted at client browser close
+    },
   })
 );
 app.use(passport.session());
