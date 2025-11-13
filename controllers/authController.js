@@ -87,6 +87,13 @@ exports.login.post = [
       }
       req.login(user, (err) => {
         if (err) return next(err);
+
+        if (req.body.remember) {
+          req.session.cookie.maxAge = Number(process.env.REMEMBER_ME_MS);
+        } else {
+          delete req.session.cookie.maxAge;
+        }
+
         setFlashMessage(req, "loginUser", true);
         saveSessionAndRedirect(req, res, "/");
       });
