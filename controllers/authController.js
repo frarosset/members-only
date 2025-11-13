@@ -51,6 +51,7 @@ exports.signup.post = [
       if (err) {
         return next(err);
       }
+      setFlashMessage(req, "signupUser", true);
       saveSessionAndRedirect(req, res, "/");
     });
   }),
@@ -86,6 +87,7 @@ exports.login.post = [
       }
       req.login(user, (err) => {
         if (err) return next(err);
+        setFlashMessage(req, "loginUser", true);
         saveSessionAndRedirect(req, res, "/");
       });
     })(req, res, next);

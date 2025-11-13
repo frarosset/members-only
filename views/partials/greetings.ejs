@@ -1,18 +1,30 @@
+ <%_ 
+  const greeting = locals.flashMessages?.signupUser
+    ? "Welcome"
+    : locals.flashMessages?.loginUser
+    ? "Welcome back"
+    : locals.isGuest
+    ? "Hello"
+    : "Hey there";
+ _%>
+
  <div class="greetings">
    <%_ if(locals.isGuest) { _%>
 
-   <p>Hello, <i class="text-gradient user-name">guest </i>!</p>
+   <p><%= greeting%>, <span class="text-gradient user-name guest">guest</span>!</p>
    <p>You're welcome to explore <i>public, anonymous messages</i> shared by our users.</p>
-   <p>To post your own messages, simply <%- include("./elements/textLink.ejs", {href: "/login", text: "log in"})%>. You'll also gain access to messages visible only to registered users.</p>
-   <p>Want to see who wrote each message and unlock members-only content? <i>Join our club</i> to get the full experience.</p>
+   <p>To post your own messages, just <%- include("./elements/textLink.ejs", {href: "/login", text: "log in"})%>. You'll also gain access to messages visible only to registered users.</p>
+   <p>By <i>joining our club</i>, you'll also discover who wrote each message and unlock members-only content.</p>
 
    <%_ } else if (locals.currentUser?.is_member) { _%>
 
-   <p>Welcome back, <span class="text-gradient user-name"><%= currentUser.name%> </span>!</p>
+   <p><%= greeting%>, <span class="text-gradient user-name"><%= currentUser.name%></span>!</p>
+   <p>Explore <i>any message</i> shared by our users, or write your own.</p>
 
    <%_ } else { _%>
 
-   <p>Welcome back, <span class="text-gradient user-name"><%= currentUser.name%> </span>!</p>
+   <p><%= greeting%>, <span class="text-gradient user-name"><%= currentUser.name%></span>!</p>
+   <p>Explore <i>public and users-only, anonymous messages</i> shared by our users, or write your own.</p>
    <p>Curious about who wrote each message? <%- include("./elements/textLink.ejs", {href: "/join-the-club", text: "Join our club"})%> to reveal authors and access members-only content.</p>
 
    <%_ } _%>
