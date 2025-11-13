@@ -18,10 +18,11 @@
   <%_ if(showIndex) { _%>
 
   <%- include("./partials/header.ejs"); _%>
-
+  <header>
+    <%- include("./partials/greetings.ejs") _%>
+  </header>
   <main>
     <div class="main-container">
-      <%- include("./partials/greetings.ejs") _%>
       <%- include("./partials/messageList.ejs") _%>
     </div>
   </main>

@@ -145,10 +145,10 @@
 
   --greetings-gap: 0.5em;
   --greetings-fontsize: 0.8rem;
-  --greetings-first-line-fontsize: 1.1rem;
-  --greetings-name-fontsize: 1.5rem;
+  --greetings-first-line-fontsize: 1.3rem;
+  --greetings-name-fontsize: 1.3rem;
   --greetings-first-line-fontweight: 700;
-  --greetings-name-fontweight: 900;
+  --greetings-name-fontweight: 800;
 
   --messages-list-gap: 1em;
   --messages-list-padding: 0 0;
@@ -364,10 +364,10 @@ h2 {
 }
 
 /* || Index Page */
-.index > main {
+/* .index > main {
   background: var(--base-radial-gradient-index-main);
   background-attachment: local;
-}
+} */
 
 /* || Entry Index Page */
 
@@ -570,6 +570,10 @@ body.error span {
 
 /* || Greetings */
 
+header:has(.greetings) {
+  width: 100%;
+}
+
 .greetings {
   color: var(--txt-col);
   text-align: center;
@@ -578,15 +582,26 @@ body.error span {
   flex-direction: column;
   gap: var(--greetings-gap);
   font-size: var(--greetings-fontsize);
+
+  width: 100%;
+  padding: var(--base-padding-tb) var(--base-padding-lr);
+  background: linear-gradient(
+    var(--top-color),
+    rgb(from var(--top-color) r g b / 40%) 100%
+  );
 }
 
-.greetings > *:first-child {
-  font-variant: small-caps;
+.greetings > p:first-of-type {
+  text-transform: uppercase;
   font-weight: var(--greetings-first-line-fontweight);
   font-size: var(--greetings-first-line-fontsize);
 }
 
-.greetings > *:first-child .user-name {
+.greetings > p:first-of-type:has(.guest) {
+  text-transform: none;
+}
+
+.greetings > p:first-of-type .user-name {
   font-variant: normal;
   font-weight: var(--greetings-name-fontweight);
   font-size: var(--greetings-name-fontsize);
@@ -594,6 +609,12 @@ body.error span {
 
 .greetings a {
   font-style: italic;
+}
+
+.greetings hr {
+  border: none;
+  height: 0.1rem;
+  background: var(--bg-gradient);
 }
 
 /*|| Messages */
