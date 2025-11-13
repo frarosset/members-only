@@ -1174,6 +1174,47 @@ dialog.delete-message-dialog {
   vertical-align: top;
 }
 
+.main-container-form .form-inputs label:has(input[type="checkbox"]) {
+  flex-direction: row;
+  align-items: center;
+  cursor: pointer;
+
+  gap: 0.25em;
+  margin-top: 1em;
+}
+
+input[type="checkbox"] {
+  -webkit-appearance: none;
+  appearance: none;
+  background-color: var(--input-bg-col);
+  margin: 0;
+
+  outline: 0;
+  width: 1.15em;
+  height: 1.15em;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  aspect-ratio: 1;
+
+  border-radius: 0.15em;
+}
+
+input[type="checkbox"]:after {
+  font-size: 1.5em;
+  font-weight: bold;
+  content: " ";
+}
+
+input[type="checkbox"]:disabled:after {
+  content: "-";
+  opacity: 0.5;
+}
+
+input[type="checkbox"]:checked:after {
+  content: "✓";
+}
+
 /* || Join the club */
 
 .join-the-club-info {
