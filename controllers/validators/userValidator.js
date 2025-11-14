@@ -21,6 +21,7 @@ exports.joinTheClub = [
       )
     )
     .withMessage(process.env.MEMBERSHIP_RIDDLE_REGEX_MSG)
+    .customSanitizer((str) => str.toLowerCase())
     .custom(async (trait, { req }) => {
       const isTraitAllowed = await db.read.membershipRiddleTraitAllowed(trait);
       if (!isTraitAllowed) {
@@ -47,6 +48,7 @@ exports.joinTheClub = [
       )
     )
     .withMessage(process.env.MEMBERSHIP_RIDDLE_REGEX_MSG)
+    .customSanitizer((str) => str.toLowerCase())
     .custom(async (noun, { req }) => {
       const isNounAllowed = await db.read.membershipRiddleNounAllowed(noun);
       if (!isNounAllowed) {

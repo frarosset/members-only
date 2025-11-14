@@ -20,8 +20,8 @@
       const joinBtn = document.querySelector('button[type="submit"]');
 
       function updateButton() {
-        const trait = traitInput.value.trim();
-        const noun = nounInput.value.trim();
+        const trait = traitInput.value.trim().toLowerCase();
+        const noun = nounInput.value.trim().toLowerCase();
 
         const startsWithVowel = (word) => /^[aeiou]/i.test(word);
         const article = startsWithVowel(trait) ? "an" : "a";
