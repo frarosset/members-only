@@ -11,7 +11,7 @@
   <%- include("./partials/headerBackToIndex.ejs"); _%>
 
   <main>
-    <div class="main-container">
+    <div class="main-container animate-children fade-in-and-drop">
       <h2 class="text-gradient"><%= code %></h2>
       <%_ if (locals.message ) { _%><p><%= locals.message %></p><%_ } _%>
       <%_ if (locals.partial ) { _%><%- include(process.cwd() + locals.partial) %><%_ } _%>

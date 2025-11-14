@@ -1,5 +1,5 @@
     <form action="/new-message" method="POST">
-      <div class="form-container light-transparent">
+      <div class="form-container light-transparent animate-children fade-in">
         <div class="form-inputs">
           <%- include("../base/input.ejs",{class: "autofocus-on-dialog-close", type: "text", name: "title", label: "Title", maxlength: process.env.TITLE_MAX_LENGTH, minlength: process.env.TITLE_MIN_LENGTH, required: true,  pattern: process.env.TITLE_REGEX, title: process.env.TITLE_REGEX_MSG, autofocus: true, autocomplete: "off"}) _%>
           <%- include("../base/textarea.ejs",{name: "text", label: "Text", maxlength: process.env.TEXT_MAX_LENGTH, minlength: process.env.TEXT_MIN_LENGTH, required: true,  pattern: process.env.TEXT_REGEX, title: process.env.TEXT_REGEX_MSG, autocomplete: "off"}) _%>

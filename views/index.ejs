@@ -28,18 +28,18 @@
   </main>
 
   <%_ } else { _%>
-  <header>
+  <header class="animate bounce-in">
     <span class="icon icon-logo"></span>
     <h1 class="text-gradient"> <%= pageTitle %></h1>
   </header>
   <main>
-    <div class="main-container">
+    <div class="main-container animate-children fade-in-and-drop">
       <div class="actions">
         <%- include("./partials/elements/linkAsSimpleButton.ejs", {href: "/login", text: "LOGIN"})%>
         <%- include("./partials/elements/linkAsHighlightButton.ejs", {href: "/signup", text: "SIGN UP"})%>
       </div>
 
-      <%- include("./partials/elements/textLink.ejs", {href: "/continue-as-guest", text: "Continue as a guest"})%>
+      <span><%- include("./partials/elements/textLink.ejs", {href: "/continue-as-guest", text: "Continue as a guest"})%></span>
     </div>
   </main>
   <%_ } _%>

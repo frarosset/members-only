@@ -13,16 +13,16 @@
   <%- include("./partials/headerBackToIndex.ejs"); _%>
 
   <main>
-    <div class="main-container">
+    <div class="main-container animate-children fade-in">
 
       <header>
         <%- include("./partials/userInfo.ejs", {user: currentUser}) _%>
       </header>
 
-      <div class="my-profile-side">
+      <div class="my-profile-side  animate-children fade-in">
         <%- include("./partials/userDetails.ejs", {user: currentUser}) _%>
 
-        <div class="actions-container">
+        <div class="actions-container animate-children fade-in">
           <div class="actions">
             <%- include("./partials/elements/linkAsHighlightButton.ejs", {href: "/my-messages", text: "My messages"})%>
             <%- include("./partials/elements/linkAsHighlightButton.ejs", {href: "/new-message", text: "Post a new message"})%>

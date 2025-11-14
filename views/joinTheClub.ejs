@@ -12,18 +12,20 @@
   <%- include("./partials/headerBackToIndex.ejs"); _%>
 
   <main>
-    <div class="main-container">
+    <div class="main-container animate-children fade-in">
       <%- include("partials/h2Heading.ejs", {text: "Join the club"}) _%>
 
-      <div class="join-the-club-info block-border-gradient">
-        <div class="join-the-club-features">
-          <p>Join our club to unlock new features: </p>
-          <%- include("partials/memberFeatures.ejs") _%>
+      <div>
+        <div class="join-the-club-info block-border-gradient">
+          <div class="join-the-club-features">
+            <p>Join our club to unlock new features: </p>
+            <%- include("partials/memberFeatures.ejs") _%>
+          </div>
+
+          <p class="join-the-club-riddle">So, <strong class="user-name text-gradient"><%= locals.currentUser.name%> <%= locals.currentUser.surname%></strong>, will you join our club?</p>
+
+          <p class="text-gradient join-the-club-riddle">You are allowed in only if you bring <i>a special animal, plant, vegetable, gem, natural entity, or fantasy creature</i>.</p>
         </div>
-
-        <p class="join-the-club-riddle">So, <strong class="user-name text-gradient"><%= locals.currentUser.name%> <%= locals.currentUser.surname%></strong>, will you join our club?</p>
-
-        <p class="text-gradient join-the-club-riddle">You are allowed in only if you bring <i>a special animal, plant, vegetable, gem, natural entity, or fantasy creature</i>.</p>
       </div>
 
       <div class="main-container-form">

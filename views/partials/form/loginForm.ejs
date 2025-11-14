@@ -1,5 +1,5 @@
     <form action="/login" method="POST">
-      <div class="form-container light-transparent">
+      <div class="form-container light-transparent animate-children fade-in">
         <div class="form-inputs">
           <%- include("../base/input.ejs",{class: "autofocus-on-dialog-close", type: "text", name: "username", label: "Username", maxlength: process.env.USERNAME_MAX_LENGTH, required: true, autofocus: true, autocomplete: "username"}) _%>
           <%- include("../base/input.ejs",{type: "password", name: "password", label: "Password", maxlength: process.env.PASSWORD_MAX_LENGTH, required: true, autocomplete: "current-password"}) _%>

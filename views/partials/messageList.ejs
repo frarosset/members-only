@@ -1,5 +1,5 @@
 <%_ if (locals?.messagesArray.length > 0) { _%>
-<ul class="messages__list">
+<ul class="messages__list animate-children fade-in-and-drop">
   <%_ locals.messagesArray.forEach((msg, idx) => { _%>
   <li><%- include("./messageItem.ejs",{...msg, includeScript: idx === (locals.messagesArray.length - 1 )}) _%> </li>
   <%_ }) _%>
