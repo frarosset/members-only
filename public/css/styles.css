@@ -186,6 +186,9 @@
   --animation-duration-entry-index-header: 1.5s;
   --animation-initial-delay-index-main: 1s;
   --animation-delta-delay-index-main: 0.1s;
+  --animation-initial-delay-index-main-new-msg: calc(
+    2 * var(--animation-initial-delay-index-main)
+  );
 
   font-family: var(--default-font);
   line-height: var(--default-lineheight);
@@ -671,6 +674,10 @@ header:has(.greetings) {
   filter: saturate(1.4) brightness(0.8);
 }
 
+.messages__item_content p {
+  white-space: pre-wrap;
+}
+
 .messages__item_public {
   background: var(--bg-gradient);
   background-attachment: fixed;
@@ -791,15 +798,48 @@ header:has(.greetings) {
   }
 }
 
-@keyframes fadeInNew {
+.messages__item.user-message header .messages__item_author::after {
+  content: " | me";
+  padding-right: 0.1em;
+  font-weight: normal;
+  font-variant: small-caps;
+}
+
+/* New item highlight */
+/* Note: you cant use transforms because children of the message item use background-attachmen: fixed, which is incompatible */
+
+@keyframes fadeInNewMessage {
+  0% {
+    display: none;
+    filter: blur(20px) opacity(0); /* pre-state before animation */
+    font-size: 0em;
+  }
+  1% {
+    display: block;
+  }
+  75% {
+    font-size: 1.2em;
+  }
   100% {
     filter: none;
+    font-size: 1em;
   }
 }
 
-.messages__item.user-new-message {
-  filter: blur(20px) opacity(0); /* pre-state before animation */
-  animation: fadeInNew 500ms 100ms ease-out forwards;
+li:first-child > .messages__item.user-new-message {
+  animation: fadeInNewMessage var(--animation-duration)
+    var(--animation-initial-delay-index-main-new-msg) ease-out backwards;
+}
+
+/* Disable other animaitons */
+
+body:has(.user-new-message) {
+  --animation-initial-delay-index-main-new-msg: 0s;
+}
+
+body:has(.user-new-message) .animate,
+body:has(.user-new-message) .animate-children > * {
+  animation: none !important;
 }
 
 .dialog-message-to-delete-container {
@@ -1438,6 +1478,10 @@ body > footer .icon {
   .animate-children > * {
     animation: none !important;
   }
+
+  :root {
+    --animation-initial-delay-index-main-new-msg: 0s;
+  }
 }
 
 dialog,
@@ -1445,6 +1489,10 @@ dialog,
 .animate-children > * {
   animation: fadeIn var(--animation-duration) ease-in;
   animation-fill-mode: backwards;
+}
+
+.animate,
+.animate-children > * {
   animation-delay: var(--animation-initial-delay);
 }
 
