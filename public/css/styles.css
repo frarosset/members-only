@@ -335,9 +335,11 @@ p,
   width: max-content;
 }
 
-.top-header nav a:hover .icon,
-.top-header nav button:hover .icon {
-  background: var(--bg-gradient);
+@media (hover: hover) {
+  .top-header nav a:hover .icon,
+  .top-header nav button:hover .icon {
+    background: var(--bg-gradient);
+  }
 }
 
 /* || Main */
@@ -413,8 +415,10 @@ h2 {
   opacity: 0.5;
 }
 
-.entry-index .text-link:hover {
-  opacity: 1;
+@media (hover: hover) {
+  .entry-index .text-link:hover {
+    opacity: 1;
+  }
 }
 
 .entry-index .actions {
@@ -533,13 +537,15 @@ body.error span {
   padding: var(--button-padding);
 }
 
-.button:hover {
-  background: transparent;
-}
+@media (hover: hover) {
+  .button:hover {
+    background: transparent;
+  }
 
-.button:hover,
-.button:hover::before {
-  background-attachment: unset;
+  .button:hover,
+  .button:hover::before {
+    background-attachment: unset;
+  }
 }
 
 /* || Custom links: text links */
@@ -563,20 +569,22 @@ body.error span {
   filter: var(--text-link-filter);
 }
 
-.text-link:hover,
-.button:hover::before {
-  background-attachment: unset;
-}
+@media (hover: hover) {
+  .text-link:hover,
+  .button:hover::before {
+    background-attachment: unset;
+  }
 
-.text-link:hover::before {
-  content: "";
-  position: absolute;
-  top: 100%;
-  width: 100%;
-  left: 0;
-  height: var(--text-link-underline-width-hover);
-  border-radius: var(--text-link-underline-radius-hover);
-  background: var(--bg-gradient);
+  .text-link:hover::before {
+    content: "";
+    position: absolute;
+    top: 100%;
+    width: 100%;
+    left: 0;
+    height: var(--text-link-underline-width-hover);
+    border-radius: var(--text-link-underline-radius-hover);
+    background: var(--bg-gradient);
+  }
 }
 
 /* || Greetings */
@@ -772,13 +780,15 @@ header:has(.greetings) {
   font-size: 1lh;
 }
 
-.messages__item header > a:hover span {
-  backdrop-filter: var(--messages-item-a-hover-backdrop-filter);
-}
+@media (hover: hover) {
+  .messages__item header > a:hover span {
+    backdrop-filter: var(--messages-item-a-hover-backdrop-filter);
+  }
 
-.messages__item header a:hover .icon,
-.messages__item header button:hover .icon {
-  background: var(--bg-gradient);
+  .messages__item header a:hover .icon,
+  .messages__item header button:hover .icon {
+    background: var(--bg-gradient);
+  }
 }
 
 @keyframes fadeInNew {
