@@ -12,6 +12,7 @@ const {
 } = require("./utils/flashMessages.js");
 const saveSessionAndRedirect = require("./utils/saveSessionAndRedirect.js");
 const { getLastReadMessageId } = require("./utils/lastReadMessageId.js");
+const initWebSocket = require("./websockets/wss.js");
 
 const CustomNotFoundError = require("./errors/CustomNotFoundError.js");
 
@@ -138,6 +139,8 @@ app.use((error, req, res, next) => {
 });
 
 const PORT = process.env.PORT || 8080;
-app.listen(PORT, () => {
+const server = app.listen(PORT, () => {
   console.log(`Server listening on port ${PORT}`);
 });
+
+initWebSocket(server);
