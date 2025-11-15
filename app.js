@@ -11,8 +11,13 @@ const {
   getFlashMessage,
 } = require("./utils/flashMessages.js");
 const saveSessionAndRedirect = require("./utils/saveSessionAndRedirect.js");
-const { getLastReadMessageId } = require("./utils/lastReadMessageId.js");
+const {
+  getLastReadMessageId,
+  updateLastReadMessageIdFromTemp,
+} = require("./utils/lastReadMessageId.js");
 const initWebSocket = require("./websockets/wss.js");
+const asyncHandler = require("express-async-handler");
+const getCookie = require("./utils/getCookie.js");
 
 const CustomNotFoundError = require("./errors/CustomNotFoundError.js");
 
@@ -60,24 +65,44 @@ app.use(
 app.use(passport.session());
 
 // Save useful data in res.locals
-app.use((req, res, next) => {
-  res.locals.pageTitle = process.env.TITLE;
+app.use(
+  asyncHandler(async (req, res, next) => {
+    res.locals.pageTitle = process.env.TITLE;
 
-  const msg = req.session.messages || [];
-  res.locals.messages = msg;
-  res.locals.hasMessages = !!msg.length;
-  req.session.messages = [];
+    const msg = req.session.messages || [];
+    res.locals.messages = msg;
+    res.locals.hasMessages = !!msg.length;
+    req.session.messages = [];
 
-  res.locals.currentUrl = req.originalUrl;
+    res.locals.currentUrl = req.originalUrl;
 
-  res.locals.currentUser = req.user;
+    res.locals.currentUser = req.user;
 
-  res.locals.isGuest = req.session.isGuest;
+    res.locals.isGuest = req.session.isGuest;
 
-  res.locals.lastReadMessageId = getLastReadMessageId(req);
+    // If a wsRefresh cookie is present, the request is
+    // triggered by websocket, so just set a locals wsRefresh to true,
+    // so that a temporary lastReadMessageId (saved in the session) is
+    // updated instead of the actual one for the user (see indexController).
+    // Otherwise, just set the lastReadMessageId of the user as the above
+    // mentioned temporary one, if present.
+    if (getCookie(req, "wsRefresh") == null) {
+      await updateLastReadMessageIdFromTemp(req);
+      res.locals.wsRefresh = false;
+    } else {
+      res.clearCookie("wsRefresh", {
+        httpOnly: true,
+        path: "/",
+        samesite: "strict",
+      });
+      res.locals.wsRefresh = true;
+    }
 
-  next();
-});
+    res.locals.lastReadMessageId = getLastReadMessageId(req);
+
+    next();
+  })
+);
 
 // Save flash messages [requires session initialized]
 app.use(useFlashMessages);

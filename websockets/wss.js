@@ -23,19 +23,24 @@ function initWebSocket(server) {
 
   // The server emits a simple text to all connected clients only when the database is
   // modified, to trigger page refresh and enabling efficient real-time syncing.
-  // This is implemented via a custom EventEmitter. A future update will optimize this by sending only the portion of the
-  // HTML message list with the new messages, to be prepended to the message list.
+  // This is implemented via a custom EventEmitter.
 
-  // Note: since the page is just refreshed, the functionality of unread
-  // message count is broken (ie, a new message becomes read as soon as the
-  // next refresh is issued). This will be fixed later on.
+  // Since the page is just refreshed, the functionality of unread
+  // message count would broke (ie, a new message becomes read as soon as the
+  // next refresh is issued). This is fixed setting a wsRefresh cookie when such
+  // is issued, which prevents the update of last read message id.
+
+  // The cookie is set client side, because once the webSocket connection has been established,
+  // it's an open TCP socket and the protocol is no longer http,
+  // thus there is no built-in way to exchange cookies.
+  // See: https://stackoverflow.com/a/39202006
 
   const writeMessage = async () => {
-    const data = "there are new messages"; // await getUpdatedDataForMessageList(); // TODO
+    const data = "refreshForDbUpdated";
     debouncedWithMaxWaitBroadcast(wss, data);
   };
 
-  notifier.on("db-updated", writeMessage);
+  notifier.on("dbUpdated", writeMessage);
 }
 
 module.exports = initWebSocket;

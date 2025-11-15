@@ -32,7 +32,7 @@ db.create.message = async (data) => {
 
   const results = await pool.query(sql, sqlData);
 
-  notifier.emit("db-updated");
+  notifier.emit("dbUpdated");
 
   return results.rows?.[0].id;
 };
@@ -50,7 +50,7 @@ db.update.upgradeUserToMember = async (id, trait, noun) => {
 
   const results = await pool.query(sql, sqlData);
 
-  notifier.emit("db-updated");
+  notifier.emit("dbUpdated");
 
   return !!results.rowCount;
 };
@@ -67,7 +67,7 @@ db.update.upgradeUserToAdmin = async (id) => {
 
   const results = await pool.query(sql, sqlData);
 
-  notifier.emit("db-updated");
+  notifier.emit("dbUpdated");
 
   return !!results.rowCount;
 };
@@ -79,13 +79,13 @@ db.update.upgradeUserLastReadMessageId = async (id, lastMsgId) => {
     WHERE id = $1 AND (
       last_read_message_id IS NULL OR last_read_message_id < $2
     )
-    RETURNING id;
+    RETURNING last_read_message_id;
   `;
   const sqlData = [id, lastMsgId];
 
   const results = await pool.query(sql, sqlData);
 
-  return !!results.rowCount;
+  return results.rows?.[0]?.last_read_message_id;
 };
 
 db.delete.deleteMessageFromId = async (id) => {
@@ -98,7 +98,7 @@ db.delete.deleteMessageFromId = async (id) => {
 
   const results = await pool.query(sql, sqlData);
 
-  notifier.emit("db-updated");
+  notifier.emit("dbUpdated");
 
   return !!results.rowCount;
 };
