@@ -6,6 +6,7 @@ const CustomNotFoundError = require("../errors/CustomNotFoundError.js");
 const setOnNotGetErrorRedirectTo = require("./redirectOnError/setOnNotGetErrorRedirectTo.js");
 const { setFlashMessage } = require("../utils/flashMessages.js");
 const saveSessionAndRedirect = require("../utils/saveSessionAndRedirect.js");
+const noCache = require("../utils/noCache.js");
 
 exports.newMessage = {};
 exports.myMessages = {};
@@ -20,6 +21,7 @@ exports.newMessage.get = [
 
 exports.myMessages.get = [
   messageErrors.myMessages,
+  noCache,
   asyncHandler(async (req, res) => {
     req.user.messages = await db.read.allMessagesPerUserId(req.user.id, true);
 

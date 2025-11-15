@@ -6,6 +6,7 @@ const CustomNotFoundError = require("../errors/CustomNotFoundError.js");
 const setOnNotGetErrorRedirectTo = require("./redirectOnError/setOnNotGetErrorRedirectTo.js");
 const { setFlashMessage } = require("../utils/flashMessages.js");
 const saveSessionAndRedirect = require("../utils/saveSessionAndRedirect.js");
+const noCache = require("../utils/noCache.js");
 
 exports.user = {};
 exports.myProfile = {};
@@ -14,6 +15,7 @@ exports.becomeAdmin = {};
 
 exports.user.get = [
   userErrors.user,
+  noCache,
   asyncHandler(async (req, res) => {
     const id = req.params.id;
 

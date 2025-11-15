@@ -1,6 +1,7 @@
 const asyncHandler = require("express-async-handler");
 const db = require("../db/queries.js");
 const { updateLastReadMessageId } = require("../utils/lastReadMessageId.js");
+const noCache = require("../utils/noCache.js");
 
 exports.get = [
   (req, res, next) => {
@@ -11,6 +12,7 @@ exports.get = [
 
     next();
   },
+  noCache,
   asyncHandler(async (req, res) => {
     const isMember = req?.user?.is_member != null;
     const allMessages = await db.read.allMessages(isMember);
