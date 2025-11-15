@@ -826,9 +826,32 @@ header:has(.greetings) {
   }
 }
 
-li:first-child > .messages__item.user-new-message {
+.messages__item.user-new-message {
   animation: fadeInNewMessage var(--animation-duration)
     var(--animation-initial-delay-index-main-new-msg) ease-out backwards;
+}
+
+li:has(> .new-message) + li:not(:has(> .new-message)),
+li:last-of-type:has(> .new-message) {
+  display: flex;
+  flex-direction: column;
+  gap: var(--messages-list-gap);
+}
+
+.unread-messages-text,
+li:has(> .new-message) + li:not(:has(> .new-message))::before,
+li:last-of-type:has(> .new-message)::after {
+  text-align: center;
+  font-size: 0.8rem;
+  color: var(--txt-col-white);
+  opacity: 50%;
+  margin: 0 var(--messages-item-padding) 1em;
+}
+
+li:has(> .new-message) + li:not(:has(> .new-message))::before,
+li:last-of-type:has(> .new-message)::after {
+  content: "↑ new messages ↑";
+  border-bottom: 0.1em solid var(--txt-col-white);
 }
 
 /* Disable other animaitons */
@@ -1445,6 +1468,7 @@ body > footer {
   line-height: 1.2;
   padding: var(--ftr-padding);
   z-index: 10;
+  opacity: 0.5;
 }
 
 body > footer p,

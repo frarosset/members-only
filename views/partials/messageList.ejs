@@ -1,5 +1,7 @@
+<%_ const unreadMessages = locals.messagesArray.filter((msg) => msg.id > locals.lastReadMessageId).length _%>
 <%_ if (locals?.messagesArray.length > 0) { _%>
 <ul class="messages__list animate-children fade-in-and-drop">
+  <span class="unread-messages-text"><%= unreadMessages %> unread <%= unreadMessages == 1 ? "message" : "messages" %></span>
   <%_ locals.messagesArray.forEach((msg, idx) => { _%>
   <li><%- include("./messageItem.ejs",{...msg, includeScript: idx === (locals.messagesArray.length - 1 )}) _%> </li>
   <%_ }) _%>
