@@ -1,5 +1,6 @@
 const pool = require("./pool.js");
 const { securePasswordForStorage } = require("../utils/passwordUtils.js");
+const notifier = require("../events/notifier.js");
 
 const db = { create: {}, read: {}, update: {}, delete: {} };
 
@@ -31,6 +32,8 @@ db.create.message = async (data) => {
 
   const results = await pool.query(sql, sqlData);
 
+  notifier.emit("db-updated");
+
   return results.rows?.[0].id;
 };
 
@@ -47,6 +50,8 @@ db.update.upgradeUserToMember = async (id, trait, noun) => {
 
   const results = await pool.query(sql, sqlData);
 
+  notifier.emit("db-updated");
+
   return !!results.rowCount;
 };
 
@@ -61,6 +66,8 @@ db.update.upgradeUserToAdmin = async (id) => {
   const sqlData = [id];
 
   const results = await pool.query(sql, sqlData);
+
+  notifier.emit("db-updated");
 
   return !!results.rowCount;
 };
@@ -90,6 +97,8 @@ db.delete.deleteMessageFromId = async (id) => {
   const sqlData = [id];
 
   const results = await pool.query(sql, sqlData);
+
+  notifier.emit("db-updated");
 
   return !!results.rowCount;
 };
