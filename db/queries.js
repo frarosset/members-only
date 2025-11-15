@@ -65,6 +65,22 @@ db.update.upgradeUserToAdmin = async (id) => {
   return !!results.rowCount;
 };
 
+db.update.upgradeUserLastReadMessageId = async (id, lastMsgId) => {
+  const sql = `
+    UPDATE users
+    SET last_read_message_id = $2
+    WHERE id = $1 AND (
+      last_read_message_id IS NULL OR last_read_message_id < $2
+    )
+    RETURNING id;
+  `;
+  const sqlData = [id, lastMsgId];
+
+  const results = await pool.query(sql, sqlData);
+
+  return !!results.rowCount;
+};
+
 db.delete.deleteMessageFromId = async (id) => {
   const sql = `
     DELETE FROM messages 

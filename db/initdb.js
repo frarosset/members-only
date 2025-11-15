@@ -34,7 +34,8 @@ CREATE TABLE users (
     is_admin BOOLEAN NOT NULL DEFAULT FALSE,
     membership_trait_noun VARCHAR(${
       1 + 2 * Number(process.env.MEMBERSHIP_RIDDLE_MAX_LENGTH)
-    }) UNIQUE
+    }) UNIQUE,
+    last_read_message_id INTEGER DEFAULT NULL
 );
 
 CREATE TABLE messages (

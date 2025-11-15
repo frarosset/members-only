@@ -11,6 +11,7 @@ const {
   getFlashMessage,
 } = require("./utils/flashMessages.js");
 const saveSessionAndRedirect = require("./utils/saveSessionAndRedirect.js");
+const { getLastReadMessageId } = require("./utils/lastReadMessageId.js");
 
 const CustomNotFoundError = require("./errors/CustomNotFoundError.js");
 
@@ -71,6 +72,8 @@ app.use((req, res, next) => {
   res.locals.currentUser = req.user;
 
   res.locals.isGuest = req.session.isGuest;
+
+  res.locals.lastReadMessageId = getLastReadMessageId(req);
 
   next();
 });

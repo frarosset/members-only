@@ -23,6 +23,8 @@ exports.myMessages.get = [
   asyncHandler(async (req, res) => {
     req.user.messages = await db.read.allMessagesPerUserId(req.user.id, true);
 
+    // No need to update last read message id if you access the user own messages only
+
     res.render("myMessages");
   }),
 ];

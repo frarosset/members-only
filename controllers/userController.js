@@ -25,6 +25,8 @@ exports.user.get = [
 
     user.messages = await db.read.allMessagesPerUserId(id, true);
 
+    // Don't update last read message id if you access an  user message: there might be other unread users messages
+
     res.render("user", { user });
   }),
 ];
