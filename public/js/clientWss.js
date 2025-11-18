@@ -1,5 +1,6 @@
 (() => {
   let socket, channel;
+  let refreshTimeout;
 
   function getWebSocketUrl() {
     const protocol = window.location.protocol === "https:" ? "wss" : "ws";
@@ -8,9 +9,12 @@
   }
 
   function refresh() {
-    document.cookie = "wsRefresh=true;path=/";
-    sessionStorage.setItem("suppressBroadcast", true); // suppress broadcast to other tabs (see BroadcastChannel)
-    location.reload();
+    if (refreshTimeout) return;
+    refreshTimeout = setTimeout(() => {
+      document.cookie = "wsRefresh=true;path=/";
+      sessionStorage.setItem("suppressBroadcast", true); // suppress broadcast to other tabs (see BroadcastChannel)
+      location.reload();
+    }, 100);
   }
 
   function refreshOtherTabs() {
