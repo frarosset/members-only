@@ -848,6 +848,10 @@ li:last-of-type:has(> .new-message)::after {
   margin: 0 var(--messages-item-padding) 1em;
 }
 
+body.my-messages .unread-messages-text {
+  display: none;
+}
+
 li:has(> .new-message) + li:not(:has(> .new-message))::before,
 li:last-of-type:has(> .new-message)::after {
   content: "↑ new messages ↑";
