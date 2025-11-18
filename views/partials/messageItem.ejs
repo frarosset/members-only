@@ -12,9 +12,11 @@
   const newMessageCssClass = isNewMessage ? "new-message" : "";
   const userNewMessageCssClass = isUserNewMessage ? "user-new-message" : "";
   const userMessageCssClass = isUserMessage ? "user-message" : "";
+
+  const animationClass = locals.wsRefresh && isNewMessage ? "animate fade-in" : "";
 _%>
 
-<div class="messages__item <%= userMessageCssClass %> <%= userNewMessageCssClass %> <%= newMessageCssClass %>">
+<div class="messages__item <%= userMessageCssClass %> <%= userNewMessageCssClass %> <%= newMessageCssClass %> <%= animationClass %>">
   <%_ if(locals.currentUser?.is_member || locals.my_data){ _%>
   <header>
     <%_ if(!(locals.hideUsername ?? false)) {_%> <a href="/user/<%= author.id _%>"><span><%- include("./elements/userIcon.ejs",{user: author})%><span class="messages__item_author"><%= author.username _%></span></span></a><%_ } _%>
