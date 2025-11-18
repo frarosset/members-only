@@ -12,6 +12,12 @@ function initWebSocket(server) {
   wss.on("connection", (ws) => {
     console.log(`Client connected (tot: ${wss.clients.size})`);
 
+    // Close client connections if there are too much
+    if (wss.clients.size > process.env.MAX_WSS_CLIENTS) {
+      ws.destroy(1013, "Server overloaded");
+      return;
+    }
+
     ws.on("close", () => {
       console.log(`Client disconnected (tot: ${wss.clients.size})`);
     });
