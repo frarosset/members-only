@@ -1,6 +1,6 @@
 function getCookie(req, name) {
   return req.headers.cookie
-    .split("; ")
+    ?.split("; ")
     .find((row) => row.startsWith(name + "="))
     ?.split("=")[1];
 }
