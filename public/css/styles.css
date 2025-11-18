@@ -843,8 +843,7 @@ li:has(> .new-message) + li:not(:has(> .new-message))::before,
 li:last-of-type:has(> .new-message)::after {
   text-align: center;
   font-size: 0.8rem;
-  color: var(--txt-col-white);
-  opacity: 50%;
+  color: rgb(from var(--txt-col-white) r g b / 50%);
   margin: 0 var(--messages-item-padding) 1em;
 }
 

@@ -7,6 +7,7 @@ const setOnNotGetErrorRedirectTo = require("./redirectOnError/setOnNotGetErrorRe
 const { setFlashMessage } = require("../utils/flashMessages.js");
 const saveSessionAndRedirect = require("../utils/saveSessionAndRedirect.js");
 const noCache = require("../utils/noCache.js");
+const { setLastReadMessageId } = require("../utils/lastReadMessageId.js");
 
 exports.newMessage = {};
 exports.myMessages = {};
@@ -37,6 +38,10 @@ exports.newMessage.post = [
   messageValidators.newMessage,
   asyncHandler(async (req, res) => {
     const id = await db.create.message({ ...req.body, userId: req.user.id });
+
+    if (res.locals.lastReadMessageId == id - 1) {
+      await setLastReadMessageId(req, id);
+    }
 
     setFlashMessage(req, "userNewMessageId", id);
     saveSessionAndRedirect(req, res, "/");
