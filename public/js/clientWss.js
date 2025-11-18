@@ -1,5 +1,5 @@
 (() => {
-  let socket;
+  let socket, channel;
 
   function getWebSocketUrl() {
     const protocol = window.location.protocol === "https:" ? "wss" : "ws";
@@ -9,7 +9,16 @@
 
   function refresh() {
     document.cookie = "wsRefresh=true;path=/";
+    sessionStorage.setItem("suppressBroadcast", true); // suppress broadcast to other tabs (see BroadcastChannel)
     location.reload();
+  }
+
+  function refreshOtherTabs() {
+    if (sessionStorage.getItem("suppressBroadcast")) {
+      sessionStorage.removeItem("suppressBroadcast");
+    } else {
+      channel.postMessage("refresh-other-tabs");
+    }
   }
 
   function connectSocket() {
@@ -41,13 +50,40 @@
     };
   }
 
+  function connectChannel() {
+    // Refresh other tabs if one gets updated...to update them too
+
+    channel = new BroadcastChannel("user-tabs");
+
+    // Listen for refresh requests from other tabs
+    channel.onmessage = (event) => {
+      if (
+        event.data === "refresh-other-tabs" &&
+        !sessionStorage.getItem("suppressBroadcast") // avoid infinite loops
+      ) {
+        sessionStorage.setItem("suppressBroadcast", true);
+        refresh();
+      }
+    };
+
+    // On load, if not suppressed, broadcast to others
+    window.addEventListener("DOMContentLoaded", refreshOtherTabs);
+  }
+
+  function disconnectChannel() {
+    window.removeEventListener("DOMContentLoaded", refreshOtherTabs);
+    channel?.close();
+  }
+
   // Handle tab visibility
   document.onvisibilitychange = () => {
     console.log("Tab is", document.visibilityState);
 
     if (document.visibilityState === "hidden") {
       socket?.close();
-    } else if (socket?.readyState !== WebSocket.OPEN) {
+      disconnectChannel();
+    } else {
+      // if (socket?.readyState !== WebSocket.OPEN) {
       // No: connectSocket();
       // new messages might have been posted while tab was not visible
       // and not connected to server via WebSockets: reload the page
@@ -57,4 +93,5 @@
   };
 
   connectSocket(); // Initial connection
+  connectChannel();
 })();
