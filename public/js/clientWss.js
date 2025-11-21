@@ -14,6 +14,7 @@
       document.cookie = "wsRefresh=true;path=/";
       sessionStorage.setItem("suppressBroadcast", true); // suppress broadcast to other tabs (see BroadcastChannel)
       location.reload();
+      refreshTimeout = null; // reset after reload attempt
     }, 100);
   }
 
@@ -94,4 +95,9 @@
 
   connectSocket(); // Initial connection
   connectChannel();
+
+  // same as above
+  addEventListener("online", (e) => {
+    refresh();
+  });
 })();
