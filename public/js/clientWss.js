@@ -18,6 +18,7 @@
   }
 
   function refreshOtherTabs() {
+    window.removeEventListener("DOMContentLoaded", refreshOtherTabs);
     if (sessionStorage.getItem("suppressBroadcast")) {
       sessionStorage.removeItem("suppressBroadcast");
     } else {
@@ -74,18 +75,13 @@
     window.addEventListener("DOMContentLoaded", refreshOtherTabs);
   }
 
-  function disconnectChannel() {
-    window.removeEventListener("DOMContentLoaded", refreshOtherTabs);
-    channel?.close();
-  }
-
   // Handle tab visibility
   document.onvisibilitychange = () => {
     console.log("Tab is", document.visibilityState);
 
     if (document.visibilityState === "hidden") {
       socket?.close();
-      disconnectChannel();
+      channel?.close();
     } else {
       // if (socket?.readyState !== WebSocket.OPEN) {
       // No: connectSocket();
