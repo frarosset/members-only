@@ -48,20 +48,20 @@ app.get(
 // Setup session for authentication
 const sessionStore = new pgSession({ pool: pool, createTableIfMissing: true });
 
-app.use(
-  session({
-    secret: process.env.SESSION_SECRET,
-    resave: false,
-    saveUninitialized: false,
-    store: sessionStore,
-    cookie: {
-      httpOnly: true, // prevent client-side JS access (keeps cookies inaccessible to JS), mitigating XSS attaks
-      sameSite: "strict", // mitigate CSRF
-      secure: process.env.NODE_ENV !== "dev", // if true, ensures cookies are transmitted only over HTTPS
-      // Do not specify maxAge or expires: the cookies is deleted at client browser close
-    },
-  })
-);
+const sessionParser = session({
+  secret: process.env.SESSION_SECRET,
+  resave: false,
+  saveUninitialized: false,
+  store: sessionStore,
+  cookie: {
+    httpOnly: true, // prevent client-side JS access (keeps cookies inaccessible to JS), mitigating XSS attaks
+    sameSite: "strict", // mitigate CSRF
+    secure: process.env.NODE_ENV !== "dev", // if true, ensures cookies are transmitted only over HTTPS
+    // Do not specify maxAge or expires: the cookies is deleted at client browser close
+  },
+});
+
+app.use(sessionParser);
 app.use(passport.session());
 
 // Save useful data in res.locals
@@ -168,4 +168,4 @@ const server = app.listen(PORT, () => {
   console.log(`Server listening on port ${PORT}`);
 });
 
-initWebSocket(server);
+initWebSocket(server, sessionParser);

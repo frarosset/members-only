@@ -1,6 +1,7 @@
 const WebSocket = require("ws");
 const { debouncedWithMaxWaitBroadcast } = require("./broadcast.js");
 const notifier = require("../events/notifier.js");
+const getCookie = require("../utils/getCookie.js");
 
 const wssPingInterval = Number(process.env.WSS_PING_INTERVAL_MIN) * 60000;
 
@@ -8,15 +9,37 @@ function heartbeat(ws) {
   ws.isAlive = true;
 }
 
-function initWebSocket(server) {
+function onSocketError(err) {
+  console.log(err);
+}
+
+function initWebSocket(server, sessionParser) {
   // This connection is designed to notify connected clients about
   // new messages sent to the server, not to receive messages
   // from clients.
 
-  const wss = new WebSocket.Server({ server });
+  // noServer allows you to edit the onUpgrade callback, eg, to
 
-  wss.on("connection", (ws) => {
+  const wss = new WebSocket.Server({ noServer: true });
+
+  server.on("upgrade", (req, socket, head) => {
+    socket.on("error", onSocketError);
+
+    sessionParser(req, {}, () => {
+      socket.removeListener("error", onSocketError);
+
+      wss.handleUpgrade(req, socket, head, function done(ws) {
+        wss.emit("connection", ws, req);
+      });
+    });
+  });
+
+  wss.on("connection", (ws, req) => {
     console.log(`Client connected (tot: ${wss.clients.size})`);
+
+    const connectSid = getCookie(req, "connect.sid");
+    ws.connectSid = connectSid;
+    ws.userId = req.session?.passport?.user;
 
     heartbeat(ws);
 
