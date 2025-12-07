@@ -7,6 +7,7 @@ const setOnNotGetErrorRedirectTo = require("./redirectOnError/setOnNotGetErrorRe
 const { setFlashMessage } = require("../utils/flashMessages.js");
 const saveSessionAndRedirect = require("../utils/saveSessionAndRedirect.js");
 const noCache = require("../utils/noCache.js");
+const notifierEmit = require("../events/notifierEmit.js");
 
 exports.user = {};
 exports.myProfile = {};
@@ -89,6 +90,8 @@ exports.joinTheClub.post = [
           throw new Error(`Cannot upgrade user with id ${id} to member`);
         }
 
+        notifierEmit.dbUpdated(req);
+
         outcomeStr = `You’ve got it! You and your ${trait} ${noun} are in. Welcome to the club!`;
       } else {
         const article = startsWithVowel(trait) ? "an" : "a";
@@ -130,6 +133,8 @@ exports.becomeAdmin.post = [
       if (!success) {
         throw new Error(`Cannot upgrade user with id ${id} to admin`);
       }
+
+      notifierEmit.dbUpdated(req);
 
       outcomeStr = `Congratulations! You're an admin now!`;
     } else {

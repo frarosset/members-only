@@ -1,10 +1,16 @@
 const { debounce, debounceWithMaxWait } = require("../utils/debounce.js");
 
-const broadcast = (wss, message) => {
-  console.log("Broadcasting to ", wss.clients.size, "connected clients");
-  for (const client of wss.clients) {
-    if (client.readyState === WebSocket.OPEN) {
-      client.send(message);
+const readyFcn = (ws) => ws.readyState === WebSocket.OPEN;
+
+const broadcast = (wss, message, allowFcn) => {
+  console.log("Broadcasting (", wss.clients.size, "connected clients)");
+
+  const allow = (ws) =>
+    allowFcn ? readyFcn(ws) && allowFcn(ws) : readyFcn(ws);
+
+  for (const ws of wss.clients) {
+    if (allow(ws)) {
+      ws.send(message);
     }
   }
 };

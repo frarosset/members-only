@@ -74,9 +74,14 @@ function initWebSocket(server, sessionParser) {
   // thus there is no built-in way to exchange cookies.
   // See: https://stackoverflow.com/a/39202006
 
-  const writeMessage = async () => {
-    const data = "refreshForDbUpdated";
-    debouncedWithMaxWaitBroadcast(wss, data);
+  const writeMessage = async (connectSid) => {
+    const message = "refreshForDbUpdated";
+    const allowFcn = (ws) => {
+      const allow = ws.connectSid !== connectSid;
+      // console.log(allow, ws.userId, ws.connectSid);
+      return allow;
+    };
+    debouncedWithMaxWaitBroadcast(wss, message, allowFcn);
   };
 
   notifier.on("dbUpdated", writeMessage);

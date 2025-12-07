@@ -8,6 +8,7 @@ const { setFlashMessage } = require("../utils/flashMessages.js");
 const saveSessionAndRedirect = require("../utils/saveSessionAndRedirect.js");
 const noCache = require("../utils/noCache.js");
 const { setLastReadMessageId } = require("../utils/lastReadMessageId.js");
+const notifierEmit = require("../events/notifierEmit.js");
 
 exports.newMessage = {};
 exports.myMessages = {};
@@ -43,7 +44,11 @@ exports.newMessage.post = [
       await setLastReadMessageId(req, id);
     }
 
-    setFlashMessage(req, "userNewMessageId", id);
+    if (id) {
+      notifierEmit.dbUpdated(req);
+      setFlashMessage(req, "userNewMessageId", id);
+    }
+
     saveSessionAndRedirect(req, res, "/");
   }),
 ];
@@ -63,6 +68,8 @@ exports.deleteMessage.post = [
       });
       throw new CustomNotFoundError("Message not found or already deleted");
     }
+
+    notifierEmit.dbUpdated(req);
 
     // Note: req.body.referrer is validated/sanitized by setOnNotGetErrorRedirectTo.deleteMessage
     setFlashMessage(req, "flashDialog", {
