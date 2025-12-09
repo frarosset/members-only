@@ -23,7 +23,8 @@
   --bottom-color: transparent;
 
   --col: rgb(from var(--top-color) r g b / 50%);
-  --bg-gradient-alt: linear-gradient(var(--col), var(--col)), var(--bg-gradient);
+  --bg-gradient-alt:
+    linear-gradient(var(--col), var(--col)), var(--bg-gradient);
 
   --base-radial-gradient-bottom: radial-gradient(
     200% 50vh at 50% 100%,
@@ -45,8 +46,8 @@
 
   --base-radial-gradient: var(--base-radial-gradient-center);
 
-  --base-radial-gradient-entry-index: var(--base-radial-gradient-bottom),
-    var(--base-radial-gradient-center);
+  --base-radial-gradient-entry-index:
+    var(--base-radial-gradient-bottom), var(--base-radial-gradient-center);
 
   --base-radial-gradient-index-main: var(--base-radial-gradient-top);
 
@@ -173,7 +174,8 @@
     (
         var(--user-info-fullanme-fontsize-horizontal) +
           var(--user-info-username-fontsize-horizontal)
-      ) * var(--default-lineheight) + var(--tag-font-size) + 1rem
+      ) *
+      var(--default-lineheight) + var(--tag-font-size) + 1rem
   );
 
   --animation-duration: 0.6s;

@@ -1,12 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
 
+<%_ const wsRefreshClass = locals.wsRefresh ? "ws-refresh" : "" _%>
+
 <head>
   <title><%= pageTitle %> | Error <%= code %> </title>
+  <script type="module" src="/js/instanceSynchronizer.js" defer></script>
   <link rel="stylesheet" href="/css/styles.css">
 </head>
 
-<body class="error">
+<body class="error <%=wsRefreshClass%>">
 
   <%- include("./partials/headerBackToIndex.ejs"); _%>
 

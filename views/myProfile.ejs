@@ -1,15 +1,18 @@
 <!DOCTYPE html>
 <html lang="en">
 
+<%_ const wsRefreshClass = locals.wsRefresh ? "ws-refresh" : "" _%>
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title><%= pageTitle %> | My Profile</title>
   <%- include("partials/elements/dateScript") _%>
+  <script type="module" src="/js/instanceSynchronizer.js" defer></script>
   <link rel="stylesheet" href="/css/styles.css">
 </head>
 
-<body class="my-profile" data-now="<%= (new Date()).toISOString() %>">
+<body class="my-profile <%=wsRefreshClass%>" data-now="<%= (new Date()).toISOString() %>">
   <%- include("./partials/headerBackToIndex.ejs"); _%>
 
   <main>
