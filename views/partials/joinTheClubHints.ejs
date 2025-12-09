@@ -29,16 +29,18 @@ _%>
 </dialog>
 
 <script>
-  const joinTheClubHintsDialog = document.querySelector("dialog.join-the-club-hints-dialog");
-  const joinTheClubHintsShowButton = document.querySelector(".show-join-the-club-hints-modal");
-  const joinTheClubHintsCloseButton = document.querySelector("dialog.join-the-club-hints-dialog button.close");
+  (() => {
+    const joinTheClubHintsDialog = document.querySelector("dialog.join-the-club-hints-dialog");
+    const joinTheClubHintsShowButton = document.querySelector(".show-join-the-club-hints-modal");
+    const joinTheClubHintsCloseButton = document.querySelector("dialog.join-the-club-hints-dialog button.close");
 
-  joinTheClubHintsShowButton.addEventListener("click", (e) => {
-    e.preventDefault();
-    joinTheClubHintsDialog.showModal();
-  });
+    joinTheClubHintsShowButton.addEventListener("click", (e) => {
+      e.preventDefault();
+      joinTheClubHintsDialog.showModal();
+    });
 
-  joinTheClubHintsCloseButton.addEventListener("click", (e) => {
-    joinTheClubHintsDialog.close();
-  });
+    joinTheClubHintsCloseButton.addEventListener("click", (e) => {
+      joinTheClubHintsDialog.close();
+    });
+  })();
 </script>

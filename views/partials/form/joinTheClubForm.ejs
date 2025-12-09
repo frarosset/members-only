@@ -15,22 +15,24 @@
     <%- include("../base/submitButton.ejs", {fallbackUrl: "/", label: "I'm bringing a ..."}) _%>
 
     <script>
-      const traitInput = document.querySelector('input[name="trait"]');
-      const nounInput = document.querySelector('input[name="noun"]');
-      const joinBtn = document.querySelector('button[type="submit"]');
+      (() => {
+        const traitInput = document.querySelector('input[name="trait"]');
+        const nounInput = document.querySelector('input[name="noun"]');
+        const joinBtn = document.querySelector('button[type="submit"]');
 
-      function updateButton() {
-        const trait = traitInput.value.trim().toLowerCase();
-        const noun = nounInput.value.trim().toLowerCase();
+        function updateButton() {
+          const trait = traitInput.value.trim().toLowerCase();
+          const noun = nounInput.value.trim().toLowerCase();
 
-        const startsWithVowel = (word) => /^[aeiou]/i.test(word);
-        const article = startsWithVowel(trait) ? "an" : "a";
+          const startsWithVowel = (word) => /^[aeiou]/i.test(word);
+          const article = startsWithVowel(trait) ? "an" : "a";
 
-        joinBtn.textContent = trait || noun ? `I'm bringing ${article} ${trait || "..."} ${noun || "..."}` : "I'm bringing a ...";
-      }
+          joinBtn.textContent = trait || noun ? `I'm bringing ${article} ${trait || "..."} ${noun || "..."}` : "I'm bringing a ...";
+        }
 
-      traitInput.addEventListener('input', updateButton);
-      nounInput.addEventListener('input', updateButton);
+        traitInput.addEventListener('input', updateButton);
+        nounInput.addEventListener('input', updateButton);
+      })();
     </script>
   </div>
 </form>

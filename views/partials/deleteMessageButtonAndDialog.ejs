@@ -27,21 +27,23 @@ _%>
 </dialog>
 
 <script>
-  const deleteMessageDialog = document.querySelector("dialog.delete-message-dialog");
-  const deleteForm = deleteMessageDialog.querySelector("form");
-  const messageToDeleteTitle = deleteMessageDialog.querySelector(".dialog-message-to-delete-title");
-  const messageToDeleteText = deleteMessageDialog.querySelector(".dialog-message-to-delete-text");
-  const deleteMessageShowButtonAll = document.querySelectorAll(".show-delete-message-modal");
+  (() => {
+    const deleteMessageDialog = document.querySelector("dialog.delete-message-dialog");
+    const deleteForm = deleteMessageDialog.querySelector("form");
+    const messageToDeleteTitle = deleteMessageDialog.querySelector(".dialog-message-to-delete-title");
+    const messageToDeleteText = deleteMessageDialog.querySelector(".dialog-message-to-delete-text");
+    const deleteMessageShowButtonAll = document.querySelectorAll(".show-delete-message-modal");
 
-  deleteMessageShowButtonAll.forEach(button => {
-    button.addEventListener("click", (e) => {
-      e.preventDefault();
-      const messageId = button.dataset.id;
-      deleteForm.action = `/message/${messageId}/delete`;
-      messageToDeleteTitle.textContent = button.dataset.title;
-      messageToDeleteText.textContent = button.dataset.text;
-      deleteMessageDialog.showModal();
+    deleteMessageShowButtonAll.forEach(button => {
+      button.addEventListener("click", (e) => {
+        e.preventDefault();
+        const messageId = button.dataset.id;
+        deleteForm.action = `/message/${messageId}/delete`;
+        messageToDeleteTitle.textContent = button.dataset.title;
+        messageToDeleteText.textContent = button.dataset.text;
+        deleteMessageDialog.showModal();
+      });
     });
-  });
+  })();
 </script>
 <%_ } _%>

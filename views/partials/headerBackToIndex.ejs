@@ -1,18 +1,22 @@
 <script>
-  const goBack = (fallbackUrl = "/") => {
-    const referrer = document.referrer ?? null;
-    const isInternal = referrer && referrer.startsWith(window.location.origin) && referrer !== window.location.href;
+  (() => {
+    const goBack = (fallbackUrl = "/") => {
+      const referrer = document.referrer ?? null;
+      const isInternal = referrer && referrer.startsWith(window.location.origin) && referrer !== window.location.href;
 
-    // console.log(referrer, "|", window.location.origin, "|", isInternal)
+      // console.log(referrer, "|", window.location.origin, "|", isInternal)
 
-    if (isInternal) {
-      history.back();
-    } else {
-      window.location.replace(fallbackUrl ?? "/");
-      //   window.location.href = fallbackUrl ?? "/";
+      if (isInternal) {
+        history.back();
+      } else {
+        window.location.replace(fallbackUrl ?? "/");
+        //   window.location.href = fallbackUrl ?? "/";
+      }
+
     }
 
-  }
+    window.goBack = goBack;
+  })();
 </script>
 
 <header class="top-header">

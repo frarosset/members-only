@@ -22,11 +22,13 @@ _%>
 <%_ } _%>
 
 <script>
-  const logoutDialog = document.querySelector("dialog.logout-dialog");
-  const logoutShowButton = document.querySelector("dialog.logout-dialog + .show-logout-modal");
+  (() => {
+    const logoutDialog = document.querySelector("dialog.logout-dialog");
+    const logoutShowButton = document.querySelector("dialog.logout-dialog + .show-logout-modal");
 
-  logoutShowButton.addEventListener("click", (e) => {
-    e.preventDefault();
-    logoutDialog.showModal();
-  });
+    logoutShowButton.addEventListener("click", (e) => {
+      e.preventDefault();
+      logoutDialog.showModal();
+    });
+  })();
 </script>

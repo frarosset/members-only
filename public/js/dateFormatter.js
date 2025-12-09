@@ -28,4 +28,4 @@ function dateFormatter() {
 
 dateFormatter();
 
-window.dateFormatter = dateFormatter;
+// window.dateFormatter = dateFormatter;
