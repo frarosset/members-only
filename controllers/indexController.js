@@ -20,10 +20,10 @@ exports.get = [
     const isMember = req?.user?.is_member != null;
     const allMessages = await db.read.allMessages(isMember);
 
-    // If the request is triggered by websocket, just update a temporary
+    // If the request is triggered by websocket or broadcast channel, just update a temporary
     // lastReadMessageId (saved in the session), instead of the actual one
     // for the user.
-    if (!res.locals.wsRefresh) {
+    if (!res.locals.autoRefresh) {
       await updateLastReadMessageId(req, allMessages);
     } else {
       await updateTempLastReadMessageId(req, allMessages);

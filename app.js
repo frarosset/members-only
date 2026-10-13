@@ -42,7 +42,7 @@ app.get(
   (req, res) => {
     // console.log(`Ignoring request of ${req.path}`);
     res.sendStatus(204); // No Content
-  }
+  },
 );
 
 // Setup session for authentication
@@ -80,28 +80,28 @@ app.use(
 
     res.locals.isGuest = req.session.isGuest;
 
-    // If a wsRefresh cookie is present, the request is
-    // triggered by websocket, so just set a locals wsRefresh to true,
+    // If a autoRefresh cookie is present, the request is
+    // triggered by websocket, so just set a locals autoRefresh to true,
     // so that a temporary lastReadMessageId (saved in the session) is
     // updated instead of the actual one for the user (see indexController).
     // Otherwise, just set the lastReadMessageId of the user as the above
     // mentioned temporary one, if present.
-    if (getCookie(req, "wsRefresh") == null) {
+    if (getCookie(req, "autoRefresh") == null) {
       await updateLastReadMessageIdFromTemp(req);
-      res.locals.wsRefresh = false;
+      res.locals.autoRefresh = false;
     } else {
-      res.clearCookie("wsRefresh", {
+      res.clearCookie("autoRefresh", {
         httpOnly: true,
         path: "/",
         samesite: "strict",
       });
-      res.locals.wsRefresh = true;
+      res.locals.autoRefresh = true;
     }
 
     res.locals.lastReadMessageId = getLastReadMessageId(req);
 
     next();
-  })
+  }),
 );
 
 // Save flash messages [requires session initialized]

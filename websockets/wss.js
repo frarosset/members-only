@@ -66,7 +66,7 @@ function initWebSocket(server, sessionParser) {
 
   // Since the page is just refreshed, the functionality of unread
   // message count would broke (ie, a new message becomes read as soon as the
-  // next refresh is issued). This is fixed setting a wsRefresh cookie when such
+  // next refresh is issued). This is fixed setting a autoRefresh cookie when such
   // is issued, which prevents the update of last read message id.
 
   // The cookie is set client side, because once the webSocket connection has been established,

@@ -1513,7 +1513,7 @@ body > footer .icon {
   }
 }
 
-body.ws-refresh *:not(.messages__item.new-message) {
+body.auto-refresh *:not(.messages__item.new-message) {
   animation: none !important;
   --animation-initial-delay: 0s;
 }
