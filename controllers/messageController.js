@@ -46,6 +46,7 @@ exports.newMessage.post = [
 
     if (id) {
       notifierEmit.dbUpdated(req);
+      setFlashMessage(req, "userFlashAction", "user-db-updated");
       setFlashMessage(req, "userNewMessageId", id);
     }
 
@@ -70,6 +71,7 @@ exports.deleteMessage.post = [
     }
 
     notifierEmit.dbUpdated(req);
+    setFlashMessage(req, "userFlashAction", "user-db-updated");
 
     // Note: req.body.referrer is validated/sanitized by setOnNotGetErrorRedirectTo.deleteMessage
     setFlashMessage(req, "flashDialog", {

@@ -70,7 +70,7 @@ exports.joinTheClub.post = [
     const isValid = await db.read.membershipRiddleCheckValidity(
       id,
       trait,
-      noun
+      noun,
     );
 
     let success;
@@ -80,7 +80,7 @@ exports.joinTheClub.post = [
       // Check if another user has already brought this item
       const isNotAlreadyBrought = await db.read.membershipTraitNounAvailability(
         trait,
-        noun
+        noun,
       );
 
       if (isNotAlreadyBrought) {
@@ -91,6 +91,7 @@ exports.joinTheClub.post = [
         }
 
         notifierEmit.dbUpdated(req);
+        setFlashMessage(req, "userFlashAction", "user-db-updated");
 
         outcomeStr = `You’ve got it! You and your ${trait} ${noun} are in. Welcome to the club!`;
       } else {
@@ -135,6 +136,7 @@ exports.becomeAdmin.post = [
       }
 
       notifierEmit.dbUpdated(req);
+      setFlashMessage(req, "userFlashAction", "user-db-updated");
 
       outcomeStr = `Congratulations! You're an admin now!`;
     } else {

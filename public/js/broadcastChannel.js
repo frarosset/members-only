@@ -9,6 +9,7 @@ const allowedMessagesActions = {
   "user-signed-up": "deferToVisible",
   "user-logged-in": "deferToVisible",
   "user-logged-out": "immediate",
+  "user-db-updated": "deferToVisible",
 };
 const allowedMessages = Object.keys(allowedMessagesActions);
 
