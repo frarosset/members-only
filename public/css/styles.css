@@ -375,6 +375,10 @@ h2 {
   filter: drop-shadow(var(--h2-shadow));
 }
 
+h1 * {
+  text-decoration: none;
+}
+
 .h2-heading {
   text-transform: uppercase;
   font-weight: bold;
