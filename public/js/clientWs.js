@@ -1,4 +1,7 @@
-import refresh from "/js/autoRefresh.js";
+import refresh, {
+  markForRefresh,
+  refreshIfMarkedAndVisible,
+} from "/js/autoRefresh.js";
 
 let socket;
 
@@ -33,7 +36,10 @@ function connectWebsocket() {
   socket.onmessage = (event) => {
     console.log("WebSocket receives refresh command:", event.data);
 
-    refresh();
+    if (event.data === "refreshForDbUpdated") {
+      markForRefresh();
+      refreshIfMarkedAndVisible();
+    }
   };
 }
 

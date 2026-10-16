@@ -1,4 +1,5 @@
 let refreshTimeout;
+let needsRefresh = document.hidden;
 
 function refresh() {
   if (refreshTimeout) return;
@@ -12,26 +13,47 @@ function refresh() {
 
 // Handle tab visibility and connection status
 
-// When tab is not visible, there is no need, eg, to keep the ws connection
-// alive so disconnect it. New messages might have been posted while tab
-// was not visible and not connected to server via WebSockets: reload the
-// page to fetch them.
+// When tab is not visible, the ws connection and broadcast channel connections
+// are kept alive, so that new messages or events are still captured. This allows
+// mark a tab to be reloaded, and: 1) reload immediately if the tab is visible,
+// or 2) reload it as soon as it becomes visible again
 
-// Specify the connections to be disconnected as an array disconnectFns
+// Instead, if connection is lost, reload to page to fetch any event
+// that might have been occurred while offline
 
-// Similarly, if connection is lost, reload to page to fetch any updated data
-
-function setupAutoRefreshListeners(disconnectFns) {
+function setupAutoRefreshListeners() {
   document.onvisibilitychange = () => {
-    if (document.visibilityState === "hidden") {
-      disconnectFns.forEach((fn) => fn());
-    } else {
-      refresh();
-    }
+    refreshIfMarkedAndVisible();
   };
 
   document.addEventListener("online", refresh);
 }
 
+// Trigger when data is modified or invalidated
+function markForRefresh() {
+  needsRefresh = true;
+  console.log("marked for refresh");
+}
+
+function refreshIfVisible() {
+  if (!document.hidden) {
+    refresh();
+  }
+}
+
+function refreshIfMarkedAndVisible() {
+  if (needsRefresh) refreshIfVisible();
+}
+
+function refreshIfMarked() {
+  if (needsRefresh) refresh();
+}
+
 export default refresh;
-export { setupAutoRefreshListeners };
+export {
+  setupAutoRefreshListeners,
+  markForRefresh,
+  refreshIfVisible,
+  refreshIfMarkedAndVisible,
+  refreshIfMarked,
+};

@@ -1,4 +1,4 @@
-import refresh from "/js/autoRefresh.js";
+import { markForRefresh, refreshIfMarkedAndVisible } from "/js/autoRefresh.js";
 
 let channel;
 
@@ -23,7 +23,8 @@ function connectChannel() {
       !sessionStorage.getItem("suppressBroadcast") // avoid infinite loops
     ) {
       sessionStorage.setItem("suppressBroadcast", true);
-      refresh();
+      markForRefresh();
+      refreshIfMarkedAndVisible();
     }
   };
 

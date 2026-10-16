@@ -1,7 +1,7 @@
 import { setupAutoRefreshListeners } from "/js/autoRefresh.js";
-import { connectChannel, disconnectChannel } from "/js/broadcastChannel.js";
+import { connectChannel } from "/js/broadcastChannel.js";
 
-setupAutoRefreshListeners([disconnectChannel]);
+setupAutoRefreshListeners();
 
 // Initial connections
 connectChannel();

@@ -1,8 +1,8 @@
 import { setupAutoRefreshListeners } from "/js/autoRefresh.js";
-import { connectChannel, disconnectChannel } from "/js/broadcastChannel.js";
-import { connectWebsocket, disconnectWebsocket } from "/js/clientWs.js";
+import { connectChannel } from "/js/broadcastChannel.js";
+import { connectWebsocket } from "/js/clientWs.js";
 
-setupAutoRefreshListeners([disconnectWebsocket, disconnectChannel]);
+setupAutoRefreshListeners();
 
 // Initial connections
 connectWebsocket();
