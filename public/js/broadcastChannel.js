@@ -1,35 +1,65 @@
-import { markForRefresh, refreshIfMarkedAndVisible } from "/js/autoRefresh.js";
+import {
+  markForRefresh,
+  refreshIfMarked,
+  refreshIfMarkedAndVisible,
+} from "/js/autoRefresh.js";
 
 let channel;
+const allowedMessagesActions = {
+  "user-signed-up": "deferToVisible",
+  "user-logged-in": "deferToVisible",
+  "user-logged-out": "immediate",
+};
+const allowedMessages = Object.keys(allowedMessagesActions);
 
-function refreshOtherTabs() {
-  window.removeEventListener("DOMContentLoaded", refreshOtherTabs);
-  if (sessionStorage.getItem("suppressBroadcast")) {
-    sessionStorage.removeItem("suppressBroadcast");
-  } else {
-    channel.postMessage("refresh-other-tabs");
+function postMessageOnDOMContentLoadedHandler() {
+  window.removeEventListener(
+    "DOMContentLoaded",
+    postMessageOnDOMContentLoadedHandler,
+  );
+
+  // Determine if a specific flash message state exists from the window object
+  let message = String(window.userFlashAction) || null;
+
+  if (allowedMessages.includes(message)) {
+    postMessage(message);
+  }
+}
+
+function postMessage(message) {
+  if (message) {
+    // Broadcast the custom message
+    channel.postMessage(message);
   }
 }
 
 function connectChannel() {
-  // Refresh other tabs if one gets updated...to update them too
-
   channel = new BroadcastChannel("user-tabs");
 
-  // Listen for refresh requests from other tabs
+  // Listen for custom messages from other tabs
   channel.onmessage = (event) => {
-    if (
-      event.data === "refresh-other-tabs" &&
-      !sessionStorage.getItem("suppressBroadcast") // avoid infinite loops
-    ) {
-      sessionStorage.setItem("suppressBroadcast", true);
-      markForRefresh();
-      refreshIfMarkedAndVisible();
+    const action = allowedMessagesActions[event.data];
+
+    // Handle different broadcast types
+    switch (action) {
+      case "immediate":
+        markForRefresh();
+        refreshIfMarked();
+        break;
+      case "deferToVisible":
+        markForRefresh();
+        refreshIfMarkedAndVisible();
+        break;
+      default:
+        break;
     }
   };
 
-  // On load, if not suppressed, broadcast to others
-  window.addEventListener("DOMContentLoaded", refreshOtherTabs);
+  // On load, if needed, broadcast to others
+  window.addEventListener(
+    "DOMContentLoaded",
+    postMessageOnDOMContentLoadedHandler,
+  );
 }
 
 function disconnectChannel() {

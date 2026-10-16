@@ -1604,6 +1604,10 @@ body.entry-index header {
   --animation-duration: var(--animation-duration-entry-index-header);
 }
 
+body.entry-index .text-link:hover::before {
+  content: none;
+}
+
 body.index main {
   --animation-initial-delay: var(--animation-initial-delay-index-main);
 }

@@ -5,7 +5,6 @@ function refresh() {
   if (refreshTimeout) return;
   refreshTimeout = setTimeout(() => {
     document.cookie = "autoRefresh=true;path=/";
-    sessionStorage.setItem("suppressBroadcast", true); // suppress broadcast to other tabs (see BroadcastChannel)
     location.reload();
     refreshTimeout = null; // reset after reload attempt
   }, 100);

@@ -52,6 +52,7 @@ exports.signup.post = [
         return next(err);
       }
       setFlashMessage(req, "signupUser", true);
+      setFlashMessage(req, "userFlashAction", "user-signed-up");
       saveSessionAndRedirect(req, res, "/");
     });
   }),
@@ -95,6 +96,7 @@ exports.login.post = [
         }
 
         setFlashMessage(req, "loginUser", true);
+        setFlashMessage(req, "userFlashAction", "user-logged-in");
         saveSessionAndRedirect(req, res, "/");
       });
     })(req, res, next);
@@ -113,6 +115,7 @@ exports.logout.post = [
         });
         return next(err);
       }
+      setFlashMessage(req, "userFlashAction", "user-logged-out");
       saveSessionAndRedirect(req, res, "/");
     });
   }),
