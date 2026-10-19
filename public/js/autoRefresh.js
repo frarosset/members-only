@@ -20,12 +20,22 @@ function refresh() {
 // Instead, if connection is lost, reload to page to fetch any event
 // that might have been occurred while offline
 
+// Refresh also if page is reloaded from bfcache (there might be a new state)
+// See: https://neuraldemy.com/handling-bfcache-with-active-websocket-connections-in-react/
+//
+
 function setupAutoRefreshListeners() {
   document.onvisibilitychange = () => {
     refreshIfMarkedAndVisible();
   };
 
   document.addEventListener("online", refresh);
+  window.addEventListener("pageshow", (e) => {
+    if (e.persisted) {
+      // The page was restored from the bfcache: re-fetch data
+      refresh();
+    }
+  });
 }
 
 // Trigger when data is modified or invalidated

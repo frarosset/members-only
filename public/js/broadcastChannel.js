@@ -4,6 +4,10 @@ import {
   refreshIfMarkedAndVisible,
 } from "/js/autoRefresh.js";
 
+// Multitab logout
+// https://dev.to/highflyer910/the-multi-tab-logout-problem-nobody-warned-you-about-2jil
+// https://www.linkedin.com/pulse/broadcastchannel-react-how-sync-logout-across-multiple-akila-nilusha-apl6c
+
 let channel;
 const allowedMessagesActions = {
   "user-signed-up": "deferToVisible",
