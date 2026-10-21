@@ -18,14 +18,15 @@ exports.user.get = [
   userErrors.user,
   noCache,
   asyncHandler(async (req, res) => {
-    const id = req.params.id;
+    const username = req.params.username;
 
-    const user = await db.read.userPublicFromId(id);
+    const user = await db.read.userPublicFromUsername(username);
 
     if (!user) {
       throw new CustomNotFoundError("This user does not exist.");
     }
 
+    const id = user.id;
     user.messages = await db.read.allMessagesPerUserId(id, true);
 
     // Don't update last read message id if you access an  user message: there might be other unread users messages

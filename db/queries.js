@@ -135,6 +135,29 @@ db.read.userFromUsername = async (username) => {
   return results.rows?.[0];
 };
 
+db.read.userPublicFromUsername = async (username) => {
+  const sql = `
+    SELECT 
+      id, 
+      username, 
+      name,
+      surname,
+      signup_date,
+      membership_start_date,
+      admin_start_date,
+      is_member,
+      is_admin,
+      membership_trait_noun
+    FROM users
+    WHERE username = $1;
+  `;
+  const sqlData = [username];
+
+  const results = await pool.query(sql, sqlData);
+
+  return results.rows?.[0];
+};
+
 db.read.usernameAvailability = async (username) => {
   const sql = "SELECT username FROM users WHERE username = $1;";
   const sqlData = [username];

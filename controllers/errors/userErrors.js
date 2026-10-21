@@ -6,14 +6,14 @@ exports.user = (req, res, next) => {
   if (!req.user) {
     throw new CustomUnauthenticatedError(
       "",
-      "/views/partials/messages/userButNotLoggedIn.ejs"
+      "/views/partials/messages/userButNotLoggedIn.ejs",
     );
-  } else if (req.user.id === Number(req.params.id)) {
+  } else if (req.user.username === req.params.username) {
     res.redirect("/my-profile");
   } else if (!req.user.is_member) {
     throw new CustomUnauthorizedError(
       "",
-      "/views/partials/messages/userButNotMember.ejs"
+      "/views/partials/messages/userButNotMember.ejs",
     );
   } else {
     next();
@@ -24,7 +24,7 @@ exports.myProfile = (req, res, next) => {
   if (!req.user) {
     throw new CustomUnauthenticatedError(
       "",
-      "/views/partials/messages/myProfileButNotLoggedIn.ejs"
+      "/views/partials/messages/myProfileButNotLoggedIn.ejs",
     );
   } else {
     next();
@@ -35,12 +35,12 @@ exports.joinTheClub = (req, res, next) => {
   if (!req.user) {
     throw new CustomUnauthenticatedError(
       "",
-      "/views/partials/messages/joinTheClubButNotLoggedIn.ejs"
+      "/views/partials/messages/joinTheClubButNotLoggedIn.ejs",
     );
   } else if (req.user.is_member) {
     throw new CustomConflictError(
       "",
-      "/views/partials/messages/joinTheClubButAlreadyMember.ejs"
+      "/views/partials/messages/joinTheClubButAlreadyMember.ejs",
     );
   } else {
     next();
@@ -51,17 +51,17 @@ exports.becomeAdmin = (req, res, next) => {
   if (!req.user) {
     throw new CustomUnauthenticatedError(
       "",
-      "/views/partials/messages/becomeAdminButNotLoggedIn.ejs"
+      "/views/partials/messages/becomeAdminButNotLoggedIn.ejs",
     );
   } else if (!req.user.is_member) {
     throw new CustomUnauthorizedError(
       "",
-      "/views/partials/messages/becomeAdminButNotMember.ejs"
+      "/views/partials/messages/becomeAdminButNotMember.ejs",
     );
   } else if (req.user.is_admin) {
     throw new CustomConflictError(
       "",
-      "/views/partials/messages/becomeAdminButAlreadyAdmin.ejs"
+      "/views/partials/messages/becomeAdminButAlreadyAdmin.ejs",
     );
   } else {
     next();

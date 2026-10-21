@@ -3,7 +3,7 @@ const userController = require("../controllers/userController.js");
 
 const router = Router();
 
-router.get("/user/:id", userController.user.get);
+router.get("/user/:username", userController.user.get);
 router.get("/my-profile", userController.myProfile.get);
 router.get("/join-the-club", userController.joinTheClub.get);
 router.get("/become-admin", userController.becomeAdmin.get);
